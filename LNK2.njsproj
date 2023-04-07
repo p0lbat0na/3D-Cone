@@ -30,6 +30,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.js" />
+    <Content Include="public\javascripts\connect.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="models\Todo.js">
       <SubType>Code</SubType>
     </Content>
@@ -45,6 +48,9 @@
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
     <Content Include="views\create-req.hbs">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\error.hbs">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\layout.pug" />

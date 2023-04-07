@@ -7,9 +7,40 @@
 
     <script>
         div.addEventListener('DOMContentLoaded', function () {
-            var elems = div.querySelectorAll('.large material-icons');
-            var instances = M.FloatingActionButton.init(elems, {
-                direction: 'left'
+            const query = ` SELECT * FROM departments `;
+            const { Pool } = require('pg');
+            const Cursor = require('pg-cursor');
+            let mass = 'V';
+
+            const pool = new Pool({
+                user: 'postgres',
+                host: 'localhost',
+                database: 'LNK',
+                password: '4444',
+                port: 5432,
             });
+
+            (async () => {
+                const client = await pool.connect();
+
+
+                const cursor = await client.query(new Cursor(query));
+                function read() {
+                    cursor.read(1, (err, rows) => {
+
+
+                        mass = mass + rows;
+                        if (rows != 0) {
+
+                            read();
+
+                        }
+
+                    });
+
+                }
+                read();
+            })();
+            return 2+2;
         });
     </script>

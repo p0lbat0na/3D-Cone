@@ -6,21 +6,48 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const exphbs = require('express-handlebars')
+const exphbs = require('express-handlebars');
 const routes = require('./routes/index');
 const users = require('./routes/users');
-const todoRoutes = require('./routes/routes')
 
+const todoRoutes = require('./routes/routes');
 const app = express();
+
 const hbs = exphbs.create({
     defaultLayout: 'main',
-    extname: 'hbs'
-})
-app.engine('hbs', hbs.engine)
-app.set('view engine', 'hbs')
+    extname: 'hbs',
+    helpers: {
+        substr: function (length, context, options) {
+            if (context.length > length) {
+                return context.substring(0, length) + "...";
+            } else {
+                return context;
+            }
+        },
+        getTime: function () {
+            var myDate = new Date()
+            var hour = myDate.getHours()
+            var minute = myDate.getMinutes()
+            var second = myDate.getSeconds()
+            if (minute < 10) {
+                minute = '0' + minute
+            }
+            if (second < 10) {
+                second = '0' + second
+            }
+            return (
+                'Текущее время: ' + hour + ':' + minute + ':' + second
+            )
+        }
+    }
+});
+app.engine('hbs', hbs.engine);
+app.set('view engine', 'hbs');
+
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.use(todoRoutes)
+
+app.set('views', 'views')
+app.use(todoRoutes);
 
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.png'));
@@ -29,7 +56,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname,'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
@@ -69,3 +96,6 @@ app.set('port', process.env.PORT || 3000);
 const server = app.listen(app.get('port'), function () {
     debug('Express server listening on port ' + server.address().port);
 });
+
+
+
