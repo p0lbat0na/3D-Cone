@@ -4,10 +4,19 @@
     <div class="container">
         <ul>
             <li>
-                Код департамента или цеха:  <input id="icon_telephone" type="tel" class="validate">
+                
+
+                <div class="fieldset">
+                    <input id="dep_code" type="text" class="textbox" required>
+                    <label class="text-field__label" for="dep_code">Код департамента или цеха</label>
+                </div>
             </li>
             <li>
-                Выполнить до:    <input type="text" class="datepicker">
+                <div class="date_input">
+                   <p> Выполнить до:</p>
+                    <input type="date" id="dep_code" class="datepicker">
+                </div>
+                
             </li>
 
             <li>
@@ -18,18 +27,50 @@
                 </label>
             </li>
         </ul>
+        
     </div>
-
 
     <div class="card-panel hoverable ">
-        <div class="container ninety">
-            <p> <strong>Испытание 1</strong> </p>
-            <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
-            <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
-            <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
-            {{connect 'departments'}}
+        <div class="container testing-header ">
+            <div class="two-btn">
+                <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
+                <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
+            </div>
+            <div class="testing-head"><p> <h5 class="center-align">Испытание 1</h5> </p></div>
+
+            <div style="display: flex; justify-content: flex-end">
+                <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
+            </div>
+            
+        </div>
+        <div class="container">
+            <div class="fieldset">
+                <input id="control_code" type="text" class="textbox" required>
+                <label class="text-field__label" for="control_code">Код испытания объекта</label>
+            </div>
+            <br />
+            <div class="fieldset">
+                <input id="reg_num" type="text" class="textbox" required>
+                <label class="text-field__label" for="reg_num">Регистрационный номер</label>
+            </div>
+            <br />
+            <div class="fieldset">
+                <input id="line_num" type="text" class="textbox" required>
+                <label class="text-field__label" for="line">Номер линии</label>
+            </div>
+            <br />
+            <div class="fieldset textarea">
+                <textarea id="comment" type="text" class="materialize-textarea textbox" required></textarea>
+                <label class="text-field__label" for="comment">Комментарий</label>
+            </div>
+            <br />
+            <div class="fieldset textarea">
+                <textarea id="files" type="text" class="materialize-textarea textbox" required></textarea>
+                <label class="text-field__label" for="files">Ссылки</label>
+            </div>
         </div>
     </div>
+
     
     
 

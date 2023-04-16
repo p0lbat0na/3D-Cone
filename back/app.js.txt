@@ -9,7 +9,6 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const routes = require('./routes/index');
 const users = require('./routes/users');
-const ntlm = require('express-ntlm');
 
 const todoRoutes = require('./routes/routes');
 const app = express();
@@ -17,31 +16,13 @@ const app = express();
 
 
 
-//app.use(ntlm({
-//    debug: function () {
-//        var args = Array.prototype.slice.apply(arguments);
-//        console.log.apply(null, args);
-//    },
-//    domain: 'MYDOMAIN',
-//    domaincontroller: 'ldap://myad.example',
 
-//    // use different port (default: 389)
-//    // domaincontroller: 'ldap://myad.example:3899',
-//}));
-app.use(ntlm());
-
-app.all('./views/autorization', function (request, response) {
-    response.end(JSON.stringify(request.ntlm)); // {"DomainName":"MYDOMAIN","UserName":"MYUSER","Workstation":"MYWORKSTATION"}
-});
 
 const hbs = exphbs.create({
     defaultLayout: 'main',
     extname: 'hbs',
     helpers: {
-        exit: function (request, response, next) {
-            response.statusCode = 401;
-            response.setHeader('WWW-Authenticate', 'NTLM'); response.end();
-        },
+
 
         substr: function (length, context, options) {
             if (context.length > length) {
@@ -69,7 +50,7 @@ const hbs = exphbs.create({
         },
 
 
-        connect: function (table) {
+        connect2: function (table) {
             
             //query = hbs.escapeExpression(query);      //экранирование выражения
             let query = ` SELECT * FROM `+table;
@@ -112,24 +93,13 @@ const hbs = exphbs.create({
                 function cons(str1,str2) {
                     
                         console.log(str1+'э');
-                    console.log(str2 + ' (*_');
-                    var data = new Blob([str2], { type: 'application/msword' });
-                    var textFile = URL.createObjectURL(data);
-                    if (document.getElementById('download') !== null) {
-                        document.body.removeChild(document.getElementById('download'));
-                    }
-                    var a = document.createElement("a");
-                    a.setAttribute("id", "download");
-                    a.setAttribute("href", textFile);
-                    a.setAttribute("download", "");
-                    a.textContent = "Click here to download the test for the students";
-                    document.body.appendChild(a);
+                        console.log(str2 + ' (*_');                    
                 }
                 read(5, cons);                
             })();            
         },
 
-        connect2: function (table) {
+        connect: function (table) {
             
             //query = hbs.escapeExpression(query);      //экранирование выражения
             let query = ` SELECT * FROM ` + table;
@@ -153,59 +123,36 @@ const hbs = exphbs.create({
                 port: 5432,
             });
 
-            pool.connect()
-                .then((client) => {
-                    let s = 'ъ';
-                    client.query(query)
-                        .then(res => {
-                            for (let row of res.rows) {
-                                //console.log(row + typeof(row));
-                                for (let j in row) {
-                                    const element = row.getElementById(j);
-                                    if (element) {
-                                        s += element;
-                                        
-                                       // element.innerHTML = (car[j]);
-                                    }
-                                };console.log(s);
-                            }
-                        })
-                        .catch(err => {
-                            console.error(err);
-                        });
-                })
-                .catch(err => {
-                    console.error(err);
-                }); 
 
-      //       let asy = async (query,pool) => {
+
+             let asy = async (query,pool) => {
                 
 
-      //          const client = await pool.connect();
+                const client = await pool.connect();
                  
-      //              const name = process.argv[2] ?? 'john';
-      //              const entries = await client.query(query);
-      //          //console.log(`${entries.rows.map((r) => Object.values(r).join('\t')).join('\n')}`);
+                    const name = process.argv[2] ?? 'john';
+                    const entries = await client.query(query);
+                //console.log(`${entries.rows.map((r) => Object.values(r).join('\t')).join('\n')}`);
 
-      //           let promise = new Promise((resolve, reject) => {
+                 let promise = new Promise((resolve, reject) => {
                     
-      //          //console.log(`Database entries ${entries.rowCount} row(s)`);
-      //              //console.log(Object.keys(entries.rows?.[0]).join('\t'));
-      //               let mass =  entries.rows.map((r) => Object.values(r).join('\t')).join('\n');
+                //console.log(`Database entries ${entries.rowCount} row(s)`);
+                    //console.log(Object.keys(entries.rows?.[0]).join('\t'));
+                     let mass =  entries.rows.map((r) => Object.values(r).join('\t')).join('\n');
                      
-      //               resolve(mass);
-      //           });
-      //           await client.end();
-      //           let result = await promise;
+                     resolve(mass);
+                 });
+                 await client.end();
+                 let result = await promise;
 
-      //           console.log("___________________" + result + "___________________" );
-      //           return result; 
+                 console.log("___________________" + result + "___________________" );
+                 return result; 
                  
-      //          //return mass;
+                //return mass;
 
-      //      };
-      ////      console.log("___________________" + asy(query, pool) + "___________________");
-      //      return (asy(query, pool));
+            };
+      //      console.log("___________________" + asy(query, pool) + "___________________");
+            return (asy(query, pool));
 
             //get_user_name().then(alert);
             //(async () => {
@@ -216,7 +163,7 @@ const hbs = exphbs.create({
 
 
 
-            
+            //return('гавно')
             //(async () => {
             //    const client = await pool.connect();
 
