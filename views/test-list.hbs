@@ -1,4 +1,144 @@
-<h2>���������</h2>
+<h2>Испытания</h2>
+<a href="/req-list"><h5>Список заявок</h5></a>
+<div class="container ninety">
+    <div class="fieldset">
+        <input id="search" type="text" class="textbox" required>
+        <label class="text-field__label" for="search">Поиск по номеру</label>
+    </div>
+    <label>
+        <input type="checkbox" />
+        <span>Ждет обработки</span>
+    </label>
+    <button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
+        Найти
+    </button>
+</div>
+
+<div class="card-panel hoverable ">
+    <h5>Испытание 0 заявки 0</h5>
+    <div class="container white">
+        <ul>
+            <li>
+                <div class="fieldset">
+                    <input id="control_code" type="text" class="textbox" required>
+                    <label class="text-field__label" for="control_code">Код испытания объекта</label>
+                </div>
+            </li>
+            <li>
+                <div class="fieldset">
+                    <input id="reg_num" type="text" class="textbox" required>
+                    <label class="text-field__label" for="reg_num">Регистрационный номер</label>
+                </div>
+            </li>
+            <li>
+                <div class="fieldset">
+                    <input id="line_num" type="text" class="textbox" required>
+                    <label class="text-field__label" for="line">Номер линии</label>
+                </div>
+            </li>
+            <li>
+                <div class="fieldset textarea">
+                    <textarea id="comment" type="text" class="materialize-textarea textbox" required></textarea>
+                    <label class="text-field__label" for="comment">Комментарий</label>
+                </div>
+            </li>
+            <li>
+                <div class="fieldset textarea">
+                    <textarea id="files" type="text" class="materialize-textarea textbox" required></textarea>
+                    <label class="text-field__label" for="files">Ссылки</label>
+                </div>
+            </li>
+            <li>
+                <div class="fieldset">
+                    <input id="executor" type="text" class="textbox" required>
+                    <label class="text-field__label" for="executor">ID исполнителя</label>
+                </div>
+            </li>
+            <li>
+                <div class="fieldset">
+                    <input id="status" type="text" class="textbox" required>
+                    <label class="text-field__label" for="status">Статус</label>
+                </div>
+        </ul>
+    </div>
+</div>
+    <div class="card-panel hoverable ">
+        <h5>Испытание 1 заявки 1</h5>
+        <div class="container white">
+            <ul>
+                <li>
+                    <div class="fieldset">
+                        <input id="control_code" type="text" class="textbox" required>
+                        <label class="text-field__label" for="control_code">Код испытания объекта</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="fieldset">
+                        <input id="reg_num" type="text" class="textbox" required>
+                        <label class="text-field__label" for="reg_num">Регистрационный номер</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="fieldset">
+                        <input id="line_num" type="text" class="textbox" required>
+                        <label class="text-field__label" for="line">Номер линии</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="fieldset textarea">
+                        <textarea id="comment" type="text" class="materialize-textarea textbox" required></textarea>
+                        <label class="text-field__label" for="comment">Комментарий</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="fieldset textarea">
+                        <textarea id="files" type="text" class="materialize-textarea textbox" required></textarea>
+                        <label class="text-field__label" for="files">Ссылки</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="fieldset">
+                        <input id="executor" type="text" class="textbox" required>
+                        <label class="text-field__label" for="executor">ID исполнителя</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="fieldset">
+                        <input id="status" type="text" class="textbox" required>
+                        <label class="text-field__label" for="status">Статус</label>
+                    </div>
+            </ul>
+        </div>
+        <div class="container ninety s12">
 
 
-{{> tomain}}
+
+
+            <button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
+                Изменить
+                <i class="material-icons right"></i>
+            </button>
+        </div>
+    </div>
+
+
+    <!--<form>
+        <input class="short" placeholder="mail" type="text" >
+        <input class="short" placeholder="subj" type="text" >
+        <textarea placeholder="text"></textarea>
+    </form>-->
+
+    <ul class="pagination">
+        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+        <li class="active"><a href="#!">1</a></li>
+        <li class="waves-effect"><a href="#!">2</a></li>
+        <li class="waves-effect"><a href="#!">3</a></li>
+        <li class="waves-effect"><a href="#!">4</a></li>
+        <li class="waves-effect"><a href="#!">5</a></li>
+        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
+    <a id="scale-demo" href="#!" class="btn-floating btn-large scale-transition">
+        <i class="material-icons">add</i>
+    </a>
+
+    {{> tomain}}

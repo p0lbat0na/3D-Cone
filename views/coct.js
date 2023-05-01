@@ -1,6 +1,8 @@
-'use strict';
+
 //const { Client } = require('pg');
 //require('dotenv').config();
+require('express-handlebars');
+const hbs = require('hbs')
 //(async () => {
 //    const client = new Client({
 //        host: process.env.PG_HOST,
@@ -52,28 +54,31 @@
 //    })();
 //}
 export function piece(){
-    return ('ooooooooooooo');
+    alert('blasdasfodifjsdifjsdi');
 }
 
 
-export async function readd(table) {
-    alert('ss');
+export async function read(table) {
+
+      alert('ssss');
+
     let query = ` SELECT * FROM ` + table;
     if (table == 'obj+control')
         query =
-            `SELECT * FROM оbjects_of_control
-                    INNER JOIN control_objects_testing ON оbjects_of_control.control_object_code= control_objects_testing.control_object_code
-                    INNER JOIN sorts_of_control ON control_objects_testing.test_code= sorts_of_control.test_code
-                    `;
+            `                
+                SELECT * FROM оbjects_of_control 
+                INNER JOIN control_objects_testing ON оbjects_of_control.control_object_code= control_objects_testing.control_object_code 
+                INNER JOIN sorts_of_control ON control_objects_testing.test_code= sorts_of_control.test_code
+ 	            `;
     if (table == 'staff+spec')
-        query = `SELECT * FROM staff INNER JOIN staff_specializing ON staff.worker_id= staff_specializing.worker_id
-                    INNER JOIN specializations ON staff_specializing.specialization_code= specializations.specialization_code
-                    `;
-    const { Client } = require('pg');
+        query = `SELECT * FROM staff INNER JOIN staff_specializing ON staff.worker_id= staff_specializing.worker_id 
+                INNER JOIN specializations ON staff_specializing.specialization_code= specializations.specialization_code
+                `;
+    //const { Client } = require('pg'); 
     //
     //const Cursor = require('pg-cursor');
 
-    alert(table + ' ж');
+    console.log(table + ' ж');
 
     const jsonResponse = (responseObject, responseCode = 200) => {
         res.writeHead(responseCode, { 'Content-Type': 'application/json' });
@@ -81,14 +86,14 @@ export async function readd(table) {
 
         //console.log(new Date(), '-- Handled request:', req.method, req.url, responseCode);
     };
+    alert('ssss');
 
-    alert('sss');
     const client = new Client({
         user: 'postgres',
         host: 'localhost',
         database: 'LNK',
         password: '4444',
-        port: 5432,
+        port: 1251,
     });
 
 
@@ -137,37 +142,36 @@ export async function readd(table) {
 
     };
     //      console.log("___________________" + asy(query, pool) + "___________________");
-    alert('last s');
-            //let masss = await asy(query, pool);
-            //console.log(masss);
-            //get_user_name().then(alert);
-            //(async () => {
-            //    console.log(await asy(query, pool));
-            //})();
-            //console.log (asy(query, pool).then(alert));
+    alert('ssss');
+    let masss = await asy(query, pool);
+    alert(masss);
+    //get_user_name().then(alert);
+    //(async () => {
+    //    console.log(await asy(query, pool));
+    //})();  
+    //console.log (asy(query, pool).then(alert));
 
-            //(async () => {
-            //    const client = await pool.connect();
-            //
-            //    const name = process.argv[2] ?? 'john';
-            //    const entries = await client.query(query);
-            //    //console.log(`Database entries ${entries.rowCount} row(s)`);
-            //    //console.log(Object.keys(entries.rows?.[0]).join('\t'));
-            //    //
-            //    ////let mass = entries.rows.map((r) => Object.values(r).join('\t')).join('\n');
-            //    //console.log(`${entries.rows.map((r) => Object.values(r).join('\t')).join('\n')}`);
-            //
-            //    await client.end();
-            //    //return mass;
-            //
-            //})();
-            //console.log(mass);
-            //cb(masss);
+    (async () => {
+        const client = await pool.connect();
+
+        const name = process.argv[2] ?? 'john';
+        const entries = await client.query(query);
+        //console.log(`Database entries ${entries.rowCount} row(s)`);
+        //console.log(Object.keys(entries.rows?.[0]).join('\t'));
+        //
+        ////let mass = entries.rows.map((r) => Object.values(r).join('\t')).join('\n');
+        //console.log(`${entries.rows.map((r) => Object.values(r).join('\t')).join('\n')}`);
+
+        await client.end();
+        //return mass;
+
+    })();
+        //console.log(mass);
+        //cb(masss);
 }
 
 
 export function resp(str) {
-
     console.log(str);
 }
 
@@ -176,71 +180,71 @@ export function resp(str) {
 
 
 
-//hbs.registerHelper("lifnk", function () {
-//    //query = hbs.escapeExpression(query);      //экранирование выражения
-//    const query = `
+hbs.registerHelper("lifnk", function () {
+    //query = hbs.escapeExpression(query);      //экранирование выражения
+    const query = `
+ SELECT *
+ FROM departments
+ `;
+    const { Pool } = require('pg');
+    const Cursor = require('pg-cursor');
+    let mass = 'V';
+
+    const pool = new Pool({
+        user: 'postgres',
+        host: 'localhost',
+        database: 'LNK',
+        password: '4444',
+        port: 5432,
+    });
+
+    (async () => {
+        const client = await pool.connect();
+
+
+        const cursor = await client.query(new Cursor(query));
+        function read() {
+            cursor.read(1, (err, rows) => {
+                
+                
+                mass = mass + rows;
+                if (rows != 0) {
+                                       
+                    read();
+                }
+            });
+        }
+        read();
+    })();
+    return mass;
+});
+
+
+//const query = `
 // SELECT *
 // FROM departments
 // `;
-//    const { Pool } = require('pg');
-//    const Cursor = require('pg-cursor');
-//    let mass = 'V';
+//connect(query);
+//export default connect;
+hbs.registerHelper('Max', function (A, B) {
+    return (A > B) ? A : B;
+});
 
-//    const pool = new Pool({
-//        user: 'postgres',
-//        host: 'localhost',
-//        database: 'LNK',
-//        password: '4444',
-//        port: 5432,
-//    });
-
-//    (async () => {
-//        const client = await pool.connect();
-
-
-//        const cursor = await client.query(new Cursor(query));
-//        function read() {
-//            cursor.read(1, (err, rows) => {
-                
-                
-//                mass = mass + rows;
-//                if (rows != 0) {
-                                       
-//                    read();
-//                }
-//            });
-//        }
-//        read();
-//    })();
-//    return mass;
-//});
-
-
-////const query = `
-//// SELECT *
-//// FROM departments
-//// `;
-////connect(query);
-////export default connect;
-//hbs.registerHelper('Max', function (A, B) {
-//    return (A > B) ? A : B;
-//});
-
-//hbs.registerHelper('getTime', function () {
-//    var myDate = new Date()
-//    var hour = myDate.getHours()
-//    var minute = myDate.getMinutes()
-//    var second = myDate.getSeconds()
-//    if (minute < 10) {
-//        minute = '0' + minute
-//    }
-//    if (second < 10) {
-//        second = '0' + second
-//    }
-//    return (
-//        'Текущее время: ' + hour + ':' + minute + ':' + second
-//    )
-//})
+hbs.registerHelper('getTime', function () {
+    var myDate = new Date()
+    var hour = myDate.getHours()
+    var minute = myDate.getMinutes()
+    var second = myDate.getSeconds()
+    if (minute < 10) {
+        minute = '0' + minute
+    }
+    if (second < 10) {
+        second = '0' + second
+    }
+    return (
+        'Текущее время: ' + hour + ':' + minute + ':' + second
+    )
+})
 
 
 
@@ -276,10 +280,10 @@ export function read2() {
 }
 
 
-export function read4() {
+export function read() {
 
     //query = hbs.escapeExpression(query);      //экранирование выражения
-    console.log('con');
+
     let query = ` SELECT * FROM staff`;
     const { Pool } = require('pg');
     const Cursor = require('pg-cursor');

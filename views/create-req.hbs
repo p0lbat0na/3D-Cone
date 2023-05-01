@@ -36,14 +36,14 @@
                 <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
                 <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
             </div>
-            <div class="testing-head"><p> <h5 class="center-align">Испытание 1</h5> </p></div>
+            <div class="testing-head"><p> <h5 class="center-align">Испытание 3</h5> </p></div>
 
             <div style="display: flex; justify-content: flex-end">
                 <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
             </div>
-            
+
         </div>
-        <div class="container">
+        <div class="container ">
             <div class="fieldset">
                 <input id="control_code" type="text" class="textbox" required>
                 <label class="text-field__label" for="control_code">Код испытания объекта</label>
@@ -68,9 +68,14 @@
                 <textarea id="files" type="text" class="materialize-textarea textbox" required></textarea>
                 <label class="text-field__label" for="files">Ссылки</label>
             </div>
+            {{message}}
         </div>
+        {{message}}
     </div>
-
+    <button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
+        Сохранить
+        
+    </button>
     
     
 

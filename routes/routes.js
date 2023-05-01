@@ -1,6 +1,9 @@
 const { Router } = require('express');
 const router = Router()
 
+var db = require('../public/javascripts/scr');
+
+module.exports = router;
 
 router.get('/', (req, res) => {
     res.render('index', {
@@ -30,10 +33,24 @@ router.get('/create-req', (req, res) => {
     })
 })
 
-router.get('/catalog', (req, res) => {
+
+//router.get('/catalog', function (req, res, next) {
+//    let sql = 'SELECT * FROM staff';
+//    db.query(sql, function (err, data, fields) {
+//        if (err) throw err;
+//        res.render('catalog', { title: 'Справочник', userData: data });
+//    });
+//});
+
+router.get('/catalog', (req, res, next) => {
+    let sql = 'SELECT * FROM staff';
+    db.query(sql, function (err, data) {
+        if (err) throw err;
     res.render('catalog', {
         title: 'Справочник',
-        isCatalog: true
+        isCatalog: true,
+        userData: data
+    });
     })
 })
 

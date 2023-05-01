@@ -11,15 +11,24 @@
     </div>
     <div class="center-align">
         <h2>ЛНК</h2>
+
         <a class="btn" href="/req-list ">Список заявок</a>
+
+
+
         <a class="btn" href="/create-req">Новая заявка</a>
+
+        <a class="btn" onclick="resp("sdgsdg")">Справочник</a>
         <a class="btn" href="/catalog">Справочник</a>
-        <a class="btn" href="/autorization">Испытания</a>
+
+        <a class="btn" href="/test-list">Испытания</a>
+
+
         <p>Отчет по исполнителям:</p>
         <form class="search">
             <div class="fieldset">
                 <input type="text" name="worker_report" class="serch_textbox" required>
-                <button type="submit" class="search_button btn">Скачать</button>
+                <button type="submit" class="search_button btn" href="/report_worker">Скачать</button>
                 <label class="text-field__label">ID исполнителя</label>
             </div>
         </form>
@@ -27,14 +36,18 @@
         <form class="search">
             <div class="fieldset">
                 <input type="text" name="obj_report" class="serch_textbox" required>
-                <button type="submit" class="search_button btn">Скачать</button>
+                <button type="submit" class="search_button btn" href="/report_obj">Скачать</button>
                 <label class="text-field__label">Код объекта</label>
             </div>
         </form>
+        <div>
+            {{message}}
+        </div>
+
     </div>
 
 
-        <p class="flow-text">I am Flow Text аываыв</p>
+        
 </body>
 <script>
     function exit(request, response, next) {
@@ -42,3 +55,7 @@
         response.setHeader('WWW-Authenticate', 'NTLM'); response.end();
     }
 </script>
+
+    <script>
+        import { resp } from "./partials/scr.js";
+    </script>

@@ -1,30 +1,111 @@
 <h2>Список заявок</h2>
 <a href="/test-list"><h5>К списку испытаний</h5></a>
+<div class="container ninety">
+    <div class="fieldset">
+        <input id="search" type="text" class="textbox" required>
+        <label class="text-field__label" for="search">Поиск по номеру</label>
+    </div>
+    <label>
+        <input type="checkbox" />
+        <span>Ждет обработки</span>
+    </label>
+    <button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
+        Найти
+    </button>
+</div>
 
-<div class="card-panel hoverable "> 
-    <h3>Hoverable Card Panel</h3> 
-    <div class="container ninety">
+<div class="card-panel hoverable ">
+    <h5>Заявка 0</h5>
+    <div class="container white">
+        <ul>
+            <li>
+                <div class="fieldset">
+                    <input id="dep_code" type="text" class="textbox" required>
+                    <label class="text-field__label" for="dep_code">Код департамента или цеха</label>
+                </div>
+            </li>
+            <li>
+                <div class="date_input">
+                    <p> Выполнить до:</p>
+                    <input type="date" id="dep_code" class="datepicker">
+                </div>
+            </li>
+            <li>
+                <br>
+                <label>
+                    <input type="checkbox" />
+                    <span>Требуется выдача заключения</span>
+                </label>
+                <br>
+            </li>
+            <li><p>Количесво испытаний: 3</p></li>
+            <li>
+                <div class="fieldset">
+                    <input id="status" type="text" class="textbox" required>
+                    <label class="text-field__label" for="status">Статус</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="container ninety s12">
         <div>
-            <a class="waves-effect waves-light btn-small">Список испытаний</i></a>
-            <a class="waves-effect waves-light btn-small">Отчет</i></a>
+            <a class="waves-effect waves-light btn-small">Список испытаний</a>
+            <a class="waves-effect waves-light btn-small">Отчет</a>
         </div>
-        
+
         <button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
             Изменить
             <i class="material-icons right"></i>
         </button>
     </div>
-    
-    
-    
+</div>
+<div class="card-panel hoverable ">
+    <h5>Заявка 1</h5>
+    <div class="container white">
+        <ul>
+            <li>
+                <div class="fieldset">
+                    <input id="dep_code" type="text" class="textbox" required>
+                    <label class="text-field__label" for="dep_code">Код департамента или цеха</label>
+                </div>
+            </li>
+            <li>
+                <div class="date_input">
+                    <p> Выполнить до:</p>
+                    <input type="date" id="dep_code" class="datepicker">
+                </div>
+            </li>
+            <li>
+                <br>
+                <label>
+                    <input type="checkbox" />
+                    <span>Требуется выдача заключения</span>
+                </label>
+                <br>
+            </li>
+            <li><p>Количесво испытаний: 3</p></li>
+            <li>
+                <div class="fieldset">
+                    <input id="status" type="text" class="textbox" required>
+                    <label class="text-field__label" for="status">Статус</label>
+                </div>
+            </li>
+        </ul>
     </div>
+    <div class="container ninety s12">
+        <div>
+            <a class="waves-effect waves-light btn-small">Список испытаний</a>
+            <a class="waves-effect waves-light btn-small">Отчет</a>
+        </div>
+
+        <button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
+            Изменить
+            <i class="material-icons right"></i>
+        </button>
+    </div>
+</div>
 
 
-<!--<form>
-    <input class="short" placeholder="mail" type="text" >
-    <input class="short" placeholder="subj" type="text" >
-    <textarea placeholder="text"></textarea>
-</form>-->
 
 <ul class="pagination">
     <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
@@ -39,25 +120,6 @@
     <i class="material-icons">add</i>
 </a>
 
-<!-- Scaled out -->
-<!--<a id="scale-demo" href="#!" class="btn-floating btn-large scale-transition scale-out">
-    <i class="material-icons">dsdsd</i>
-</a>
-<ul class="collapsible popout" >
-    <li id="elev" >
-        <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
-        <div class=" active collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li >
-    <li>
-        <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li >
-        <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-</ul>
 
-<script src="partials/script.js"> </script>-->
 
 {{> tomain}}

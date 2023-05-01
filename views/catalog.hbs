@@ -1,31 +1,245 @@
 <h1>Справочник</h1>
 
-
 <div class="row">
-    
-    
-        <a class="btn" href="/req-list ">  
-            Сотрудники </a>
-        <a class="btn" href="/create-req"> 
-            Объекты контроля</a>
-        <a class="btn" href="/req-list">   
-            Испытания  </a>
-        <a class="btn" href="/req-list">   
-        Объекты + испытания </a>
-        
 
+
+    <a class="btn" href="/req-list ">
+        Сотрудники
+    </a>
+    <a class="btn" href="/create-req">
+        Объекты контроля
+    </a>
+    <a class="btn" href="/req-list">
+        Испытания
+    </a>
+    <a class="btn" href="/req-list">
+        Объекты + испытания
+    </a>
+
+    <button type="submit" class="search_button btn" onclick="countRabbits()">Скачать</button>
+    <input type="button"  value="Считать кроликов!">
+    <a class="btn" onclick="Hello()">Цеха</a>
+    <a class="btn" onclick="piece()">Специальности</a>
     
-        <a class="btn" href="/create-req">Цеха</a>
-        <a class="btn" href="/req-list">Специальности</a>
-        <a class="btn" href="/req-list">Специализация сотрудников</a>
+    <a class="btn" id="elem" >Специализация сотрудников</a>
+
+</div>
+
+<script>
+    
+    async function Hello() {
+        try {
+            
+            alert('correct')
+            console.log('correct')
+        }
+        catch {
+            alert('err')
+            console.log('not correct')
+        }
+        document.getElementById('demo').innerHTML = piece;
+    }
+</script>
+
+<div class="table-data">    
+    <table border="1">
+        <tr>
+            <th>S.N</th>
+            <th>Full Name</th>
+            <th>Email Address</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+
+        {{#each userData.rows}}
+    <tr>
+
+        <td>{{this.worker_id}} </td>
+        <td>{{this.full_name}} </td>
+        <td>{{this.department_num}} </td>
+
+        <td>{{@key}} </td>
+        <td>{{this.job_title}} </td>
+
+        <td>{{this.contacts}}</td>
+        <td>{{this.staff_additional_information}} </td>
+    </tr>
+        {{/each}}
+    </table>
     
 </div>
 
 
 
+<div class="container lll" id="x">
+    x
+</div>
+<div class="container lll" id="y">
+    y
+</div>
+<!--<div class="container lll" id="demo">
+        <pre>
+2       13 тарелок                      Рект. колонна           LN13-89         -
+3       ryzen 3100g, 8, 512gb           ПК                      днс-1749        -
+5       Сталь, чугун, вес 2400кг        Печь промышленная       ZM-14           -
+0       45 метров год изготовления 1998 Ленточный конвеер       gs-45           -
+1       Алюминий,пластик                барьер сдвижной         greta light
+                                </pre>
+</div>-->
+
+    <script>
+
+        //import { piece } from '../public/javascripts/scr.js'
+        //import { readd } from '../public/javascripts/connect.js'
+
+        //
+        function resp(str) {
+
+            document.getElementById("demo").innerHTML = piece;
+            ale('staff');
+
+        }
+        // function read3() {
+        //     alert('d')
+        //     read('staff', resp);
+        // }
+        // //function p() {
+        // //    piece()
+        // //}
+        //  elem.addEventListener("click", p);
+    </script>
+    
+    <script>
+        
+            
+    </script>
+        
+    <script>
+        async function ale(table) {
+            alert('ss');
+            let query = ` SELECT * FROM ` + table;
+            if (table == 'obj+control')
+                query =
+                    `SELECT * FROM оbjects_of_control
+                    INNER JOIN control_objects_testing ON оbjects_of_control.control_object_code= control_objects_testing.control_object_code
+                    INNER JOIN sorts_of_control ON control_objects_testing.test_code= sorts_of_control.test_code
+                    `;
+            if (table == 'staff+spec')
+                query = `SELECT * FROM staff INNER JOIN staff_specializing ON staff.worker_id= staff_specializing.worker_id
+                    INNER JOIN specializations ON staff_specializing.specialization_code= specializations.specialization_code
+                    `;
+            const { Client } = require('pg');
+            //
+            //const Cursor = require('pg-cursor');
+
+            alert(table + ' ж');
+
+            const jsonResponse = (responseObject, responseCode = 200) => {
+                res.writeHead(responseCode, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(responseObject));
+
+                //console.log(new Date(), '-- Handled request:', req.method, req.url, responseCode);
+            };
+
+            alert('sss');
+            const client = new Client({
+                user: 'postgres',
+                host: 'localhost',
+                database: 'LNK',
+                password: '4444',
+                port: 5432,
+            });
 
 
+            client.connect((err) => {
+                if (err) {
+                    console.error('connection error', err.stack)
+                } else {
+                    console.log('connected')
+                }
+            })
+            alert('ssss');
+            client.query(query, (err, res) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                for (let row of res.rows) {
+                    console.log(row);
+                }
+                client.end();
+            });
+            let asy = async (query, pool) => {
 
 
-<div>{{connect 'departments'}}</div>
-{{> tomain}}
+                const client = await pool.connect();
+
+                const name = process.argv[2] ?? 'john';
+                const entries = await client.query(query);
+                //console.log(`${entries.rows.map((r) => Object.values(r).join('\t')).join('\n')}`);
+
+                let promise = new Promise((resolve, reject) => {
+
+                    //console.log(`Database entries ${entries.rowCount} row(s)`);
+                    //console.log(Object.keys(entries.rows?.[0]).join('\t'));
+                    let mass = entries.rows.map((r) => Object.values(r).join('\t')).join('\n');
+
+                    resolve(mass);
+                });
+                await client.end();
+                let result = await promise;
+
+                //console.log(result);
+                return result;
+
+                //return mass;
+
+            };
+            //      console.log("___________________" + asy(query, pool) + "___________________");
+            alert('last s');
+            //let masss = await asy(query, pool);
+            //console.log(masss);
+            //get_user_name().then(alert);
+            //(async () => {
+            //    console.log(await asy(query, pool));
+            //})();
+            //console.log (asy(query, pool).then(alert));
+
+            //(async () => {
+            //    const client = await pool.connect();
+            //
+            //    const name = process.argv[2] ?? 'john';
+            //    const entries = await client.query(query);
+            //    //console.log(`Database entries ${entries.rowCount} row(s)`);
+            //    //console.log(Object.keys(entries.rows?.[0]).join('\t'));
+            //    //
+            //    ////let mass = entries.rows.map((r) => Object.values(r).join('\t')).join('\n');
+            //    //console.log(`${entries.rows.map((r) => Object.values(r).join('\t')).join('\n')}`);
+            //
+            //    await client.end();
+            //    //return mass;
+            //
+            //})();
+            //console.log(mass);
+            //cb(masss);
+        }
+
+    </script>
+    <script>
+
+
+        import { read } from './/coct.js'
+        import { read } from './coct'
+        import { readd } from '../public/javascripts/connect.js'
+        import { readd } from './public/javascripts/connect'
+        import { readd } from '../public/javascripts/connect'
+
+    </script>
+
+    <div>
+        {{connect2 'staff' }}
+
+    </div>
+    {{> tomain}}

@@ -39,6 +39,10 @@
     <Content Include="public\index.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="public\javascripts\read.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\javascripts\scr.js" />
     <Content Include="routes\index.js" />
     <Content Include="routes\routes.js">
       <SubType>Code</SubType>
@@ -59,6 +63,9 @@
     <Content Include="views\error.hbs">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="views\handlebars.compile.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />
     <Content Include="views\layouts\main.hbs">
@@ -68,6 +75,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\index.hbs">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\partials\scr.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\partials\script.js">
