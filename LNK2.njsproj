@@ -51,7 +51,7 @@
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
-    <Content Include="views\autorization.hbs">
+    <Content Include="views\login.hbs">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\catalog.hbs">

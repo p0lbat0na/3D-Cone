@@ -2,28 +2,19 @@
 
     {{{body}}}
     <div class="fixed-action-btn">
-        <p>Выполнен вход, пользователь ID={{ntlm.UserName}}</p>
+        <p>
+            Выполнен вход, пользователь ID={{ntlm.UserName}}_____{{ntlm.Workstation}}
+        </p>
         <button class="waves-effect waves-teal btn-flat" onclick='exit()'>
             Выйти
         </button>
-        
-
     </div>
     <div class="center-align">
         <h2>ЛНК</h2>
-
         <a class="btn" href="/req-list ">Список заявок</a>
-
-
-
         <a class="btn" href="/create-req">Новая заявка</a>
-
-        <a class="btn" onclick="resp("sdgsdg")">Справочник</a>
         <a class="btn" href="/catalog">Справочник</a>
-
         <a class="btn" href="/test-list">Испытания</a>
-
-
         <p>Отчет по исполнителям:</p>
         <form class="search">
             <div class="fieldset">
@@ -42,7 +33,7 @@
         </form>
         <div>
             {{message}}
-        </div>
+</div>
 
     </div>
 

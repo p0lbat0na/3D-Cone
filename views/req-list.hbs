@@ -13,35 +13,42 @@
         Найти
     </button>
 </div>
-
+{{#each userData.rows}}
 <div class="card-panel hoverable ">
-    <h5>Заявка 0</h5>
+
+
+
+    <h5>Заявка {{this.request_code}}</h5>
     <div class="container white">
         <ul>
             <li>
-                <div class="fieldset">
-                    <input id="dep_code" type="text" class="textbox" required>
-                    <label class="text-field__label" for="dep_code">Код департамента или цеха</label>
-                </div>
+
+
+                <label>Код департамента или цеха {{this.department_num}}</label>
+
             </li>
             <li>
                 <div class="date_input">
-                    <p> Выполнить до:</p>
-                    <input type="date" id="dep_code" class="datepicker">
+                    <p> Выполнить до: {{this.deadline}}</p>
+                    <input type="date" id="dep_code" class="datepicker" value="{{this.deadline}}">
                 </div>
             </li>
             <li>
                 <br>
                 <label>
-                    <input type="checkbox" />
+                    {{#if this.opinion_required}}
+                    <input type="checkbox" checked>
+                    {{else}}
+                    <input type="checkbox">
+                    {{/if}}
                     <span>Требуется выдача заключения</span>
                 </label>
                 <br>
             </li>
-            <li><p>Количесво испытаний: 3</p></li>
+            <li><p>Количесво испытаний: </p></li>
             <li>
                 <div class="fieldset">
-                    <input id="status" type="text" class="textbox" required>
+                    <input id="status" type="text" class="textbox" value="{{this.status}}" required>
                     <label class="text-field__label" for="status">Статус</label>
                 </div>
             </li>
@@ -59,51 +66,8 @@
         </button>
     </div>
 </div>
-<div class="card-panel hoverable ">
-    <h5>Заявка 1</h5>
-    <div class="container white">
-        <ul>
-            <li>
-                <div class="fieldset">
-                    <input id="dep_code" type="text" class="textbox" required>
-                    <label class="text-field__label" for="dep_code">Код департамента или цеха</label>
-                </div>
-            </li>
-            <li>
-                <div class="date_input">
-                    <p> Выполнить до:</p>
-                    <input type="date" id="dep_code" class="datepicker">
-                </div>
-            </li>
-            <li>
-                <br>
-                <label>
-                    <input type="checkbox" />
-                    <span>Требуется выдача заключения</span>
-                </label>
-                <br>
-            </li>
-            <li><p>Количесво испытаний: 3</p></li>
-            <li>
-                <div class="fieldset">
-                    <input id="status" type="text" class="textbox" required>
-                    <label class="text-field__label" for="status">Статус</label>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div class="container ninety s12">
-        <div>
-            <a class="waves-effect waves-light btn-small">Список испытаний</a>
-            <a class="waves-effect waves-light btn-small">Отчет</a>
-        </div>
+{{/each}}
 
-        <button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
-            Изменить
-            <i class="material-icons right"></i>
-        </button>
-    </div>
-</div>
 
 
 

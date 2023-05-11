@@ -21,6 +21,7 @@
     "express-ntlm": "^2.6.2",
     "file-saver": "^2.0.5",
     "handlebars-async-helpers": "^1.0.4",
+    "jsonwebtoken": "^9.0.0",
     "materialize-css": "^1.0.0-rc.2",
     "morgan": "^1.7.0",
     "pg": "^8.10.0",
