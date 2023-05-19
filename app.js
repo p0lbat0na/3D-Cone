@@ -102,10 +102,6 @@ const hbs = exphbs.create({
         },
 
 
-
-
-
-
         //getTime: function () {
         //    var myDate = new Date()
         //    var hour = myDate.getHours()

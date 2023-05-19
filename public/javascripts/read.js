@@ -1,8 +1,54 @@
 const loginForm = document.getElementById('loginForm');
 
+//alert(window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
+try {
+    alert('qr');
+    const searchForm = document.getElementById('searchForm');
+
+    searchForm.addEventListener('submit', event => {
+        
+        event.preventDefault();
+        let page = window.location.href.substring(window.location.href.lastIndexOf('/'))
+        const num = document.getElementById('num').value;
+        
+        let requires_processing = document.getElementById('requires_processing');
+        
+        //if (document.getElementById('requires_processing').checked)
+        //    requires_processing = true;
+
+        fetch('/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ num, requires_processing, page })
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                userData = data;
+                location.reload();
+                //alert(data.token);
+                // alert(window.location.href );
+                //window.location.href = '/';
+
+            })
+            .catch(error => {
+                console.error(error);
+                alert(error);
+
+            });
+
+    });
+}
+catch (e) {
+    alert(e);
+    console.error(e);
+    console.log(e);
+    
 loginForm.addEventListener('submit', event => {
     //alert('q');
-    event.preventDefault();// отменяем стандартное действие отправки формы
+    event.preventDefault();// РѕС‚РјРµРЅСЏРµРј СЃС‚Р°РЅРґР°СЂС‚РЅРѕРµ РґРµР№СЃС‚РІРёРµ РѕС‚РїСЂР°РІРєРё С„РѕСЂРјС‹
     const worker_id = document.getElementById('worker_id').value;
     const password = document.getElementById('password').value;
     try {
@@ -14,12 +60,14 @@ loginForm.addEventListener('submit', event => {
         body: JSON.stringify({ worker_id, password })
     })
         .then(response => response.json())
-        .then(data => {
-            localStorage.setItem('token', data.token); // сохраняем токен в localStorage
+            .then(data => {
+                
+            localStorage.setItem('token', data.accessToken);
+            localStorage.setItem('refreshToken', data.refreshToken); 
+            
             //alert(data.token);
-           // alert(window.location.href );
-
-            window.location.href = '/catalog/staffSpec'; // перенаправляем на защищенную страницу
+            // alert(window.location.href );
+            window.location.href = '/'; 
 
         })
         .catch(error => {
@@ -27,7 +75,37 @@ loginForm.addEventListener('submit', event => {
             alert(error);
 
         });
-} catch (e) {
+    } catch (e) {
         alert(e);
-}
+    }
 });
+}
+exit.addEventListener('submit', event => {
+    
+    const cookies = document.cookie.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+        try {
+            let token=localStorage.getItem('token'); 
+
+            const cookie = cookies[i];
+            alert(token)
+            alert(cookies.token)
+            alert(document.cookie.token)
+            alert(document.cookie)
+            alert(document.cookie.refreshToken)
+            alert(document.cookie.accessToken)
+
+
+
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+        catch (e) {
+            alert(e)
+        }
+        alert(' not clear 2')
+
+    } alert('clear')
+})

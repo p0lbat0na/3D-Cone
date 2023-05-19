@@ -61,8 +61,8 @@ export async function readd(table) {
     let query = ` SELECT * FROM ` + table;
     if (table == 'obj+control')
         query =
-            `SELECT * FROM оbjects_of_control
-                    INNER JOIN control_objects_testing ON оbjects_of_control.control_object_code= control_objects_testing.control_object_code
+            `SELECT * FROM Рѕbjects_of_control
+                    INNER JOIN control_objects_testing ON Рѕbjects_of_control.control_object_code= control_objects_testing.control_object_code
                     INNER JOIN sorts_of_control ON control_objects_testing.test_code= sorts_of_control.test_code
                     `;
     if (table == 'staff+spec')
@@ -73,7 +73,7 @@ export async function readd(table) {
     //
     //const Cursor = require('pg-cursor');
 
-    alert(table + ' ж');
+    alert(table + ' Р¶');
 
     const jsonResponse = (responseObject, responseCode = 200) => {
         res.writeHead(responseCode, { 'Content-Type': 'application/json' });
@@ -177,7 +177,7 @@ export function resp(str) {
 
 
 //hbs.registerHelper("lifnk", function () {
-//    //query = hbs.escapeExpression(query);      //экранирование выражения
+//    //query = hbs.escapeExpression(query);      //СЌРєСЂР°РЅРёСЂРѕРІР°РЅРёРµ РІС‹СЂР°Р¶РµРЅРёСЏ
 //    const query = `
 // SELECT *
 // FROM departments
@@ -238,7 +238,7 @@ export function resp(str) {
 //        second = '0' + second
 //    }
 //    return (
-//        'Текущее время: ' + hour + ':' + minute + ':' + second
+//        'РўРµРєСѓС‰РµРµ РІСЂРµРјСЏ: ' + hour + ':' + minute + ':' + second
 //    )
 //})
 
@@ -278,13 +278,13 @@ export function read2() {
 
 export function read4() {
 
-    //query = hbs.escapeExpression(query);      //экранирование выражения
+    //query = hbs.escapeExpression(query);      //СЌРєСЂР°РЅРёСЂРѕРІР°РЅРёРµ РІС‹СЂР°Р¶РµРЅРёСЏ
     console.log('con');
     let query = ` SELECT * FROM staff`;
     const { Pool } = require('pg');
     const Cursor = require('pg-cursor');
     let mass = 'V';
-    console.log(table + ' ж');
+    console.log(table + ' Р¶');
 
     const pool = new Pool({
         user: 'postgres',
@@ -320,7 +320,7 @@ export function read4() {
         console.log('dsf');
         function cons(str1, str2) {
 
-            console.log(str1 + 'э');
+            console.log(str1 + 'СЌ');
             console.log(str2 + ' (*_');
 
         }

@@ -35,7 +35,7 @@
 //    console.log('dsf');
 //    function cons(str1, str2) {
 
-//        console.log(str1 + '˝');
+//        console.log(str1 + '—ç');
 //        console.log(str2 + ' (*_');
 
 //    }

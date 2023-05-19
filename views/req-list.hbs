@@ -1,18 +1,18 @@
 <h2>Список заявок</h2>
 <a href="/test-list"><h5>К списку испытаний</h5></a>
-<div class="container ninety">
+<form id="searchForm" class="container ninety" >
     <div class="fieldset">
-        <input id="search" type="text" class="textbox" required>
+        <input id="num" type="text" class="textbox">
         <label class="text-field__label" for="search">Поиск по номеру</label>
     </div>
     <label>
-        <input type="checkbox" />
+        <input type="checkbox" id="requires_processing">
         <span>Ждет обработки</span>
     </label>
-    <button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
-        Найти
-    </button>
-</div>
+    <button class="btn large" type="submit">Найти</button>
+</form>
+<script src="/javascripts/read.js"></script>
+
 {{#each userData.rows}}
 <div class="card-panel hoverable ">
 
@@ -84,6 +84,7 @@
     <i class="material-icons">add</i>
 </a>
 
-
-
 {{> tomain}}
+
+
+

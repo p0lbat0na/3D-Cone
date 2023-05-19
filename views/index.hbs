@@ -1,21 +1,26 @@
 <body>
 
     {{{body}}}
-    <div class="fixed-action-btn">
+    <form action="/login" class="fixed-action-btn">
         <p>
-            Выполнен вход, пользователь ID={{ntlm.UserName}}_____{{ntlm.Workstation}}
+            Выполнен вход, {{user.user_name}}
         </p>
-        <button class="waves-effect waves-teal btn-flat" onclick='exit()'>
+        <button class="waves-effect waves-teal btn-flat" href="/login">
             Выйти
         </button>
-    </div>
+    </form>
     <div class="center-align">
         <h2>ЛНК</h2>
+        {{#unless user.isExecutor}}
         <a class="btn" href="/req-list ">Список заявок</a>
+        {{/unless}}
+        {{#if user.isDeclarant}}
         <a class="btn" href="/create-req">Новая заявка</a>
+        {{/if}}
         <a class="btn" href="/catalog">Справочник</a>
         <a class="btn" href="/test-list">Испытания</a>
-        <p>Отчет по исполнителям:</p>
+        {{#if user.isOperator}}
+        <p class="upper">Отчет по исполнителям:</p>
         <form class="search">
             <div class="fieldset">
                 <input type="text" name="worker_report" class="serch_textbox" required>
@@ -31,13 +36,9 @@
                 <label class="text-field__label">Код объекта</label>
             </div>
         </form>
-        <div>
-            {{message}}
-</div>
-
+        {{/if}}
     </div>
-
-
+ 
         
 </body>
 <script>
@@ -46,7 +47,17 @@
         response.setHeader('WWW-Authenticate', 'NTLM'); response.end();
     }
 </script>
+<script>
 
-    <script>
-        import { resp } from "./partials/scr.js";
-    </script>
+    function deleteAllCookies() {
+        const cookies = document.cookie.split(";");
+
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i];
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            
+        } alert('clear')
+    }
+</script>

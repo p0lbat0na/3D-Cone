@@ -1,83 +1,85 @@
 <script id="Handlebars-Template" type="text/x-handlebars-template">
 </script>
-    <h2>Новая заявка</h2>
-    <div class="container">
-        <ul>
-            <li>
-                
+<h2>Новая заявка</h2>
+<form class="container" id="reqForm">
+    <ul>
+        <li>
 
-                <div class="fieldset">
-                    <input id="dep_code" type="text" class="textbox" required>
-                    <label class="text-field__label" for="dep_code">Код департамента или цеха</label>
-                </div>
-            </li>
-            <li>
-                <div class="date_input">
-                   <p> Выполнить до:</p>
-                    <input type="date" id="dep_code" class="datepicker">
-                </div>
-                
-            </li>
 
-            <li>
-                <br>
-                <label>
-                    <input type="checkbox" />
-                    <span>Требуется выдача заключения</span>
-                </label>
-            </li>
-        </ul>
-        
-    </div>
-
-    <div class="card-panel hoverable ">
-        <div class="container testing-header ">
-            <div class="two-btn">
-                <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
-                <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
-            </div>
-            <div class="testing-head"><p> <h5 class="center-align">Испытание 3</h5> </p></div>
-
-            <div style="display: flex; justify-content: flex-end">
-                <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
-            </div>
-
-        </div>
-        <div class="container ">
             <div class="fieldset">
-                <input id="control_code" type="text" class="textbox" required>
-                <label class="text-field__label" for="control_code">Код испытания объекта</label>
+                <input id="dep_code" type="text" class="textbox" required>
+                <label class="text-field__label" for="dep_code">Код департамента или цеха</label>
             </div>
-            <br />
-            <div class="fieldset">
-                <input id="reg_num" type="text" class="textbox" required>
-                <label class="text-field__label" for="reg_num">Регистрационный номер</label>
+        </li>
+        <li>
+            <div class="date_input">
+                <p> Выполнить до:</p>
+                <input type="date" id="deadline" class="datepicker">
             </div>
-            <br />
-            <div class="fieldset">
-                <input id="line_num" type="text" class="textbox" required>
-                <label class="text-field__label" for="line">Номер линии</label>
-            </div>
-            <br />
-            <div class="fieldset textarea">
-                <textarea id="comment" type="text" class="materialize-textarea textbox" required></textarea>
-                <label class="text-field__label" for="comment">Комментарий</label>
-            </div>
-            <br />
-            <div class="fieldset textarea">
-                <textarea id="files" type="text" class="materialize-textarea textbox" required></textarea>
-                <label class="text-field__label" for="files">Ссылки</label>
-            </div>
-            {{message}}
-        </div>
-        {{message}}
-    </div>
-    <button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
-        Сохранить
-        
+
+        </li>
+
+        <li>
+            <br>
+            <label>
+                <input type="checkbox" id="opinion">
+                <span>Требуется выдача заключения</span>
+            </label>
+        </li>
+    </ul>
+    <button class="btn large" type="submit">
+        Зарегистрировать заявку
     </button>
-    
-    
+</form>
+
+<form class="card-panel hoverable " id="add">
+    <div class="container testing-header ">
+        <div class="two-btn">
+            <button class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">back</i></button>
+            <button class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">del</i></button>
+        </div>
+        <div class="testing-head"><p> <h5 class="center-align">Испытание 3</h5> </p></div>
+
+        <div style="display: flex; justify-content: flex-end">
+            <button class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></button>
+        </div>
+
+    </div>
+    <div class="container ">
+        <div class="fieldset">
+            <input id="control_code" type="text" class="textbox" required>
+            <label class="text-field__label" for="control_code">Код испытания объекта</label>
+        </div>
+        <br />
+        <div class="fieldset">
+            <input id="reg_num" type="text" class="textbox" required>
+            <label class="text-field__label" for="reg_num">Регистрационный номер</label>
+        </div>
+        <br />
+        <div class="fieldset">
+            <input id="line_num" type="text" class="textbox" required>
+            <label class="text-field__label" for="line">Номер линии</label>
+        </div>
+        <br />
+        <div class="fieldset textarea">
+            <textarea id="comment" type="text" class="materialize-textarea textbox" required></textarea>
+            <label class="text-field__label" for="comment">Комментарий</label>
+        </div>
+        <br />
+        <div class="fieldset textarea">
+            <textarea id="files" type="text" class="materialize-textarea textbox" required></textarea>
+            <label class="text-field__label" for="files">Ссылки</label>
+        </div>
+
+    </div>
+
+</form>
+<button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
+    Сохранить
+</button>
 
 
-    {{> tomain}}
+<script src="/javascripts/insert.js"></script>
+
+
+{{> tomain}}

@@ -39,6 +39,9 @@
     <Content Include="public\index.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="public\javascripts\insert.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="public\javascripts\read.js">
       <SubType>Code</SubType>
     </Content>

@@ -1,11 +1,10 @@
 <body>
 
 
-    <!--<div class="fixed-action-btn">
-        <button class="waves-effect waves-teal btn-flat" onclick='exit()'>
-            Выйти
-        </button>
-    </div>-->
+    <form id="exit" class="fixed-action-btn">
+        <a class="btn" onclick="logout()">Объекты + испытания</a>
+        <button class="btn large" type="submit">Выйти</button>
+    </form>
     <h1>Вход в систему</h1>
     <form id="loginForm">
         <div>
@@ -18,7 +17,26 @@
         </div>
         <button class="btn large" type="submit">Войти</button>
     </form>
+    <script>
+        function logout() {
+            try {
+                fetch('/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    
+                })
+                    
+                    .catch(error => {
+                        console.error(error);
+                        alert(error);
 
+                    });
+            } catch (e) {
+                alert(e);
+            }
+        }</script>
     
     <script src="/javascripts/read.js"></script>
     <!--<div class="center-align">
