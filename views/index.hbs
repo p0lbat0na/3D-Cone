@@ -23,8 +23,8 @@
         <p class="upper">Отчет по исполнителям:</p>
         <form class="search">
             <div class="fieldset">
-                <input type="text" name="worker_report" class="serch_textbox" required>
-                <button type="submit" class="search_button btn" href="/report_worker">Скачать</button>
+                <input type="text" name="worker_report"  id="executorReportInpt" class="serch_textbox" required>
+                <button type="submit" class="search_button btn" id="executorReport">Скачать</button>
                 <label class="text-field__label">ID исполнителя</label>
             </div>
         </form>
@@ -32,14 +32,14 @@
         <form class="search">
             <div class="fieldset">
                 <input type="text" name="obj_report" class="serch_textbox" required>
-                <button type="submit" class="search_button btn" href="/report_obj">Скачать</button>
+                <button type="submit" class="search_button btn">Скачать</button>
                 <label class="text-field__label">Код объекта</label>
             </div>
         </form>
         {{/if}}
     </div>
- 
-        
+
+
 </body>
 <script>
     function exit(request, response, next) {

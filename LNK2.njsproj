@@ -46,6 +46,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="public\javascripts\scr.js" />
+    <Content Include="public\javascripts\signup.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="routes\index.js" />
     <Content Include="routes\routes.js">
       <SubType>Code</SubType>

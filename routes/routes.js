@@ -102,7 +102,7 @@ function authenticate(worker_id, password) {
     });
 }
 
-function write(table, attr, value) {
+function write(table, attr, value, returnCode) {
     return new Promise((resolve, reject) => {
         //let where = 'where'
         //for (var i = 0; i < attr.length - 1; i++) {
@@ -110,7 +110,7 @@ function write(table, attr, value) {
         //}
         //co
         
-            let q = 'INSERT INTO public.' + table + '(' + attr + ') VALUES(' + value+')';
+        let q = 'INSERT INTO public.' + table + '(' + attr + ') VALUES(' + value + ') RETURNING ' + returnCode+' AS return_code';
         console.log(q);
         //db.query('SELECT INTO $1 ($2) VALUES ($3);', [table, attr,value], (error, data) => {
         db.query(q, (error, data) => {
@@ -127,11 +127,36 @@ function write(table, attr, value) {
 
                     //const token = jwt.sign({ worker_id: data.rows[0].worker_id }, 'my-secret-key');
                     //const token = jwt.sign({ userId: data.rows[0].id }, 'my-secret-key');
-                    //console.log(data.rows[0].worker_id + " auth token " + '\n' + token.accessToken + '\n' +token.refreshToken);
-                    resolve(value[0]);
+                    //console.log(data);
+                    resolve(data);
                 } else {
                     reject('no data?;(');
                 }
+            }
+        });
+    });
+}
+
+function del(table, row, condition) {
+    return new Promise((resolve, reject) => {
+        //let where = 'where'
+        //for (var i = 0; i < attr.length - 1; i++) {
+        //    where = where + attr[i] + "=" + value[i]+'AND';
+        //}
+        //co
+        if (typeof (condition) != 'number')
+            condition = `'` + condition+`'`
+        let sql = 'DELETE FROM public.' + table + ' WHERE ' + row + ' = ' + condition;
+        console.log(sql);
+        //db.query('SELECT INTO $1 ($2) VALUES ($3);', [table, attr,value], (error, data) => {
+        db.query(sql, (error, data) => {
+
+            if (error) {
+                reject(error);
+                console.log(error);
+            } else {
+
+                resolve('deleted');
             }
         });
     });
@@ -173,60 +198,184 @@ router.post('/login', (req, res) => {
 router.post('/insert', (req, res) => {
     console.log('Wwwww');
 
-    const request_coge = 7;
+    
     const department_num = req.body.department_num;
     const deadline = req.body.deadline;   
     const opinion_reqired = req.body.opinion_reqired;
+    const worker_id = req.body.user_id;   
 
-    let attr = `request_code, department_num, deadline, opinion_required`
-    let val = request_coge + ', ' + department_num + `, '` + deadline + `', ` + opinion_reqired;
+    let attr = `department_num, deadline, opinion_required, status, worker_id`
+    let val = department_num + `, '` + deadline + `', ` + opinion_reqired + `, 'в обработке'` + `, ` + worker_id;
     console.log('WWWWWWWWWWWWW');
 
-
-    write('requests', attr, val)
-        .then(value => {
+    write('requests', attr, val, 'request_code')
+        
+        .then(data =>    {
             // добавляем токен в ответ
             //res.json({ token });
+            
+            console.log(data.rows[0].return_code);
 
-            console.log(value);
+            //console.log(data.substring(data.indexOf(`'`),3));
+            //console.log(data.rows[{ return_req_code }]);
+
+            res.send(data.rows[0].return_code);
+
         })
         .catch(error => {
-            console.log(error);
-            res.status(401).send(error.message);
+            console.log('33333' + error);
+            res.status(401).send(error);
         });
 });
 
-router.get('/search', (req, res, next) => {
+router.post('/insert-test', (req, res) => {
+    console.log('Wwwww');
+    const request_code = req.body.return_req_code;
+    const control_code = req.body.control_code;
+    const object_reg_number = req.body.reg_num;
+    const line_code = req.body.line_num;
+    const comment = req.body.comment;
+    const files = req.body.files;
 
-    num = req.body.num;
-    req.requires_processing = req.body.requires_processing;
-    req.page = req.body.page;
-    console.log(req.body.num + ' ^^ ' + req.requires_processing)
-    
+    let attr = `request_code, control_object_testing_code, line_code, testing_status, object_reg_number, comment, files`
+    let val = request_code + `, '` + control_code + `', ` + line_code + `, 'в обработке'` + `, '` + object_reg_number + `', '` + comment + `', '` + files + `'`;
+    console.log('WWWWWWWWWWWWW');
 
+    write('tests_in_requests', attr, val, 'test_in_request_code')
 
-    let sql = 'SELECT * FROM requests';
+        .then(data => {
+            // добавляем токен в ответ
+            //res.json({ token });
 
-    if (num != undefined) {
+            console.log(data.rows[0].return_code);
 
-        sql = sql + ' WHERE request_code=' + num;
-        if (req.requires_processing == 'on') {
-            sql = sql + ` AND status='в обработке'`;
-        }
-    }
-    else {
-        if (req.requires_processing == 'on')
-            sql = sql + ` WHERE status='в обработке'`;
-    }
-    console.log(sql + " @@ " + num);
-    const user = req.user;
-    
-    db.query(sql, function (err, data) {
-        if (err) throw err;
-        res.json({ userData: data, });
+            //console.log(data.substring(data.indexOf(`'`),3));
+            //console.log(data.rows[{ return_req_code }]);
+
+            res.send(data.rows[0].return_code);
+
+        })
+        .catch(error => {
+            console.log('33333' + error);
+            res.status(401).send(error);
+        });
+});
+
+router.post('/delete', (req, res) => {
+    const table = req.body.table;
+    const row = req.body.row;
+    const condition = req.body.condition;
+
+    console.log('Wwwww');
+    del(table, row, condition)
+
+        .then(data => {
+            
+
+            console.log(data);
+
+            //console.log(data.substring(data.indexOf(`'`),3));
+            //console.log(data.rows[{ return_req_code }]);
+
+            res.send(data);
+
+        })
+        .catch(error => {
+            console.log('33333' + error);
+            res.status(401).send(error);
+        });
+});
+
+router.post('/req-list/search', (req, res, next) => {
+    try {
+        let num = req.body.num;
+        let requires_processing = req.body.requires_processing;
         
-    })
-    
+        //console.log(req.body.num + ' ^^ ' + req.requires_processing)
+        let sql = 'SELECT * FROM requests';
+
+        if (num != undefined && num != '') {
+            sql = sql + ' WHERE request_code=' + num;
+            if (requires_processing == true) {
+                sql = sql + ` AND status='в обработке'`;
+            }
+        }
+        else {
+            if (requires_processing == true)
+                sql = sql + ` WHERE status='в обработке'`;
+        }
+        const user = req.user;
+        db.query(sql, function (err, data) {
+            if (err) throw err;
+            if (data.rows.length == 0) {
+                res.status(400).send('Запрос не дал результатов')                
+            }
+            else {
+                
+                res.render('req-list', {
+                    title: 'Заявка '+num,
+                    isReqList: true,
+                    userData: data,
+                    user: user
+                });
+            }
+        })
+    }
+        catch(err){
+            console.log(error);
+        };    
+});
+
+router.post('/test-list/search', (req, res, next) => {
+    try {
+        num = req.body.num;
+        req.requires_processing = req.body.requires_processing;
+        
+        let sql = 'SELECT * FROM tests_in_requests';
+        let title= 'Список испытаний'
+        if (num != undefined && num != '') {
+            if (req.body.diagonal_dir) {
+                
+                sql = sql + ' WHERE request_code=' + num;
+                title = 'Испытания заявки ' + num;
+            }
+            else
+            sql = sql + ' WHERE test_in_request_code=' + num;
+            if (req.requires_processing == true) {
+                sql = sql + ` AND testing_status='в обработке'`;
+            }
+        }
+        
+        else {
+            if (req.requires_processing == true)
+                sql = sql + ` WHERE testing_status='в обработке'`;
+        }
+        console.log(req.body.num + ' ^^ ' + sql + ' %% ' + req.body.diagonal_dir)
+        const user = req.user;
+        db.query(sql, function (err, data) {
+            if (err) throw err;
+            if (data.rows.length == 0) {
+                res.status(400).send('Запрос не дал результатов')
+            }
+            else {
+                if (req.body.is_create_req) {
+                    res.send(data);
+                }
+                else {
+                    res.render('test-list', {
+                        title: title,
+                        isTestList: true,
+                        userData: data,
+                        user: user,
+                        diagonaled: req.body.diagonal_dir
+                    });
+                }
+            }
+        })
+    }
+    catch (err) {
+        console.log(error);
+    };
 });
 
 router.post('/logout', (req, res) => {
@@ -251,41 +400,38 @@ router.post('/logout', (req, res) => {
 });
 
 
-router.get('/', authenticateJWT, (req, res) => {
-    const user = req.user
+router.get('/', authenticateJWT, (req, res) => {    
     res.render('index', {
         title: 'Главная',
         isMain: true,
-        user: user
+        user: req.user
     })
 })
 
 router.get('/req-list', authenticateJWT, (req, res) => {
     if (!req.user.isExecutor) {
+       
         let sql = 'SELECT * FROM requests';
-         
-        if (req.num != undefined) {
-            
-            sql = sql + ' WHERE request_code=' + req.num;
-            if (req.requires_processing == 'on') {
-                sql = sql + ` AND status='в обработке'`;
-            }
-        }
-         else {
-            if (req.requires_processing=='on')
-                sql = sql + ` WHERE status='в обработке'`;
-            }
-        console.log(sql+" @@ "+req.num);
-        const user = req.user;
+        
         db.query(sql, function (err, data) {
             if (err) throw err;
+            let options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+
+            for (let i = 0; i < data.rowCount; i++) {
+
+                let deadline = data.rows[i].deadline.toLocaleDateString("en-US", { year: 'numeric' }) + '-' +
+                    data.rows[i].deadline.toLocaleDateString("en-US", { month: '2-digit' }) + '-' +
+                    data.rows[i].deadline.toLocaleDateString("en-US", { day: '2-digit' });
+                data.rows[i].deadline = deadline
+            }
+            console.log(data.rows[1])
             res.render('req-list', {
-                title: 'Список заявок',
-                isReqList: true,
-                userData: data,
-                user: user
-            })
-        })
+                    title: 'Список заявок',
+                    isReqList: true,
+                    userData: data,
+                user: req.user
+            });            
+        })        
     }
     else {
         res.redirect('/login');
@@ -294,24 +440,26 @@ router.get('/req-list', authenticateJWT, (req, res) => {
 
 router.get('/test-list', authenticateJWT, function (req, res) {
     let sql = 'SELECT * FROM tests_in_requests';
-    const user = req.user;
     db.query(sql, function (err, data) {
         if (err) throw err;
     res.render('test-list', {
         title: 'Испытания',
         isTestList: true,
         userData: data,
-        user: user
+        user: req.user
         })
         })
 })
 
 router.get('/create-req', authenticateJWT, (req, res) => {
+    console.log(req.user.user_id)
     if (req.user.isDeclarant) {
         res.render('create-req', {
             title: 'Новая заявка',
-            isNewReq: true
+            isNewReq: true,
+            user: req.user,
         })
+             
     }
 
     else {
@@ -446,6 +594,10 @@ router.get('/login', (req, res) => {
         title: 'Вход',
         isLogin: true
     })
+})
+
+router.get('/say-my-name', authenticateJWT, (req, res) => {
+    res.send(req.user)
 })
 //router.post('/login', (req, res) => {
 //    const worker_id = req.body.worker_id;

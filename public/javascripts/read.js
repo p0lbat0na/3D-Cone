@@ -1,111 +1,94 @@
-const loginForm = document.getElementById('loginForm');
 
 //alert(window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
-try {
-    alert('qr');
-    const searchForm = document.getElementById('searchForm');
+const searchForm = document.getElementById('searchForm');
+const cardPanel = document.getElementById('cardPanel');
 
-    searchForm.addEventListener('submit', event => {
-        
-        event.preventDefault();
-        let page = window.location.href.substring(window.location.href.lastIndexOf('/'))
-        const num = document.getElementById('num').value;
-        
-        let requires_processing = document.getElementById('requires_processing');
-        
-        //if (document.getElementById('requires_processing').checked)
-        //    requires_processing = true;
 
-        fetch('/search', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ num, requires_processing, page })
-        })
-            .then(response => response.json())
-            .then(data => {
-
-                userData = data;
-                location.reload();
-                //alert(data.token);
-                // alert(window.location.href );
-                //window.location.href = '/';
-
-            })
-            .catch(error => {
-                console.error(error);
-                alert(error);
-
-            });
-
-    });
-}
-catch (e) {
-    alert(e);
-    console.error(e);
-    console.log(e);
+[searchForm, cardPanel].forEach(function (element) {
+    element.addEventListener('submit', event => {
+    event.preventDefault();
     
-loginForm.addEventListener('submit', event => {
-    //alert('q');
-    event.preventDefault();// отменяем стандартное действие отправки формы
-    const worker_id = document.getElementById('worker_id').value;
-    const password = document.getElementById('password').value;
-    try {
-        fetch('/login', {
-            method: 'POST',
-            headers: {
+        let url = '/';
+        let urlFull = '/'
+    // page + '/search'//page + '?num=' + num + '&req_proc=' + requires_processing;
+    //let page = window.location.href.substring(window.location.href.lastIndexOf('/'))
+    //page= page.slice(0, -1);
+    let requires_processing = false;
+    let diagonal_dir = false;
+        let num = -1;
+        try {
+            if (element.className == "card-panel hoverable" || document.title.slice(0, 9) == "Испытания") {
+                if (document.title.slice(0, 9) == "Испытания" && element.className != "card-panel hoverable") {
+                    num = document.getElementById('num_input').value;
+                    //url = url + window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+                    urlFull = document.getElementById('refresh').href;
+                    url = urlFull.substring(urlFull.lastIndexOf('/'))
+                    diagonal_dir = false;
+                    if (document.getElementById('requires_processing').checked)
+                        requires_processing = true;
+
+                } else {
+                    num = document.getElementById('num').innerHTML;
+                    urlFull = document.getElementById('diagonal').href;
+                    url = urlFull.substring(urlFull.lastIndexOf('/'))
+                diagonal_dir = true;
+                }
+
+            }
+            else {
+                urlFull = document.getElementById('refresh').href;
+                url = urlFull.substring(urlFull.lastIndexOf('/'))
+                num = document.getElementById('num_input').value;
+                if (document.getElementById('requires_processing').checked)
+                    requires_processing = true;
+            }
+            if (element.className == "card-panel hoverable" && document.title.slice(0, 9) == "Испытания") {
+                url = url + window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+                
+                diagonal_dir = false;
+                if (document.getElementById('requires_processing').checked)
+                    requires_processing = true;
+            }
+            
+        }
+        catch (e) {
+            alert(e)
+        }
+        //alert(window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
+        if (url[url.length - 1] == "?") {
+            url=url.slice(0, url.length - 1);
+        }
+        //alert(diagonal_dir +element.className)
+        url=url+'/search'
+        //alert(url);
+    fetch(url, {
+        method: 'POST',
+        headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ worker_id, password })
+        body: JSON.stringify({
+            num: num,
+            requires_processing: requires_processing,
+            diagonal_dir: diagonal_dir
+        })
     })
-        .then(response => response.json())
-            .then(data => {
-                
-            localStorage.setItem('token', data.accessToken);
-            localStorage.setItem('refreshToken', data.refreshToken); 
-            
-            //alert(data.token);
-            // alert(window.location.href );
-            window.location.href = '/'; 
+        .then(res => res.text())
+        .then(data => {
+            if (data.length < 200)
+                alert(data);
+            else {
+            const newWindow = window.open();
+            newWindow.document.write(data);
 
+            }
+            
         })
         .catch(error => {
             console.error(error);
             alert(error);
 
         });
-    } catch (e) {
-        alert(e);
-    }
+
 });
-}
-exit.addEventListener('submit', event => {
-    
-    const cookies = document.cookie.split(";");
+});
 
-    for (let i = 0; i < cookies.length; i++) {
-        try {
-            let token=localStorage.getItem('token'); 
-
-            const cookie = cookies[i];
-            alert(token)
-            alert(cookies.token)
-            alert(document.cookie.token)
-            alert(document.cookie)
-            alert(document.cookie.refreshToken)
-            alert(document.cookie.accessToken)
-
-
-
-            const eqPos = cookie.indexOf("=");
-            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        }
-        catch (e) {
-            alert(e)
-        }
-        alert(' not clear 2')
-
-    } alert('clear')
-})

@@ -106,7 +106,7 @@
             border-radius: 32px;
             padding: 12px 24px;
         }
-        
+
         .btn {
             width: 250px;
             height: 50px;
@@ -136,7 +136,7 @@
 
         .upper {
             display: inline-block;
-            margin-top:-8px;
+            margin-top: -8px;
         }
 
         .search {
@@ -305,6 +305,8 @@
             font-size: 10px;
         }
 
+
+
         label {
             color: #000000;
             text-decoration: none;
@@ -357,7 +359,6 @@
     </style>
     {{/if}}
     {{#if isReqList}}
-
     <style>
 
 
@@ -466,6 +467,11 @@
 
 
 
+
+
+
+
+
     {{#if isTestList}}
     <style>
         .search {
@@ -533,12 +539,14 @@
         }
 
         .textbox:focus ~ .text-field__label,
+        .textbox:placeholder-shown,
         .textbox:not(:focus):valid ~ .text-field__label {
             top: -67px;
             font-size: 10px;
         }
 
         .textbox:focus ~ .text-field-label,
+        .textbox:not(:placeholder-shown),
         .textbox:not(:focus):valid ~ .text-field-label {
             top: -67px;
             font-size: 10px;

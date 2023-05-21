@@ -27,47 +27,49 @@
             </label>
         </li>
     </ul>
-    <button class="btn large" type="submit">
-        Зарегистрировать заявку
-    </button>
+    
 </form>
 
-<form class="card-panel hoverable " id="add">
+<form class="card-panel hoverable " id="AaddTestForm">
     <div class="container testing-header ">
         <div class="two-btn">
-            <button class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">back</i></button>
-            <button class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">del</i></button>
+            <button class="btn-floating btn-small waves-effect waves-light red" id="back" disabled>
+            <i class="material-icons">back</i>
+            </button>
+            <button class="btn-floating btn-small waves-effect waves-light red" id="del" disabled>
+            <i class="material-icons">del</i>
+            </button>
         </div>
-        <div class="testing-head"><p> <h5 class="center-align">Испытание 3</h5> </p></div>
+        <div class="testing-head"><p> <h5 class="center-align">Испытание <strong id="addBtnCount" ></strong></h5> </p></div>
 
+            <button class="btn-floating btn-small waves-effect waves-light red" id="addTestForm">ADD</button>
         <div style="display: flex; justify-content: flex-end">
-            <button class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></button>
         </div>
 
     </div>
     <div class="container ">
         <div class="fieldset">
-            <input id="control_code" type="text" class="textbox" required>
-            <label class="text-field__label" for="control_code">Код испытания объекта</label>
+            <input id="control_code" type="text" class="textbox" required readonly>
+            <label class="text-field__label" for="control_code"  >Код испытания объекта </label>
         </div>
         <br />
         <div class="fieldset">
-            <input id="reg_num" type="text" class="textbox" required>
+            <input id="reg_num" type="text" class="textbox" required readonly>
             <label class="text-field__label" for="reg_num">Регистрационный номер</label>
         </div>
         <br />
         <div class="fieldset">
-            <input id="line_num" type="text" class="textbox" required>
+            <input id="line_num" type="text" class="textbox"required readonly>
             <label class="text-field__label" for="line">Номер линии</label>
         </div>
         <br />
         <div class="fieldset textarea">
-            <textarea id="comment" type="text" class="materialize-textarea textbox" required></textarea>
+            <textarea id="comment" type="text" class="materialize-textarea textbox"required readonly></textarea>
             <label class="text-field__label" for="comment">Комментарий</label>
         </div>
         <br />
         <div class="fieldset textarea">
-            <textarea id="files" type="text" class="materialize-textarea textbox" required></textarea>
+            <textarea id="files" type="text" class="materialize-textarea textbox"required readonly ></textarea>
             <label class="text-field__label" for="files">Ссылки</label>
         </div>
 
