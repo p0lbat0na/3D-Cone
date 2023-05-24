@@ -1,9 +1,9 @@
 
 <a id="refresh" href="/req-list"><h2>Список заявок</h2></a>
 <a id="diagonal" href="/test-list"><h5>К списку испытаний</h5></a>
-<form id="searchForm" class="container ninety">
+<form id="searchForm{{userData.rows.length}}" class="container ninety">
     <div class="fieldset">
-        <input id="num_input" type="text" class="textbox" required>
+        <input id="num_input{{userData.rows.length}}" type="text" class="textbox" required>
         <label class="text-field__label" for="search">Поиск по номеру</label>
     </div>
     <label>
@@ -12,10 +12,11 @@
     </label>
     <button class="btn large" type="submit">Найти</button>
 </form>
+<p>Найдено заявок: <strong id="amount_of_record">{{userData.rows.length}}</strong></p>
 
 {{#each userData.rows}}
-<form class="card-panel hoverable" id="cardPanel">
-    <h5>Заявка <strong id="num" value="1" >{{this.request_code}}</strong></h5>
+<form class="card-panel hoverable" id="cardPanel{{@index}}">
+    <h5>Заявка <strong id="num{{@index}}">{{this.request_code}}</strong></h5>
     <div class="container white">
         <ul>
             <li>
@@ -24,14 +25,14 @@
             <li>
                 <div class="date_input">
                     <p> Выполнить до: </p>
-                    <input type="date" id="dep_code" class="datepicker" value="{{this.deadline}}">
+                    <input type="date" id="dep_code{{@index}}" class="datepicker" value="{{this.deadline}}">
                 </div>
             </li>
             <li>
                 <br>
                 <label>
                     {{#if this.opinion_required}}
-                    <input type="checkbox" checked>
+                    <input id="opinion_required{{@index}}" type="checkbox" checked>
                     {{else}}
                     <input type="checkbox">
                     {{/if}}
@@ -42,7 +43,7 @@
             <li><p>Количесво испытаний: </p></li>
             <li>
                 <div class="fieldset">
-                    <input type="text" class="textbox" value="1" id="nudm" required>
+                    <input type="text" class="textbox" value="{{this.status}}" id="nudm{{@index}}" required>
 
 
                     <label class="text-field__label" for="status">Статус</label>
@@ -52,13 +53,13 @@
     </div>
     <div class="container ninety s12">
         <div>
-    <button class="waves-effect waves-light btn-small" type="submit">Список испытаний</button>
+            <button class="waves-effect waves-light btn-small" type="submit">Список испытаний</button>
 
             <a class="waves-effect waves-light btn-small">Отчет</a>
-        <button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
-            Изменить
-            <i class="material-icons right"></i>
-        </button>
+            <button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
+                Изменить
+                <i class="material-icons right"></i>
+            </button>
         </div>
 
     </div>
@@ -67,22 +68,6 @@
 
 <script src="/javascripts/read.js"></script>
 
-
-
-
-
-<ul class="pagination">
-    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-    <li class="active"><a href="#!">1</a></li>
-    <li class="waves-effect"><a href="#!">2</a></li>
-    <li class="waves-effect"><a href="#!">3</a></li>
-    <li class="waves-effect"><a href="#!">4</a></li>
-    <li class="waves-effect"><a href="#!">5</a></li>
-    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-</ul>
-<a id="scale-demo" href="#!" class="btn-floating btn-large scale-transition">
-    <i class="material-icons">add</i>
-</a>
 
 {{> tomain}}
 

@@ -423,6 +423,7 @@ router.get('/req-list', authenticateJWT, (req, res) => {
                     data.rows[i].deadline.toLocaleDateString("en-US", { month: '2-digit' }) + '-' +
                     data.rows[i].deadline.toLocaleDateString("en-US", { day: '2-digit' });
                 data.rows[i].deadline = deadline
+                
             }
             console.log(data.rows[1])
             res.render('req-list', {
@@ -566,7 +567,7 @@ router.get('/catalog/staffSpec', authenticateJWT, (req, res) => {
     let sql = `SELECT * FROM staff INNER JOIN staff_specializing ON staff.worker_id= staff_specializing.worker_id 
      INNER JOIN specializations ON staff_specializing.specialization_code= specializations.specialization_code
     `;
-    if (req.user.user_role == 'operator') {
+    
         db.query(sql, function (err, data) {
             if (err) throw err;
             res.render('catalog', {
@@ -575,20 +576,10 @@ router.get('/catalog/staffSpec', authenticateJWT, (req, res) => {
                 isStaffSpec: true,
                 userData: data
             });
-        })
-    }
+        })   
     
 })
-//app.get("/login", (req, res) => {
-//    const token = jwt.sign({ id: 7, role: "captain" }, "YOUR_SECRET_KEY");
-//    return res
-//        .cookie("access_token", token, {
-//            httpOnly: true,
-//            secure: process.env.NODE_ENV === "production",
-//        })
-//        .status(200)
-//        .json({ message: "Logged in successfully 😊 👌" });
-//});
+
 router.get('/login', (req, res) => {
     res.render('login', {
         title: 'Вход',
@@ -599,83 +590,10 @@ router.get('/login', (req, res) => {
 router.get('/say-my-name', authenticateJWT, (req, res) => {
     res.send(req.user)
 })
-//router.post('/login', (req, res) => {
-//    const worker_id = req.body.worker_id;
-//    const password = req.body.password;
-//    authenticate(worker_id, password)
-//        .then(token => {
-//            // добавляем токен в ответ
-//            res.json({ token });
-//        })
-//        .catch(error => {
-//            res.status(401).send(error.message);
-//        });
-//});
 
-//router.get('/login', (req, res) => {
-//    console.log('22');
-    
-//    console.log('33');
-//    let worker_id = 1
-//    let password = 4444
 
-//    db.query(`SELECT * FROM staff WHERE worker_id = 1 AND password = '4444'`, function (err, data) {
-//        res.render('login', {
-//            title: 'Новая заявка',
-//            isLogin: true
-//        })
-//        if (err) {
-//            console.log(err);
-//            res.sendStatus(500);
-//            console.log('2');
-//        } else if (data.rows.length > 0) {
-            
-//            console.log('222');
-//            const token = jwt.sign({ worker_id: 1 }, 'secret_key');
-//            console.log('2222');
-//            res.cookie("access_token", token);
-//            console.log('22222');
-//            res.json({ success: true });
-//            console.log('222222');
-//        } else {
-//            res.sendStatus(401);
-//        }
-//    });
-//});
+
 
 
 module.exports = router;
 
-//router.get('/token', (req, res) => {
-//    console.log('34');
-//    let authHeader = req.headers.cookie;
-
-//    if (authHeader) {
-//        let jwtStr = req.headers.cookie.indexOf('refreshToken');
-//        const tokenDem = req.headers.cookie.substring(jwtStr + 21);
-//        const token = tokenDem.substring(0, tokenDem.indexOf('%'));
-//        //const tokenDem = authHeader.split(' ')[2];        
-//        //const token = tokenDem.substring(tokenDem.indexOf('=') + 1);
-//        ;
-//        console.log(token);
-//        console.log(req.headers.cookie);        
-//        jwt.verify(token, refreshTokenSecret, (err, user) => {
-//            if (err) {
-//                return res.sendStatus(403);
-//            }
-//            const newtoken = {
-//                accessToken: jwt.sign({ user_id: worker_id, user_role: job_title, user_name: worker_name }, accessTokenSecret, { expiresIn: '20m' }),
-//                refreshToken: token
-//            };
-            
-
-//            res.json({
-//                accessToken
-//            });
-//        });
-//    } else {
-//        console.log("****er");
-//        return res.redirect('/token');
-//        //res.sendStatus(401);
-//    }
-//});
