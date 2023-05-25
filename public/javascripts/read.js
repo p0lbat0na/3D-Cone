@@ -4,19 +4,21 @@ const searchForm = document.getElementById('searchForm');
 
 
 let amount_of_records = document.getElementById('amount_of_record').textContent;
-let cardPanels = []
+let searchBtns = []
 try{    
-for (let i = 0; i < amount_of_records; i++) {
-    cardPanels[i] = document.getElementById('cardPanel' + [i]);    
+for (let i = 0; i < amount_of_records+1; i++) {
+    searchBtns[i] = document.getElementById('search' + [i]);
+    //alert(amount_of_records);
+
     }
-cardPanels[amount_of_records] = document.getElementById('searchForm' + amount_of_records);
-alert(cardPanels[amount_of_records-1].className + cardPanels[amount_of_records].className)
+//searchBtns[amount_of_records] = document.getElementById('searchForm' + amount_of_records);
+    //alert(cardPanels[amount_of_records - 1].className + cardPanels[amount_of_records].className)
 } catch (e) {
     alert(e);
 }
 
-cardPanels.forEach(function (element, index) {
-    element.addEventListener('submit', event => {
+searchBtns.forEach(function (element, index) {
+    element.addEventListener('click', event => {
        
             event.preventDefault();           
             
@@ -31,8 +33,8 @@ cardPanels.forEach(function (element, index) {
             let diagonal_dir = false;
             let num = -1;
             try {
-                if (element.className == "card-panel hoverable" || document.title.slice(0, 9) == "Испытания") {
-                    if (document.title.slice(0, 9) == "Испытания" && element.className != "card-panel hoverable") {
+                if (element.className == "waves-effect waves-light btn-small" || document.title.slice(0, 9) == "Испытания") {
+                    if (document.title.slice(0, 9) == "Испытания" && element.className != "waves-effect waves-light btn-small") {
                         num = document.getElementById('num_input' + amount_of_records).value;
                         //url = url + window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
                         urlFull = document.getElementById('refresh').href;
@@ -52,14 +54,14 @@ cardPanels.forEach(function (element, index) {
                 }
                 else {
                     alert('qй')
-                    alert(document.getElementById('searchForm').value)
+                    //alert(document.getElementById('searchForm').value)
                     urlFull = document.getElementById('refresh').href;
                     url = urlFull.substring(urlFull.lastIndexOf('/'))
                     num = document.getElementById('num_input'+amount_of_records).value;
                     if (document.getElementById('requires_processing').checked)
                         requires_processing = true;
                 }
-                if (element.className == "card-panel hoverable" && document.title.slice(0, 9) == "Испытания") {
+                if (element.className == "waves-effect waves-light btn-small" && document.title.slice(0, 9) == "Испытания") {
                     url = url + window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
 
                     diagonal_dir = false;

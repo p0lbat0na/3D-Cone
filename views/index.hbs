@@ -20,10 +20,11 @@
         <a class="btn" href="/catalog">Справочник</a>
         <a class="btn" href="/test-list">Испытания</a>
         {{#if user.isOperator}}
+        <a class="btn" href="/backup">Администрирование</a>
         <p class="upper">Отчет по исполнителям:</p>
         <form class="search">
             <div class="fieldset">
-                <input type="text" name="worker_report"  id="executorReportInpt" class="serch_textbox" required>
+                <input type="text" name="worker_report" id="executorReportInpt" class="serch_textbox" required>
                 <button type="submit" class="search_button btn" id="executorReport">Скачать</button>
                 <label class="text-field__label">ID исполнителя</label>
             </div>

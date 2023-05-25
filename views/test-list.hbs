@@ -1,81 +1,79 @@
 <a id="refresh" href="/test-list"><h2>Испытания</h2></a>
 
-    <a id="diagonal" href="/req-list"><h5>Список заявок</h5></a>
-    <form id="searchForm{{userData.rows.length}}" class="container ninety">
-        <div class="fieldset">
-            <input id="num_input{{userData.rows.length}}" type="text" class="textbox" required>
-            <label class="text-field__label" for="search">Поиск по номеру</label>
-        </div>
-        <label>
-            <input type="checkbox" id="requires_processing">
-            <span>Ждет обработки</span>
-        </label>
-        <button class="btn large" type="submit">Найти</button>
-    </form>
-    <script src="/javascripts/read.js"></script>
+<a id="diagonal" href="/req-list"><h5>Список заявок</h5></a>
+<form id="searchForm{{userData.rows.length}}" class="container ninety">
+    <div class="fieldset">
+        <input id="num_input{{userData.rows.length}}" type="text" class="textbox" required>
+        <label class="text-field__label" for="search">Поиск по номеру</label>
+    </div>
+    <label>
+        <input type="checkbox" id="requires_processing">
+        <span>Ждет обработки</span>
+    </label>
+    <button class="btn large" type="submit">Найти</button>
+</form>
+<script src="/javascripts/read.js"></script>
+<p>Найдено заявок: <strong id="amount_of_record">{{userData.rows.length}}</strong></p>
 
-    <p>Найдено испытаний: <strong id="amount_of_record">{{userData.rows.length}}</strong></p>
-    {{#each userData.rows}}
-    <form class="card-panel hoverable " id="cardPanel{{@index}}">
-        <h5>Испытание {{this.test_in_request_code}} заявки {{this.request_code}}</h5>
-        <div class="container white">
-            <ul>
-                <li>
-                    <div class="fieldset">
-                        <input id="control_code{{@index}}" type="text" class="textbox" value="{{this.control_object_testing_code}}">
-                        <label class="text-field__label" for="control_code">Код испытания объекта</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="fieldset">
-                        <input id="reg_num{{@index}}" type="text" class="textbox" value="{{this.object_reg_number}}">
-                        <label class="text-field__label" for="reg_num">Регистрационный номер</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="fieldset">
-                        <input id="line_num{{@index}}" type="text" class="textbox" value="{{this.line_code}}">
-                        <label class="text-field__label" for="line">Номер линии</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="fieldset textarea">
-                        <textarea id="comment{{@index}}" type="text" class="materialize-textarea textbox" value="{{this.comment}}"></textarea>
-                        <label class="text-field__label" for="comment">Комментарий</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="fieldset textarea">
-                        <textarea id="files{{@index}}" type="text" class="materialize-textarea textbox" value="{{this.files}}"></textarea>
-                        <label class="text-field__label" for="files">Ссылки</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="fieldset">
-                        <input id="executor{{@index}}" type="text" class="textbox" value="{{this.worker_id}}">
-                        <label class="text-field__label" for="executor">ID исполнителя</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="fieldset">
-                        <input id="status{{@index}}" type="text" class="textbox" value="{{this.testing_status}}">
-                        <label class="text-field__label" for="status">Статус</label>
-                    </div>
-            </ul>
-            <button class="waves-effect waves-light btn-small" id="update">Изменить</button>
+{{#each userData.rows}}
+<form class="card-panel hoverable" id="cardPanel{{@index}}">
+    <h5>Испытание <strong id="num{{@index}}">{{this.test_in_request_code}}</strong> заявки {{this.request_code}}</h5>
+    <div class="container white">
+        <ul>
+            <li>
+                <div class="fieldset">
+                    <input id="control_code{{@index}}" type="text" class="textbox" value="{{this.control_object_testing_code}}" required>
+                    <label class="text-field__label" for="control_code">Код испытания объекта</label>
+                </div>
+            </li>
+            <li>
+                <div class="fieldset">
+                    <input id="reg_num{{@index}}" type="text" class="textbox" value="{{this.object_reg_number}}">
+                    <label class="text-field__label" for="reg_num">Регистрационный номер</label>
+                </div>
+            </li>
+            <li>
+                <div class="fieldset">
+                    <input id="line_num{{@index}}" type="text" class="textbox" value="{{this.line_code}}">
+                    <label class="text-field__label" for="line">Номер линии</label>
+                </div>
+            </li>
+            <li>
+                <div class="fieldset textarea">
+                    <textarea id="comment{{@index}}" type="text" class="materialize-textarea textbox" value="{{this.comment}}"></textarea>
+                    <label class="text-field__label" for="comment">Комментарий</label>
+                </div>
+            </li>
+            <li>
+                <div class="fieldset textarea">
+                    <textarea id="files{{@index}}" type="text" class="materialize-textarea textbox" value="{{this.files}}"></textarea>
+                    <label class="text-field__label" for="files">Ссылки</label>
+                </div>
+            </li>
+            <li>
+                <div class="fieldset">
+                    <input id="executor{{@index}}" type="text" class="textbox" value="{{this.worker_id}}">
+                    <label class="text-field__label" for="executor">ID исполнителя</label>
+                </div>
+            </li>
+            <li>
+                <div class="fieldset">
+                    <input id="status{{@index}}" type="text" class="textbox" value="{{this.testing_status}}">
+                    <label class="text-field__label" for="status">Статус</label>
+                </div>
+        </ul>
+        <button class="btn-small waves-effect waves-light btn-save"  type="submit">Изменить</button>
 
-        </div>
-    </form>
-    {{/each}}
+    </div>
+</form>
+{{/each}}
+<script src="/javascripts/update-test.js"></script>
 
 
 
-    <!--<form>
-        <input class="short" placeholder="mail" type="text" >
-        <input class="short" placeholder="subj" type="text" >
-        <textarea placeholder="text"></textarea>
-    </form>-->
-
-  
-
-    {{> tomain}}
+<!--<form>
+    <input class="short" placeholder="mail" type="text" >
+    <input class="short" placeholder="subj" type="text" >
+    <textarea placeholder="text"></textarea>
+</form>-->
+{{> tomain}}

@@ -1,0 +1,16 @@
+<body>
+
+
+    <div class="center-align">
+        <h2>ЛНК</h2>
+
+        {{#if user.isOperator}}
+        <a class="btn" id="backup_create">Создать</a>
+        <a class="btn" href="/backup">Загрузиться</a>
+
+        {{/if}}
+    </div>
+    <script src="/javascripts/backup.js"></script>
+    {{> tomain}}
+
+</body>

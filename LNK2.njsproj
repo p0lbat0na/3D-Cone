@@ -49,6 +49,11 @@
     <Content Include="public\javascripts\signup.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="public\javascripts\backup.js" />
+    <Content Include="public\javascripts\update-test.js" />
+    <Content Include="public\javascripts\update-req.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="routes\index.js" />
     <Content Include="routes\routes.js">
       <SubType>Code</SubType>
@@ -57,6 +62,9 @@
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
+    <Content Include="views\backup.hbs">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="views\login.hbs">
       <SubType>Code</SubType>
     </Content>

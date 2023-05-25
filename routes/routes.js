@@ -1,14 +1,15 @@
 const { Router } = require('express');
+const { exec } = require('child_process');
 const router = Router()
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-var db = require('../public/javascripts/scr');
-router.use(express.json());
-let  refreshTokens = [];
+const db = require('../public/javascripts/scr');
 const accessTokenSecret = 'goooordon-freeman';
 const refreshTokenSecret = 'goooordon-freeman2';
+let  refreshTokens = [];
+router.use(express.json());
 
 const authenticateJWT = (req, res, next) => {
 
@@ -161,6 +162,37 @@ function del(table, row, condition) {
         });
     });
 }
+
+function anyRequest(sql) {
+    return new Promise((resolve, reject) => {       
+        
+        console.log(sql);
+        db.query(sql, (error, data) => {
+
+            if (error) {
+                reject(error);
+                console.log(error);
+            } else {
+                console.log('updated')
+                resolve(data);
+            }
+        });
+    });
+}
+
+router.post('/anyRequest', (req, res) => {
+    const sql = req.body.sql;
+
+    anyRequest(sql)
+
+        .then(data => {            
+            res.send(data);
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(401).send(error);
+        });
+});
 
 router.post('/login', (req, res) => {
     
@@ -591,6 +623,26 @@ router.get('/say-my-name', authenticateJWT, (req, res) => {
     res.send(req.user)
 })
 
+router.get('/backup', authenticateJWT, (req, res) => {
+    res.render('backup', {
+        title: 'Администрирование',
+        isLogin: true,
+        user: req.user
+    })
+})
+
+router.post('/backup', (req, res) => {
+    
+    exec('pg_dump -U postgres -W LNK > D:\\', (err, stdout, stderr) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Ошибка при создании резервной копии');
+            return;
+        }
+        console.log(stdout);
+        res.send('Резервная копия успешно создана');
+    });
+});
 
 
 

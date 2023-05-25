@@ -10,7 +10,7 @@
         <input type="checkbox" id="requires_processing">
         <span>Ждет обработки</span>
     </label>
-    <button class="btn large" type="submit">Найти</button>
+    <button class="btn large" id="search{{userData.rows.length}}">Найти</button>
 </form>
 <p>Найдено заявок: <strong id="amount_of_record">{{userData.rows.length}}</strong></p>
 
@@ -25,7 +25,7 @@
             <li>
                 <div class="date_input">
                     <p> Выполнить до: </p>
-                    <input type="date" id="dep_code{{@index}}" class="datepicker" value="{{this.deadline}}">
+                    <input type="date" id="deadline{{@index}}" class="datepicker" value="{{this.deadline}}">
                 </div>
             </li>
             <li>
@@ -34,16 +34,16 @@
                     {{#if this.opinion_required}}
                     <input id="opinion_required{{@index}}" type="checkbox" checked>
                     {{else}}
-                    <input type="checkbox">
+                    <input id="opinion_required{{@index}}" type="checkbox">
                     {{/if}}
                     <span>Требуется выдача заключения</span>
                 </label>
                 <br>
             </li>
-            <li><p>Количесво испытаний: </p></li>
+            <!--<li><p>Количесво испытаний: </p></li>-->
             <li>
                 <div class="fieldset">
-                    <input type="text" class="textbox" value="{{this.status}}" id="nudm{{@index}}" required>
+                    <input type="text" class="textbox" value="{{this.status}}" id="status{{@index}}" required>
 
 
                     <label class="text-field__label" for="status">Статус</label>
@@ -53,18 +53,19 @@
     </div>
     <div class="container ninety s12">
         <div>
-            <button class="waves-effect waves-light btn-small" type="submit">Список испытаний</button>
-
-            <a class="waves-effect waves-light btn-small">Отчет</a>
-            <button class="btn-small waves-effect waves-light btn-save" type="submit" name="action">
+            <button class="waves-effect waves-light btn-small" id="search{{@index}}">Список испытаний</button>
+            <button class="btn-small waves-effect waves-light btn-save" type="submit">
                 Изменить
-                <i class="material-icons right"></i>
             </button>
+            <a class="waves-effect waves-light btn-small">Отчет</a>
+                <i class="material-icons right"></i>
         </div>
 
     </div>
+            
 </form>
 {{/each}}
+<script src="/javascripts/update-req.js"></script>
 
 <script src="/javascripts/read.js"></script>
 
