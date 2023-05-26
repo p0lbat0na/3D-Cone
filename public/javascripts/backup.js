@@ -16,7 +16,7 @@ create.addEventListener('click', event => {
         .then(res => res.text())
         .then(data => {
             alert(data);
-alert('q')
+
 
         })
         .catch(error => {

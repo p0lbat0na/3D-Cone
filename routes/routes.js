@@ -1,5 +1,9 @@
 const { Router } = require('express');
-const { exec } = require('child_process');
+require("dotenv").config()
+
+
+const path = require('path');
+const {exec} = require('child_process');
 const router = Router()
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -631,20 +635,52 @@ router.get('/backup', authenticateJWT, (req, res) => {
     })
 })
 
-router.post('/backup', (req, res) => {
-    
-    exec('pg_dump -U postgres -W LNK > D:\\', (err, stdout, stderr) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Ошибка при создании резервной копии');
-            return;
-        }
-        console.log(stdout);
-        res.send('Резервная копия успешно создана');
+//start C:\"Program Files"\PostgreSQL\15\bin\psql.exe -d postgres -U postgres
+
+    const execFile = require("child_process").execFile;
+
+    router.post('/backup', (req, res) => {
+        
+            var exePath = path.resolve(__dirname, './backup.sh');
+        execFile(exePath,
+            [`pg_dump--username =postgres LNK`, 'export_17', '4444'],
+            (error, stdout, stderr) => {
+                if (error !== null) {
+                    console.log(`exec error:` + error)
+                    console.log(`second error:` + stderr)
+                    console.log(`second error:` + stdout)
+
+                    res.send(error);
+                    return;
+                }
+                res.send('Резервная копия успешно создана');
+                console.log("Backup complete!")
+            })
+
+        //exec('pg_dump LNK > D:\\', (err, stdout, stderr) => {
+        //    if (err) {
+        //        console.error(err);
+        //        res.send(err);
+        //        return;
+        //    }
+        //    console.log(stdout);
+        //    res.send('Резервная копия успешно создана');
+        //});
     });
-});
 
 
+
+//var backupcr = execFile(
+//    `./backup.sh`,
+//    [backup_script, backup_file, 4444],
+//    (error, stdout, stderr) => {
+//        if (error !== null) {
+//            console.log(`exec error:` +error)
+//        }
+//        else
+//        console.log("Backup complete!")
+//    }
+//)
 
 
 module.exports = router;
