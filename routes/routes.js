@@ -3,7 +3,6 @@ require("dotenv").config()
 
 
 const path = require('path');
-const {exec} = require('child_process');
 const router = Router()
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -635,38 +634,86 @@ router.get('/backup', authenticateJWT, (req, res) => {
     })
 })
 
+//chcp 1251
 //start C:\"Program Files"\PostgreSQL\15\bin\psql.exe -d postgres -U postgres
+//const { exec } = require('child_process');
+ //cd C:\Program Files\PostgreSQL\15\bin
+    //pg_dump -U postgres -W LNK > /"My Games"/LNK.dump
+var exePath = ('C:\\"Program Files"\\PostgreSQL\\15\\bin\\pg_dump.exe');
+const { execFile } = require("child_process");
+const currentDir = process.cwd();
+// указываем полный путь к файлу резервной копии
+const backupScriptPath = path.join(currentDir, "backup.sh");
+const options = {
+    windowsHide: true,
+    cwd: null,
+    env: null,
+    encoding: "utf8",
+    timeout: 0,
+    maxBuffer: 1024 * 1024 * 64,
+    killSignal: "SIGTERM",
+    shell: true,
+    // добавляем параметр для кэша
+    windowsVerbatimArguments: true,
+ 
+    // путь к папке для кэша
+    // в кавычках необходимо указать полный путь к папке для кэша
+    // например: "C:\\Users\\username\\cache-folder"
+    // обратите внимание на двойные обратные слеши при указании пути
+    // или же используйте одиночные прямые слеши
+    args: ["--disk-cache-dir=C:/Games", exePath],
+};
+//execFile("cmd.exe", ["/c", backupScriptPath], options, function (error, stdout, stderr) {
+//    // обработка результата выполнения
+//});
+//exePath,
+//    [`pg_dump -U postgres -W LNK > C:/"My Games"/LNK.dump`], options,
 
-    const execFile = require("child_process").execFile;
+function scrippt() {
+    console.log('aaaaaaaaaaaa ' + backupScriptPath)
+    execFile(exePath, [`"dbname=LNK user=postgres password=4444" > C:/Games/mydb_export.dump`], options,
+        (error, stdout, stderr) => {
+            if (error !== null) {
+                console.log(`exec error:` + error)
+                console.log(stderr)
+                console.log(stdout)
+                return
+            }
+            console.log(stderr)
+                console.log(stdout)
+            console.log("Backup complete!")
+            
+        })
+}
 
-    router.post('/backup', (req, res) => {
-        
-            var exePath = path.resolve(__dirname, './backup.sh');
-        execFile(exePath,
-            [`pg_dump--username =postgres LNK`, 'export_17', '4444'],
-            (error, stdout, stderr) => {
-                if (error !== null) {
-                    console.log(`exec error:` + error)
-                    console.log(`second error:` + stderr)
-                    console.log(`second error:` + stdout)
+const { execute } = require('@getvim/execute');
+function backup() {
+    execute(` pg_dump -U postgres LNK -f bckp1.tar -F t`,).then(async () => {
+        console.log("Finito");
+    }).catch(err => {
+        console.log(err);
+    })
+}
 
-                    res.send(error);
-                    return;
-                }
-                res.send('Резервная копия успешно создана');
-                console.log("Backup complete!")
-            })
+router.post('/backup', (req, res) => {
+    try {
 
-        //exec('pg_dump LNK > D:\\', (err, stdout, stderr) => {
-        //    if (err) {
-        //        console.error(err);
-        //        res.send(err);
-        //        return;
-        //    }
-        //    console.log(stdout);
-        //    res.send('Резервная копия успешно создана');
-        //});
-    });
+        scrippt();
+        res.send('Резервная копия успешно создана');
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+    //exec('pg_dump LNK > D:\\', (err, stdout, stderr) => {
+    //    if (err) {
+    //        console.error(err);
+    //        res.send(err);
+    //        return;
+    //    }
+    //    console.log(stdout);
+    //    res.send('Резервная копия успешно создана');
+    //});
+});
 
 
 
@@ -685,3 +732,5 @@ router.get('/backup', authenticateJWT, (req, res) => {
 
 module.exports = router;
 
+// [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("ISO-8859-5")
+// [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("Windows-1251")
