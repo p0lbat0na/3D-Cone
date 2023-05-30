@@ -45,6 +45,7 @@
     <Content Include="public\javascripts\read.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="public\javascripts\connest-no-db.js" />
     <Content Include="public\javascripts\scr.js" />
     <Content Include="public\javascripts\signup.js">
       <SubType>Code</SubType>

@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const db = require('../public/javascripts/scr');
 const accessTokenSecret = 'goooordon-freeman';
-const refreshTokenSecret = 'goooordon-freeman2';
+const refreshTokenSecret = 'goooordon-freeman';
 let  refreshTokens = [];
 router.use(express.json());
 
@@ -176,7 +176,7 @@ function anyRequest(sql) {
                 reject(error);
                 console.log(error);
             } else {
-                console.log('updated')
+                console.log('Запрос выполнен')
                 resolve(data);
             }
         });
@@ -669,9 +669,9 @@ const options = {
 //exePath,
 //    [`pg_dump -U postgres -W LNK > C:/"My Games"/LNK.dump`], options,
 
-function scrippt() {
+function dump(dumpName) {
     console.log('aaaaaaaaaaaa ' + backupScriptPath)
-    execFile(exePath, [`"dbname=LNK user=postgres password=4444" > C:/Games/mydb_export.dump`], options,
+    execFile(exePath, [`"dbname=LNK user=postgres password=4444 client_encoding=Windows-1251" > C:/Games/LNK` + dumpName], options,
         (error, stdout, stderr) => {
             if (error !== null) {
                 console.log(`exec error:` + error)
@@ -698,7 +698,7 @@ function backup() {
 router.post('/backup', (req, res) => {
     try {
 
-        scrippt();
+        dump('_main_backup.dump');
         res.send('Резервная копия успешно создана');
     } catch (err) {
         console.log(err);
@@ -715,7 +715,48 @@ router.post('/backup', (req, res) => {
     //});
 });
 
+router.post('/restore', (req, res) => {
 
+    try {
+        dump('_additional_backup.dump');
+        console.log('q');
+        anyRequest(`ALTER DATABASE "LNK" RENAME TO LNK2;`)
+            .then(resolve => {
+                console.log(resolve);
+
+            })
+            .catch(error => {
+                console.error(error);
+
+            });
+        console.log('q');
+
+    } catch (err) {
+        console.log(err);
+        
+    }
+    anyRequest(`ALTER DATABASE "LNK" RENAME TO LNK2;`)
+
+    //anyRequest(`DROP DATABASE IF EXISTS "LNK"`)
+    try {
+        dump('_additional_backup.dump');
+        console.log('q');
+        anyRequest(`DROP DATABASE LNK`)
+            .then(resolve => {
+                console.log(resolve);
+                
+            })
+            .catch(error => {                
+                console.error(error);
+                
+            });
+        console.log('q');
+
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+});
 
 //var backupcr = execFile(
 //    `./backup.sh`,
