@@ -8,13 +8,27 @@
             {{{body}}}
         </div>
         {{else}}
-    <div class='container col s8 offset-s2'>
-        {{{body}}}
+        {{#if isLogin}}
 
-        
-    </div>
+        <div class='container'>
+            {{{body}}}
+        </div>
+        {{else}}
+        {{#if isCatalog}}
+
+        <div class='container  col s12'>
+            {{{body}}}
+        </div>
+        {{else}}
+
+        <div class='container col s8 offset-s2'>
+            {{{body}}}
+
+
+        </div>
         {{/if}}
-
+        {{/if}}
+        {{/if}}
     </div>
 </body>
 </html>

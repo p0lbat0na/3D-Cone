@@ -1,14 +1,19 @@
 
 //alert(window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
+alert('read')
+
 const searchForm = document.getElementById('searchForm');
 
 
+
 let amount_of_records = document.getElementById('amount_of_record').textContent;
+alert(amount_of_records);
+
 let searchBtns = []
 try{    
-for (let i = 0; i < amount_of_records+1; i++) {
+for (let i = 0; i < amount_of_records; i++) {
     searchBtns[i] = document.getElementById('search' + [i]);
-    //alert(amount_of_records);
+    
 
     }
 //searchBtns[amount_of_records] = document.getElementById('searchForm' + amount_of_records);
@@ -16,12 +21,17 @@ for (let i = 0; i < amount_of_records+1; i++) {
 } catch (e) {
     alert(e);
 }
+alert(searchBtns[1].value);
+alert(searchBtns[1].innerHTML.textContent);
+alert(searchBtns[2].innerHTML);
+alert(searchBtns[0].textContent);
 
 searchBtns.forEach(function (element, index) {
     element.addEventListener('click', event => {
        
             event.preventDefault();           
-            
+    alert('click')
+
             let url = '/';
             let urlFull = '/'
 

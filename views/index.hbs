@@ -11,35 +11,36 @@
     </form>
     <div class="center-align">
         <h2>ЛНК</h2>
-        {{#unless user.isExecutor}}
-        <a class="btn" href="/req-list ">Список заявок</a>
-        {{/unless}}
         {{#if user.isDeclarant}}
         <a class="btn" href="/create-req">Новая заявка</a>
         {{/if}}
-        <a class="btn" href="/catalog">Справочник</a>
+        {{#unless user.isExecutor}}
+        <a class="btn" href="/req-list ">Список заявок</a>
+        {{/unless}}
         <a class="btn" href="/test-list">Испытания</a>
+        <a class="btn" href="/catalog">Справочник</a>
         {{#if user.isOperator}}
         <a class="btn" href="/backup">Администрирование</a>
         <p class="upper">Отчет по исполнителям:</p>
-        <form class="search">
-            <div class="fieldset">
-                <input type="text" name="worker_report" id="executorReportInpt" class="serch_textbox" required>
+        <form class="search" id="worker_report">
+            <div class="fieldset" >
+                <input type="text" id="worker_report_inp"  class="serch_textbox" required>
                 <button type="submit" class="search_button btn" id="executorReport">Скачать</button>
                 <label class="text-field__label">ID исполнителя</label>
             </div>
         </form>
         <p>Отчет по объектам:</p>
-        <form class="search">
+        <form class="search" id="obj_report">
             <div class="fieldset">
-                <input type="text" name="obj_report" class="serch_textbox" required>
-                <button type="submit" class="search_button btn">Скачать</button>
+                <input type="text" id="obj_report_inp" class="serch_textbox" required>
+                <button type="submit" class="search_button btn" href="/report/staff">Скачать</button>
                 <label class="text-field__label">Код объекта</label>
             </div>
         </form>
         {{/if}}
     </div>
 
+        <script src="/javascripts/report.js"></script>
 
 </body>
 <script>

@@ -1,7 +1,9 @@
 const { Router } = require('express');
 require("dotenv").config()
-
-
+const docx = require('docx');
+const saveAs = require("file-saver");
+const fs = require('fs');
+const Docxtemplater = require('docxtemplater');
 const path = require('path');
 const router = Router()
 const express = require('express');
@@ -9,6 +11,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const db = require('../public/javascripts/scr');
+const PizZip = require("pizzip");
 const accessTokenSecret = 'goooordon-freeman';
 const refreshTokenSecret = 'goooordon-freeman';
 let  refreshTokens = [];
@@ -141,6 +144,30 @@ function write(table, attr, value, returnCode) {
     });
 }
 
+function getTime() {
+    let myDate = new Date()
+    let day = myDate.getDay();
+    let month = myDate.getMonth();
+    let year = myDate.getFullYear();
+
+    let hour = myDate.getHours()
+    let minute = myDate.getMinutes()
+    
+    if (minute < 10) {
+        minute = '0' + minute
+    }
+    //if (day < 10) {
+    //    day = '0' + day
+    //}
+    //if (month < 10) {
+    //    month = '0' + month;
+    //}
+    
+    return (
+        day + '.' + month + '.' + year + ' ' + hour + ':' + minute
+    )
+}
+
 function del(table, row, condition) {
     return new Promise((resolve, reject) => {
         //let where = 'where'
@@ -169,7 +196,7 @@ function del(table, row, condition) {
 function anyRequest(sql) {
     return new Promise((resolve, reject) => {       
         
-        console.log(sql);
+        console.log('###########'+sql);
         db.query(sql, (error, data) => {
 
             if (error) {
@@ -339,6 +366,8 @@ router.post('/req-list/search', (req, res, next) => {
             if (requires_processing == true)
                 sql = sql + ` WHERE status='в обработке'`;
         }
+        sql = sql + 'ORDER BY request_code DESC';
+
         const user = req.user;
         db.query(sql, function (err, data) {
             if (err) throw err;
@@ -385,6 +414,7 @@ router.post('/test-list/search', (req, res, next) => {
             if (req.requires_processing == true)
                 sql = sql + ` WHERE testing_status='в обработке'`;
         }
+        sql = sql + 'ORDER BY test_in_request_code DESC';
         console.log(req.body.num + ' ^^ ' + sql + ' %% ' + req.body.diagonal_dir)
         const user = req.user;
         db.query(sql, function (err, data) {
@@ -447,7 +477,8 @@ router.get('/req-list', authenticateJWT, (req, res) => {
     if (!req.user.isExecutor) {
        
         let sql = 'SELECT * FROM requests';
-        
+        sql = sql + ' ORDER BY request_code DESC';
+
         db.query(sql, function (err, data) {
             if (err) throw err;
             let options = { year: 'numeric', month: 'numeric', day: 'numeric' };
@@ -460,7 +491,7 @@ router.get('/req-list', authenticateJWT, (req, res) => {
                 data.rows[i].deadline = deadline
                 
             }
-            console.log(data.rows[1])
+            
             res.render('req-list', {
                     title: 'Список заявок',
                     isReqList: true,
@@ -475,7 +506,9 @@ router.get('/req-list', authenticateJWT, (req, res) => {
 })
 
 router.get('/test-list', authenticateJWT, function (req, res) {
-    let sql = 'SELECT * FROM tests_in_requests';
+    let sql = 'SELECT * FROM tests_in_requests ';
+    sql = sql + ' ORDER BY test_in_request_code DESC';
+
     db.query(sql, function (err, data) {
         if (err) throw err;
     res.render('test-list', {
@@ -602,16 +635,15 @@ router.get('/catalog/staffSpec', authenticateJWT, (req, res) => {
     let sql = `SELECT * FROM staff INNER JOIN staff_specializing ON staff.worker_id= staff_specializing.worker_id 
      INNER JOIN specializations ON staff_specializing.specialization_code= specializations.specialization_code
     `;
-    
-        db.query(sql, function (err, data) {
-            if (err) throw err;
-            res.render('catalog', {
-                title: 'Справочник',
-                isCatalog: true,
-                isStaffSpec: true,
-                userData: data
-            });
-        })   
+    db.query(sql, function (err, data) {
+        if (err) throw err;
+        res.render('catalog', {
+        title: 'Справочник',
+        isCatalog: true,
+        isStaffSpec: true,
+        userData: data
+        });
+    })   
     
 })
 
@@ -629,7 +661,7 @@ router.get('/say-my-name', authenticateJWT, (req, res) => {
 router.get('/backup', authenticateJWT, (req, res) => {
     res.render('backup', {
         title: 'Администрирование',
-        isLogin: true,
+        isMain: true,
         user: req.user
     })
 })
@@ -698,7 +730,7 @@ function backup() {
 router.post('/backup', (req, res) => {
     try {
 
-        dump('_main_backup.dump');
+        dump('_main_backup.sql');
         res.send('Резервная копия успешно создана');
     } catch (err) {
         console.log(err);
@@ -773,5 +805,92 @@ router.post('/restore', (req, res) => {
 
 module.exports = router;
 
-// [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("ISO-8859-5")
-// [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("Windows-1251")
+
+router.get('/report/staff', (req, res, next) => {
+    
+    //let num = req.headers.num;      
+
+    console.log(' ^^  ######')   
+
+
+    let sql = `SELECT * FROM tests_in_requests 
+INNER JOIN staff ON tests_in_requests.worker_id = staff.worker_id 
+INNER JOIN requests ON tests_in_requests.request_code = requests.request_code
+WHERE tests_in_requests.worker_id=3 
+ORDER BY requests.request_code ASC`;
+        
+        db.query(sql, function (err, data) {
+            if (err) throw err;
+            if (data.rows.length == 0) {
+                res.status(400).send('Запрос не дал результатов')
+            }
+            else {
+                try {
+                    console.log(' ^^ 0')
+                    //const mimeType =   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    const template = fs.readFileSync('template.docx', 'binary');
+                    console.log(' ^^ 0.4')
+
+                    const zip = new PizZip(template);
+                    console.log(' ^^ 0.9')
+
+                    const doc = new Docxtemplater(zip, {
+                        paragraphLoop: true,
+                        linebreaks: true,
+                    });
+                    console.log(' ^^ 1')
+
+                    
+                    let arrRows = [];
+                    let currentDate = getTime();    
+                    console.log(data.rows.length)
+
+                    for (var i = 0; i < data.rows.length; i++) {
+                        let deadline = data.rows[i].deadline.toLocaleDateString("en-US", { year: 'numeric' }) + '-' +
+                            data.rows[i].deadline.toLocaleDateString("en-US", { month: '2-digit' }) + '-' +
+                            data.rows[i].deadline.toLocaleDateString("en-US", { day: '2-digit' });
+                        
+                        arrRows[i] = {
+                            testCode: data.rows[i].test_in_request_code,
+                            reqCode: data.rows[i].request_code,
+                            dep: data.rows[i].department_num,
+                            objTest: data.rows[i].control_object_testing_code,
+                            status: data.rows[i].testing_status,
+                            regNum: data.rows[i].object_reg_number,                                
+                            deadline: deadline,
+
+                        }
+                    }
+
+                    doc.render({
+                        fullName: data.rows[0].full_name,
+                        jobTitle: data.rows[0].job_title,
+                        workerID: data.rows[0].worker_id,
+                        testInRequest: arrRows,
+                        currentDate: currentDate
+                    });
+                    const buffer = doc.getZip().generate({ type: 'nodebuffer' });
+                    console.log(' ^^ 4')
+
+                    //fs.writeFileSync(currentDate.substring(0, 13) + '.docx', buffer);
+                    fs.writeFileSync('report.docx', buffer);
+                    const file = 'C:/Users/tatya/source/repos/LNK2/report.docx';
+                    res.download(file);
+                    //console.log(file);
+                   // res.download(file);
+                    //const file = __dirname + '/generated.docx';
+                    //res.download(file);
+                    console.log(' ^^ 5')
+                    //res.send('success');
+
+                } catch (error) {
+                    console.log(error);
+                    res.send(error);
+                }
+                //res.send(data,);
+            }
+        })
+        //const b64string = exporter.toBase64String(doc);
+
+        //res.setHeader('Content-Disposition', 'attachment; filename=My Document.docx');
+});

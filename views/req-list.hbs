@@ -12,7 +12,10 @@
     </label>
     <button class="btn large" id="search{{userData.rows.length}}">Найти</button>
 </form>
+
 <p>Найдено заявок: <strong id="amount_of_record">{{userData.rows.length}}</strong></p>
+<script src="/javascripts/update-req.js"></script>
+<script src="/javascripts/read.js"></script>
 
 {{#each userData.rows}}
 <form class="card-panel hoverable" id="cardPanel{{@index}}">
@@ -54,20 +57,20 @@
     <div class="container ninety s12">
         <div>
             <button class="waves-effect waves-light btn-small" id="search{{@index}}">Список испытаний</button>
-            <button class="btn-small waves-effect waves-light btn-save" type="submit">
+            <button class="btn-small waves-effect waves-light btn-save" id="change{{@index}}">
                 Изменить
             </button>
             <a class="waves-effect waves-light btn-small">Отчет</a>
-                <i class="material-icons right"></i>
+            <i class="material-icons right"></i>
         </div>
 
     </div>
-            
+
 </form>
 {{/each}}
-<script src="/javascripts/update-req.js"></script>
+<div>{{read117}}</div>
 
-<script src="/javascripts/read.js"></script>
+
 
 
 {{> tomain}}

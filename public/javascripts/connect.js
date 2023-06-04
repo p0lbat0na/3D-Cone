@@ -324,8 +324,8 @@ export function read4() {
             console.log(str2 + ' (*_');
 
         }
-        //import { Document, Packer } from "docx";
-        //import { saveAs } from "file-saver";
+        import { Document, Packer } from "docx";
+        import { saveAs } from "file-saver";
 
         function generateWordDocument() {
 

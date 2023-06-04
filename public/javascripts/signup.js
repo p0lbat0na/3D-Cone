@@ -1,5 +1,5 @@
 const loginForm = document.getElementById('loginForm');
-
+                 
 loginForm.addEventListener('submit', event => {
     //alert('q');
     event.preventDefault();// отменяем стандартное действие отправки формы

@@ -16,6 +16,7 @@
     "cookie-parser": "^1.4.6",
     "debug": "^2.2.0",
     "docx": "^8.0.2",
+    "docxtemplater": "^3.37.9",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-handlebars": "^7.0.4",
@@ -27,6 +28,7 @@
     "morgan": "^1.7.0",
     "pg": "^8.10.0",
     "pg-cursor": "^2.9.0",
+    "pizzip": "^3.1.4",
     "pug": "^3.0.2",
     "serve-favicon": "^2.3.0",
     "when": "^3.7.8"

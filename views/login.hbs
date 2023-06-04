@@ -1,21 +1,23 @@
 <body>
 
 
-    <form id="exit" class="fixed-action-btn">
-        <a class="btn" onclick="logout()">Объекты + испытания</a>
-        <button class="btn large" type="submit">Выйти</button>
-    </form>
-    <h1>Вход в систему</h1>
-    <form id="loginForm">
-        <div>
-            <label for="username">Логин</label>
-            <input type="text" id="worker_id" name="username" >
+
+    
+    <form id="loginForm" class="center-align">
+       
+    <h1>Вход</h1>
+        <div class="fieldset center-align">
+            <input for="username" id="worker_id" type="text" class="textbox" required>
+            <label class="text-field__label">Логин</label>
         </div>
-        <div>
-            <label for="password">Пароль</label>
-            <input type="password" id="password" name="password">
+
+
+        <div class="fieldset">
+            <input id="password" type="password" class="textbox" required>
+            <label class="text-field__label">Пароль</label>
         </div>
         <button class="btn large" type="submit">Войти</button>
+        
     </form>
     <script>
         function logout() {
@@ -25,9 +27,9 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    
+
                 })
-                    
+
                     .catch(error => {
                         console.error(error);
                         alert(error);
@@ -37,32 +39,8 @@
                 alert(e);
             }
         }</script>
-    
+
     <script src="/javascripts/signup.js"></script>
-    <!--<div class="center-align">
-            <h2>ЛНК</h2>
-
-
-
-            <form class="sign" id="loginForm">
-                <div class="fieldset">
-                    <input type="text" id="worker_id" name="worker_id" class="sign_textbox" required>
-                    <label class="text-field__label">ID</label>
-                </div>
-                <div class="fieldset">
-                    <input type="text" id="password" name="password" class="sign_textbox" required>
-                    <label class="text-field__label">Пароль</label>
-                </div>
-                <button class="btn-large waves-effect waves-light btn-save" type="submit">
-        Войти
-    </button>
-            </form>
-            <script src="/javascripts/read.js"></script>
-
-
-        </div>-->
-
-
 
 </body>
 

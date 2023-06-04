@@ -1,3 +1,4 @@
+alert('upd')
 
 try {
     let cardPanels = []

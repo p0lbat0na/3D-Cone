@@ -1,5 +1,4 @@
 <a id="refresh" href="/test-list"><h2>Испытания</h2></a>
-
 <a id="diagonal" href="/req-list"><h5>Список заявок</h5></a>
 <form id="searchForm{{userData.rows.length}}" class="container ninety">
     <div class="fieldset">
@@ -12,8 +11,8 @@
     </label>
     <button class="btn large" type="submit">Найти</button>
 </form>
-<script src="/javascripts/read.js"></script>
 <p>Найдено заявок: <strong id="amount_of_record">{{userData.rows.length}}</strong></p>
+<script src="/javascripts/read.js"></script>
 
 {{#each userData.rows}}
 <form class="card-panel hoverable" id="cardPanel{{@index}}">
