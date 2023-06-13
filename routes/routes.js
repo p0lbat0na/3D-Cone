@@ -17,6 +17,11 @@ const refreshTokenSecret = 'goooordon-freeman';
 let  refreshTokens = [];
 router.use(express.json());
 
+const role1 = ['Оператор ЛНК', 'Директор ЛНК', 'Заместитель директора ЛНК'];
+const role2 = ['Инженер по неразрушающему контролю', 'Младший специалист по неразрушающему контролю', 'Специалист по неразрушающему контролю'];
+const role3 = ['Директор', 'Руководитель', 'Главный инженер', 'Заместитель директора', 'Инженер'];
+
+                
 const authenticateJWT = (req, res, next) => {
 
     let authHeader = req.headers.cookie;
@@ -25,12 +30,7 @@ const authenticateJWT = (req, res, next) => {
         let jwtStr = req.headers.cookie.indexOf('accessToken');
         const tokenDem = req.headers.cookie.substring(jwtStr + 20);
         const token = tokenDem.substring(0, tokenDem.indexOf('%'));
-        //const tokenDem = authHeader.split(' ')[2];        
-        //const token = tokenDem.substring(tokenDem.indexOf('=') + 1);
-        ;
-        //console.log(token);
-        //console.log(req.headers.cookie);        
-        jwt.verify(token, accessTokenSecret, (err, user) => {
+         jwt.verify(token, accessTokenSecret, (err, user) => {
             if (err) {
                 console.log(err)
                 //return res.sendStatus(403);
@@ -62,24 +62,17 @@ function authenticate(worker_id, password) {
                     let isDeclarant = false;
                     let isExecutor = false;
                     let isOperator = false;
-                    if (data.rows[0].job_title == 'Оператор ЛНК' ||
-                        data.rows[0].job_title == 'Директор ЛНК' ||
-                        data.rows[0].job_title == 'Заместитель директора ЛНК')
+                    if (data.rows[0].job_title == role1[0] ||
+                        data.rows[0].job_title == role1[1] ||
+                        data.rows[0].job_title == role1[2])
                         isOperator = true;
                     else {
-                        if (data.rows[0].job_title == 'Специалист по неразрушающему контролю' ||
-                            data.rows[0].job_title == 'Младший специалист по неразрушающему контролю' ||
-                            data.rows[0].job_title == 'Инженер по неразрушающему контролю')
+                        if (data.rows[0].job_title == role2[0] ||
+                            data.rows[0].job_title == role2[1] ||
+                            data.rows[0].job_title == role2[2])
                             isExecutor = true;
                         else isDeclarant = true;
-                    }
-
-                    //password = data.rows[0].password
-                    
-                    //const token = jwt.sign({ user_id }, 'my-secret-key');
-                    //const accessToken = jwt.sign({ user_id, user_role }, accessTokenSecret);
-                    //const refreshToken = jwt.sign({ user_id, user_role }, refreshTokenSecret);
-                    const worker_name = data.rows[0].full_name;
+                    }const worker_name = data.rows[0].full_name;
                     
                     const token = {
                         accessToken: jwt.sign({
@@ -96,11 +89,7 @@ function authenticate(worker_id, password) {
                             isOperator: isOperator,
                             user_name: worker_name
                         }, refreshTokenSecret)
-                    }; 
-                    //const token = jwt.sign({ worker_id: data.rows[0].worker_id }, 'my-secret-key');
-                    //const token = jwt.sign({ userId: data.rows[0].id }, 'my-secret-key');
-                    //console.log(data.rows[0].worker_id + " auth token " + '\n' + token.accessToken + '\n' +token.refreshToken);
-                    resolve(token);
+                    }; resolve(token);
                 } else {
                     reject(new Error('Неправильный логин или пароль'));
                 }            
@@ -111,31 +100,15 @@ function authenticate(worker_id, password) {
 
 function write(table, attr, value, returnCode) {
     return new Promise((resolve, reject) => {
-        //let where = 'where'
-        //for (var i = 0; i < attr.length - 1; i++) {
-        //    where = where + attr[i] + "=" + value[i]+'AND';
-        //}
-        //co
-        
-        let q = 'INSERT INTO public.' + table + '(' + attr + ') VALUES(' + value + ') RETURNING ' + returnCode+' AS return_code';
+         let q = 'INSERT INTO public.' + table + '(' + attr + ') VALUES(' + value + ') RETURNING ' + returnCode+' AS return_code';
         console.log(q);
-        //db.query('SELECT INTO $1 ($2) VALUES ($3);', [table, attr,value], (error, data) => {
         db.query(q, (error, data) => {
 
             if (error) {
-                reject(error);
-                console.log(error);
-            } else {
-                console.log('qq');
-
+                reject(error);                    
+            } else {                     
                 if (data) {
-
-                console.log('qqq');
-
-                    //const token = jwt.sign({ worker_id: data.rows[0].worker_id }, 'my-secret-key');
-                    //const token = jwt.sign({ userId: data.rows[0].id }, 'my-secret-key');
-                    //console.log(data);
-                    resolve(data);
+    resolve(data);
                 } else {
                     reject('no data?;(');
                 }
@@ -152,30 +125,22 @@ function getTime() {
 
     let hour = myDate.getHours()
     let minute = myDate.getMinutes()
-    
+    let sec = myDate.getSeconds()
+    console.log(sec)
+
+          console.log(minute)
     if (minute < 10) {
         minute = '0' + minute
     }
-    //if (day < 10) {
-    //    day = '0' + day
-    //}
-    //if (month < 10) {
-    //    month = '0' + month;
-    //}
-    
+    console.log(minute+'min')
+
     return (
-        day + '.' + month + '.' + year + ' ' + hour + ':' + minute
+        day + '.' + month + '.' + year + ' ' + hour + ':' + minute + ':' + sec
     )
 }
 
 function del(table, row, condition) {
-    return new Promise((resolve, reject) => {
-        //let where = 'where'
-        //for (var i = 0; i < attr.length - 1; i++) {
-        //    where = where + attr[i] + "=" + value[i]+'AND';
-        //}
-        //co
-        if (typeof (condition) != 'number')
+    return new Promise((resolve, reject) => {if (typeof (condition) != 'number')
             condition = `'` + condition+`'`
         let sql = 'DELETE FROM public.' + table + ' WHERE ' + row + ' = ' + condition;
         console.log(sql);
@@ -203,7 +168,7 @@ function anyRequest(sql) {
                 reject(error);
                 console.log(error);
             } else {
-                console.log('Запрос выполнен')
+                console.log('Запрос выполнен' +sql)
                 resolve(data);
             }
         });
@@ -231,10 +196,7 @@ router.post('/login', (req, res) => {
 
     let cookieOptions = {
         // Delete the cookie after 90 days
-        expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
-        // Set the cookie's HttpOnly flag to ensure the cookie is 
-        // not accessible through JS, making it immune to XSS attacks  
-        httpOnly: true,
+        expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),httpOnly: true,
     };
     cookieOptions.secure = true;
     
@@ -272,16 +234,7 @@ router.post('/insert', (req, res) => {
 
     write('requests', attr, val, 'request_code')
         
-        .then(data =>    {
-            // добавляем токен в ответ
-            //res.json({ token });
-            
-            console.log(data.rows[0].return_code);
-
-            //console.log(data.substring(data.indexOf(`'`),3));
-            //console.log(data.rows[{ return_req_code }]);
-
-            res.send(data.rows[0].return_code);
+        .then(data =>    {res.send(data.rows[0].return_code);
 
         })
         .catch(error => {
@@ -305,16 +258,7 @@ router.post('/insert-test', (req, res) => {
 
     write('tests_in_requests', attr, val, 'test_in_request_code')
 
-        .then(data => {
-            // добавляем токен в ответ
-            //res.json({ token });
-
-            console.log(data.rows[0].return_code);
-
-            //console.log(data.substring(data.indexOf(`'`),3));
-            //console.log(data.rows[{ return_req_code }]);
-
-            res.send(data.rows[0].return_code);
+        .then(data => {res.send(data.rows[0].return_code);
 
         })
         .catch(error => {
@@ -366,7 +310,7 @@ router.post('/req-list/search', (req, res, next) => {
             if (requires_processing == true)
                 sql = sql + ` WHERE status='в обработке'`;
         }
-        sql = sql + 'ORDER BY request_code DESC';
+        sql = sql + ' ORDER BY request_code DESC';
 
         const user = req.user;
         db.query(sql, function (err, data) {
@@ -414,7 +358,7 @@ router.post('/test-list/search', (req, res, next) => {
             if (req.requires_processing == true)
                 sql = sql + ` WHERE testing_status='в обработке'`;
         }
-        sql = sql + 'ORDER BY test_in_request_code DESC';
+        sql = sql + ' ORDER BY test_in_request_code DESC';
         console.log(req.body.num + ' ^^ ' + sql + ' %% ' + req.body.diagonal_dir)
         const user = req.user;
         db.query(sql, function (err, data) {
@@ -444,24 +388,12 @@ router.post('/test-list/search', (req, res, next) => {
 });
 
 router.post('/logout', (req, res) => {
-    try {
-        //let jwtStr = req.headers.cookie.indexOf('refreshToken');
-        //const tokenDem = req.headers.cookie.substring(jwtStr + 21);
-        //const token = tokenDem.substring(0, tokenDem.indexOf('%'));
-        //refreshTokens = refreshTokens.filter(token => t !== token);
-        let wrongToken ="wrongToken"
+    
         refreshTokens.push(wrongToken);
         res.send("Logout successful"); 
         jwt.destroy
-        //res.status(200).clearCookie('connect.sid', {
-        //    path: '/login'
-        //});
-        console.log('2');
-    }
-    catch (error) {
-        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-            //res.status(401).send(error.message);
-        };
+        
+    
 });
 
 
@@ -536,14 +468,6 @@ router.get('/create-req', authenticateJWT, (req, res) => {
     }
 })
 
-//router.get('/catalog', function (req, res, next) {
-//    let sql = 'SELECT * FROM staff';
-//    db.query(sql, function (err, data, fields) {
-//        if (err) throw err;
-//        res.render('catalog', { title: 'Справочник', userData: data });
-//    });
-//});
-
 router.get('/catalog', authenticateJWT, (req, res) => {
     res.render('catalog', {
         title: 'Справочник',
@@ -606,7 +530,7 @@ INNER JOIN sorts_of_control ON control_objects_testing.test_code = sorts_of_cont
 })
 
 router.get('/catalog/dep', authenticateJWT, (req, res, next) => {
-    let sql = 'SELECT * FROM departments';
+    let sql = 'SELECT * FROM departments ORDER BY department_num DESC';
     db.query(sql, function (err, data) {
         if (err) throw err;
         res.render('catalog', {
@@ -666,12 +590,9 @@ router.get('/backup', authenticateJWT, (req, res) => {
     })
 })
 
-//chcp 1251
-//start C:\"Program Files"\PostgreSQL\15\bin\psql.exe -d postgres -U postgres
-//const { exec } = require('child_process');
- //cd C:\Program Files\PostgreSQL\15\bin
-    //pg_dump -U postgres -W LNK > /"My Games"/LNK.dump
-var exePath = ('C:\\"Program Files"\\PostgreSQL\\15\\bin\\pg_dump.exe');
+var exePathDump = ('C:\\"Program Files"\\PostgreSQL\\15\\bin\\pg_dump.exe');
+var exePathPsql = ('C:\\"Program Files"\\PostgreSQL\\15\\bin\\psql.exe');
+
 const { execFile } = require("child_process");
 const currentDir = process.cwd();
 // указываем полный путь к файлу резервной копии
@@ -685,122 +606,108 @@ const options = {
     maxBuffer: 1024 * 1024 * 64,
     killSignal: "SIGTERM",
     shell: true,
-    // добавляем параметр для кэша
-    windowsVerbatimArguments: true,
- 
-    // путь к папке для кэша
-    // в кавычках необходимо указать полный путь к папке для кэша
-    // например: "C:\\Users\\username\\cache-folder"
-    // обратите внимание на двойные обратные слеши при указании пути
-    // или же используйте одиночные прямые слеши
-    args: ["--disk-cache-dir=C:/Games", exePath],
+    windowsVerbatimArguments: true,       
+    args: ["--disk-cache-dir=C:/LNK", exePathDump],
 };
-//execFile("cmd.exe", ["/c", backupScriptPath], options, function (error, stdout, stderr) {
-//    // обработка результата выполнения
-//});
-//exePath,
-//    [`pg_dump -U postgres -W LNK > C:/"My Games"/LNK.dump`], options,
 
 function dump(dumpName) {
-    console.log('aaaaaaaaaaaa ' + backupScriptPath)
-    execFile(exePath, [`"dbname=LNK user=postgres password=4444 client_encoding=Windows-1251" > C:/Games/LNK` + dumpName], options,
+    
+    return new Promise((resolve, reject) => {
+        execFile(exePathDump, [`"dbname=LNK user=postgres password=4444 client_encoding=Windows-1251" > C:/Games/LNK` + dumpName], options,
+            (error, stdout, stderr) => {
+                if (error !== null) {
+                    console.log(`exec error:` + error)
+                    console.log(stderr)
+                    console.log(stdout)
+                    reject(error);
+                    return
+                }
+                console.log(stderr)
+                console.log(stdout)
+                console.log("Backup complete!")
+                resolve("Backup complete!");
+
+            })
+    });
+
+}
+function restore(dumpName) {
+    return new Promise((resolve, reject) => {
+        execFile(exePathPsql, [`"dbname=LNK user=postgres password=4444" < C:/Games/` + dumpName], options,
         (error, stdout, stderr) => {
             if (error !== null) {
-                console.log(`exec error:` + error)
+                reject(error);
                 console.log(stderr)
                 console.log(stdout)
                 return
             }
+            resolve("Restore complete!");
             console.log(stderr)
-                console.log(stdout)
-            console.log("Backup complete!")
-            
-        })
-}
+            console.log(stdout)
+            console.log("Restore complete!")
 
-const { execute } = require('@getvim/execute');
-function backup() {
-    execute(` pg_dump -U postgres LNK -f bckp1.tar -F t`,).then(async () => {
-        console.log("Finito");
-    }).catch(err => {
-        console.log(err);
-    })
+        })
+        
+    });
+    console.log('aaaaaaaaaaaa ' + backupScriptPath)
+    
 }
+const { execute } = require('@getvim/execute');
+
 
 router.post('/backup', (req, res) => {
-    try {
-
-        dump('_main_backup.sql');
+    
+        dump('_main_backup.dump')
+            .then(data => {                 
+                    console.log(data);
+                
         res.send('Резервная копия успешно создана');
-    } catch (err) {
-        console.log(err);
+            })
+            .catch(error => {
+                console.error(error);
         res.send(err);
-    }
-    //exec('pg_dump LNK > D:\\', (err, stdout, stderr) => {
-    //    if (err) {
-    //        console.error(err);
-    //        res.send(err);
-    //        return;
-    //    }
-    //    console.log(stdout);
-    //    res.send('Резервная копия успешно создана');
-    //});
+
+            });            
+    
 });
 
 router.post('/restore', (req, res) => {
 
-    try {
-        dump('_additional_backup.dump');
-        console.log('q');
-        anyRequest(`ALTER DATABASE "LNK" RENAME TO LNK2;`)
+    
+    dump('_additional_backup.dump').then(data => {
+          anyRequest(`DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;`)
             .then(resolve => {
                 console.log(resolve);
+                console.log('q976');
+                restore('mydb_export.dump').then(data => {
+                    res.send(data);  
+                })
+                    .catch(error => {
+                        console.log(error);
+                        res.status(401).send(error);
+                    });
+                    
+                })
+                    .catch(error => {
+                        console.error(error);
 
-            })
-            .catch(error => {
-                console.error(error);
+                    });
+    })
+        .catch(error => {
+            console.error(error);
+            res.send(err);
 
-            });
-        console.log('q');
-
-    } catch (err) {
-        console.log(err);
+        }); 
         
-    }
-    anyRequest(`ALTER DATABASE "LNK" RENAME TO LNK2;`)
+         //асинхронность нада
 
     //anyRequest(`DROP DATABASE IF EXISTS "LNK"`)
-    try {
-        dump('_additional_backup.dump');
-        console.log('q');
-        anyRequest(`DROP DATABASE LNK`)
-            .then(resolve => {
-                console.log(resolve);
-                
-            })
-            .catch(error => {                
-                console.error(error);
-                
-            });
-        console.log('q');
-
-    } catch (err) {
-        console.log(err);
-        res.send(err);
-    }
+    
+        
+        console.log('q67');
+        
 });
-
-//var backupcr = execFile(
-//    `./backup.sh`,
-//    [backup_script, backup_file, 4444],
-//    (error, stdout, stderr) => {
-//        if (error !== null) {
-//            console.log(`exec error:` +error)
-//        }
-//        else
-//        console.log("Backup complete!")
-//    }
-//)
 
 
 module.exports = router;
@@ -808,41 +715,38 @@ module.exports = router;
 
 router.get('/report/staff', (req, res, next) => {
     
-    //let num = req.headers.num;      
-
-    console.log(' ^^  ######')   
-
-
-    let sql = `SELECT * FROM tests_in_requests 
+    let num = req.headers.num;      
+let sql = `SELECT * FROM tests_in_requests 
 INNER JOIN staff ON tests_in_requests.worker_id = staff.worker_id 
 INNER JOIN requests ON tests_in_requests.request_code = requests.request_code
-WHERE tests_in_requests.worker_id=3 
+WHERE tests_in_requests.worker_id=` +num+`  
 ORDER BY requests.request_code ASC`;
-        
+    console.log('worker '+num)
         db.query(sql, function (err, data) {
             if (err) throw err;
             if (data.rows.length == 0) {
                 res.status(400).send('Запрос не дал результатов')
             }
             else {
+                //let isExecutor = false;
+                //for (var i = 0; i < role2.length; i++) {
+                //    if (data.rows[0].job_title == role2[i])
+                //        isExecutor == true;
+                //}
+                //if (isExecutor) {
+                //    res.status(400).send('Запрос не дал результатов')
+                
                 try {
-                    console.log(' ^^ 0')
-                    //const mimeType =   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    const template = fs.readFileSync('template.docx', 'binary');
-                    console.log(' ^^ 0.4')
-
+                    const template = fs.readFileSync('public/templates/staff.docx', 'binary');                       
                     const zip = new PizZip(template);
-                    console.log(' ^^ 0.9')
-
-                    const doc = new Docxtemplater(zip, {
+                                       const doc = new Docxtemplater(zip, {
                         paragraphLoop: true,
                         linebreaks: true,
                     });
-                    console.log(' ^^ 1')
-
-                    
                     let arrRows = [];
-                    let currentDate = getTime();    
+                    let currentTime = getTime();    
+                    let currentDate = currentTime.substring(0, 14)    
+
                     console.log(data.rows.length)
 
                     for (var i = 0; i < data.rows.length; i++) {
@@ -863,34 +767,201 @@ ORDER BY requests.request_code ASC`;
                     }
 
                     doc.render({
+                        workerID: num,
                         fullName: data.rows[0].full_name,
                         jobTitle: data.rows[0].job_title,
-                        workerID: data.rows[0].worker_id,
+                        contacts: data.rows[0].contacts,
                         testInRequest: arrRows,
                         currentDate: currentDate
                     });
+                    currentTime = currentDate+currentTime.slice(14);
+                    console.log(currentTime)
                     const buffer = doc.getZip().generate({ type: 'nodebuffer' });
-                    console.log(' ^^ 4')
 
                     //fs.writeFileSync(currentDate.substring(0, 13) + '.docx', buffer);
-                    fs.writeFileSync('report.docx', buffer);
-                    const file = 'C:/Users/tatya/source/repos/LNK2/report.docx';
+                    let repPath = ('public/reports/report' + currentTime + '.docx')
+                    fs.writeFileSync(repPath, buffer);
+                    const file = (path.join(__dirname, '../public/reports/') + 'report' + currentTime + '.docx');
                     res.download(file);
-                    //console.log(file);
-                   // res.download(file);
-                    //const file = __dirname + '/generated.docx';
-                    //res.download(file);
-                    console.log(' ^^ 5')
+
+                    
                     //res.send('success');
 
                 } catch (error) {
                     console.log(error);
                     res.send(error);
-                }
-                //res.send(data,);
-            }
+                }                                       }         
         })
-        //const b64string = exporter.toBase64String(doc);
+       });
+router.get('/report/obj', (req, res, next) => {
+    let num = req.headers.num;      
 
-        //res.setHeader('Content-Disposition', 'attachment; filename=My Document.docx');
+    let sql = `SELECT * FROM objects_of_control
+INNER JOIN control_objects_testing ON objects_of_control.control_object_code = control_objects_testing.control_object_code
+INNER JOIN sorts_of_control ON control_objects_testing.test_code = sorts_of_control.test_code
+INNER JOIN tests_in_requests ON control_objects_testing.control_object_testing_code = tests_in_requests.control_object_testing_code
+INNER JOIN requests ON tests_in_requests.request_code = requests.request_code
+INNER JOIN departments ON requests.department_num = departments.department_num
+WHERE objects_of_control.control_object_code=`+num+` 
+ORDER BY objects_of_control.control_object_code ASC`;
+    db.query(sql, function (err, data) {
+        if (err) throw err;
+        if (data.rows.length == 0) {
+            res.status(400).send('Запрос не дал результатов')
+        }
+        else {
+            try {
+                console.log(' ^^ 0')
+                //const mimeType =   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                const template = fs.readFileSync('public/templates/object.docx', 'binary');                       
+                const zip = new PizZip(template);
+                console.log(' ^^ 0.9')
+
+                const doc = new Docxtemplater(zip, {
+                    paragraphLoop: true,
+                    linebreaks: true,
+                });
+                console.log(' ^^ 1')
+
+
+                let arrRows = [];
+               let currentTime = getTime();    
+                    let currentDate = currentTime.substring(0, 14)    
+
+                console.log(data.rows.length+'llllll')
+                console.log(data.rows[0].worker_id)
+                //console.log(data.rows[0].requests.worker_id)
+
+
+
+                    for (var i = 0; i < data.rows.length; i++) {
+                       arrRows[i] = {
+                           testName: data.rows[i].testing_full_name,
+                            reqCode: data.rows[i].request_code,
+                            depName: data.rows[i].dep_full_name,
+                            entity: data.rows[i].entity_short_name,
+                            lineNum: data.rows[i].line_code,
+                            status: data.rows[i].testing_status,
+                           objRegNum: data.rows[i].object_reg_number,
+                           executorID: data.rows[i].worker_id,
+
+                        }
+                    }
+                    doc.render({
+                        objID: num,
+                        subcategory: data.rows[0].subcategory,
+                        category: data.rows[0].category,
+                        objInfo: data.rows[0].additional_information,
+                        testInRequest: arrRows,
+                        currentDate: currentDate
+                    });
+                    currentTime = currentDate+currentTime.slice(14);
+                    console.log(currentTime)
+                    const buffer = doc.getZip().generate({ type: 'nodebuffer' });
+
+                    //fs.writeFileSync(currentDate.substring(0, 13) + '.docx', buffer);
+                    let repPath = ('public/reports/report' + currentTime + '.docx')
+                    fs.writeFileSync(repPath, buffer);
+                    const file = (path.join(__dirname, '../public/reports/') + 'report' + currentTime + '.docx');
+                    res.download(file);
+
+                    
+                    //res.send('success');
+
+                } catch (error) {
+                console.log(error);
+                res.status(500).send(error);
+                    
+                }
+            //res.send(data,);
+        }
+    })
+    
+});
+router.get('/report/req', (req, res, next) => {
+
+    let sql = `SELECT * FROM requests
+INNER JOIN tests_in_requests ON requests.request_code = tests_in_requests.request_code
+INNER JOIN control_objects_testing ON tests_in_requests.control_object_testing_code = control_objects_testing.control_object_testing_code
+INNER JOIN objects_of_control ON control_objects_testing.control_object_code = objects_of_control.control_object_code
+INNER JOIN sorts_of_control ON control_objects_testing.test_code = sorts_of_control.test_code
+INNER JOIN staff ON tests_in_requests.worker_id = staff.worker_id
+INNER JOIN departments ON requests.department_num = departments.department_num
+WHERE requests.request_code=2 
+ORDER BY tests_in_requests.test_in_request_code ASC`;
+
+    db.query(sql, function (err, data) {
+        if (err) throw err;
+        if (data.rows.length == 0) {
+            res.status(400).send('Запрос не дал результатов')
+        }
+        else {
+            try {
+                console.log(' ^^ 0')
+                //const mimeType =   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                const template = fs.readFileSync('public/templates/request.docx', 'binary');
+                const zip = new PizZip(template);
+                console.log(' ^^ 0.9')
+
+                const doc = new Docxtemplater(zip, {
+                    paragraphLoop: true,
+                    linebreaks: true,
+                });
+                console.log(' ^^ 1')
+
+
+                let arrRows = [];
+                let currentTime = getTime();
+                let currentDate = currentTime.substring(0, 14)
+
+                console.log(data.rows.length + 'llllll')
+                console.log(data.rows[0].worker_id)
+                console.log(data.rows[0].requests.worker_id)
+                console.log(data.rows[0].tests_in_requests.worker_id)
+
+
+
+                for (var i = 0; i < data.rows.length; i++) {
+                    arrRows[i] = {
+                        testName: data.rows[i].testing_full_name,
+                        reqCode: data.rows[i].request_code,
+                        depName: data.rows[i].dep_full_name,
+                        entity: data.rows[i].entity_short_name,
+                        lineNum: data.rows[i].line_code,
+                        status: data.rows[i].testing_status,
+                        objRegNum: data.rows[i].object_reg_number,
+                        executorID: data.rows[i].worker_id,
+
+                    }
+                }
+                doc.render({
+                    objID: num,
+                    subcategory: data.rows[0].subcategory,
+                    category: data.rows[0].category,
+                    objInfo: data.rows[0].additional_information,
+                    testInRequest: arrRows,
+                    currentDate: currentDate
+                });
+                currentTime = currentDate + currentTime.slice(14);
+                console.log(currentTime)
+                const buffer = doc.getZip().generate({ type: 'nodebuffer' });
+
+                //fs.writeFileSync(currentDate.substring(0, 13) + '.docx', buffer);
+                let repPath = ('public/reports/report' + currentTime + '.docx')
+                fs.writeFileSync(repPath, buffer);
+                const file = (path.join(__dirname, '../public/reports/') + 'report' + currentTime + '.docx');
+                res.download(file);
+
+
+                //res.send('success');
+
+            } catch (error) {
+                console.log(error);
+                res.status(500).send(error);
+
+            }
+            //res.send(data,);
+        }
+    })
+
 });

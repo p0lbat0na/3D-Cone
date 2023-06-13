@@ -120,6 +120,7 @@
             padding: 5px 24px 25px 24px;
         }
 
+
         .btn {
             width: 250px;
             height: 50px;
@@ -145,7 +146,8 @@
             justify-content: space-between;
             background-color: gainsboro;
             border-radius: 32px;
-
+            bottom: auto;
+            top:23px;
         }
 
         .upper {
@@ -153,9 +155,16 @@
             margin-top: -8px;
         }
 
+        .height {
+            height:70px;
+            line-height:2;
+            font-size:11pt;
+        }
+
         .search {
             display: flex;
             flex-wrap: wrap;
+
             /*background: white url(/img/Group.png)no-repeat 24px center;
             background-size: 20px,18px;*/
             top: -3px;
@@ -167,17 +176,10 @@
             border: 1px solid #E0E3EB;
             margin-top: -13px;
             margin-bottom: 10px;
+            margin-right:20px;
         }
 
-        .serch_textbox {
-            border: 0;
-            font-size: 20px;
-            outline: none;
-            height: 46px;
-            top: 50px;
-            margin-top: 5px;
-            background-color: transparent;
-        }
+        
 
         .search_button {
             font-family: 'Lexend';
@@ -388,6 +390,10 @@
             margin-bottom: 32px;
         }
 
+        h2{
+            color:rgb(60, 60, 60);
+        }
+
         .textbox {
             border: 0;
             font-size: 20px;
@@ -405,6 +411,10 @@
 
         .inp {
             margin-right: 30px;
+        }
+
+        .checkbox{
+            margin-top:10px;
         }
 
         .date_input {
@@ -487,6 +497,12 @@
             margin-bottom: 32px;
         }
 
+        .checkbox {
+            margin-top: 10px;
+        }
+        h2 {
+            color: rgb(60, 60, 60);
+        }
         .textbox {
             border: 0;
             font-size: 20px;
@@ -567,6 +583,7 @@
             width: 95%;
             display: flex;
             justify-content: space-between;
+                    height:30px;
         }
     </style>
 
@@ -593,8 +610,14 @@
     {{/if}}
 
     <style>
+        body {
+            font-family: 'Lexend';
+            font-style: normal;
+            background: white url(prism.png) repeat;
+            background-size: 700px;
+        }
         .btn {
-            background-color: tomato;
+            background-color:tomato;
         }
 
             .btn:hover, .btn:active {
@@ -613,5 +636,6 @@
         .rightt {
             float: right;
         }
+        
     </style>
 </head>

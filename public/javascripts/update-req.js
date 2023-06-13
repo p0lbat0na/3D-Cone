@@ -1,21 +1,21 @@
 
-  alert('upd')
 
 let changeBtns = []
-    let amount_of_records = document.getElementById('amount_of_record').textContent;
+    let amount_of_records2 = document.getElementById('amount_of_record').textContent;
 
-    for (let i = 0; i < amount_of_records; i++) {
+    for (let i = 0; i < amount_of_records2; i++) {
         changeBtns[i] = document.getElementById('change' + [i]);
 }
-
+       
 
 changeBtns.forEach(function (element, index) {
         element.addEventListener('click', event => {
     
+            
 
+            try {
             event.preventDefault();
             
-            try {
                 let num = document.getElementById('num' + index).innerHTML;
                 
                 let opinion_required = false;

@@ -23,8 +23,8 @@
         <a class="btn" href="/backup">Администрирование</a>
         <p class="upper">Отчет по исполнителям:</p>
         <form class="search" id="worker_report">
-            <div class="fieldset" >
-                <input type="text" id="worker_report_inp"  class="serch_textbox" required>
+            <div class="fieldset">
+                <input type="text" id="worker_report_inp" class="serch_textbox" required>
                 <button type="submit" class="search_button btn" id="executorReport">Скачать</button>
                 <label class="text-field__label">ID исполнителя</label>
             </div>
@@ -40,9 +40,10 @@
         {{/if}}
     </div>
 
-        <script src="/javascripts/report.js"></script>
 
+<script src="/javascripts/report.js"></script>
 </body>
+
 <script>
     function exit(request, response, next) {
         response.statusCode = 401;
@@ -59,7 +60,7 @@
             const eqPos = cookie.indexOf("=");
             const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
             document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-            
+
         } alert('clear')
     }
 </script>

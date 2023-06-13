@@ -1,12 +1,12 @@
-alert('upd')
+
 
 try {
     let cardPanels = []
-    let amount_of_records = document.getElementById('amount_of_record').textContent;
+    let amount_of_records2 = document.getElementById('amount_of_record').textContent;
 
 
 
-    for (let i = 0; i < amount_of_records; i++) {
+    for (let i = 0; i < amount_of_records2; i++) {
         cardPanels[i] = document.getElementById('cardPanel' + [i]);
     }
 

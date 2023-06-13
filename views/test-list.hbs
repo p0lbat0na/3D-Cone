@@ -5,14 +5,16 @@
         <input id="num_input{{userData.rows.length}}" type="text" class="textbox" required>
         <label class="text-field__label" for="search">Поиск по номеру</label>
     </div>
-    <label>
-        <input type="checkbox" id="requires_processing">
-        <span>Ждет обработки</span>
-    </label>
-    <button class="btn large" type="submit">Найти</button>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" id="requires_processing">
+            <span>Ждет обработки</span>
+        </label>
+    </div>
+
+    <button class="btn large" type="submit" id="search{{userData.rows.length}}">Найти</button>
 </form>
 <p>Найдено заявок: <strong id="amount_of_record">{{userData.rows.length}}</strong></p>
-<script src="/javascripts/read.js"></script>
 
 {{#each userData.rows}}
 <form class="card-panel hoverable" id="cardPanel{{@index}}">
@@ -61,18 +63,14 @@
                     <label class="text-field__label" for="status">Статус</label>
                 </div>
         </ul>
-        <button class="btn-small waves-effect waves-light btn-save"  type="submit">Изменить</button>
+        <button class=" btn btn-small waves-effect waves-light btn-save" type="submit">Изменить</button>
 
     </div>
 </form>
 {{/each}}
+<script src="/javascripts/read.js"></script>
 <script src="/javascripts/update-test.js"></script>
 
 
 
-<!--<form>
-    <input class="short" placeholder="mail" type="text" >
-    <input class="short" placeholder="subj" type="text" >
-    <textarea placeholder="text"></textarea>
-</form>-->
 {{> tomain}}

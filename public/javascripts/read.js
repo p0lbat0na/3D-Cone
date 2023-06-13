@@ -1,36 +1,27 @@
 
 //alert(window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
-alert('read')
+
 
 const searchForm = document.getElementById('searchForm');
 
 
 
 let amount_of_records = document.getElementById('amount_of_record').textContent;
-alert(amount_of_records);
 
 let searchBtns = []
-try{    
-for (let i = 0; i < amount_of_records; i++) {
-    searchBtns[i] = document.getElementById('search' + [i]);
-    
+if (document.title.slice(0, 9) != "Испытания") {
+    for (let i = 0; i < amount_of_records; i++) {
+        searchBtns[i] = document.getElementById('search' + [i]);
+
 
     }
-//searchBtns[amount_of_records] = document.getElementById('searchForm' + amount_of_records);
-    //alert(cardPanels[amount_of_records - 1].className + cardPanels[amount_of_records].className)
-} catch (e) {
-    alert(e);
 }
-alert(searchBtns[1].value);
-alert(searchBtns[1].innerHTML.textContent);
-alert(searchBtns[2].innerHTML);
-alert(searchBtns[0].textContent);
+searchBtns[amount_of_records] = document.getElementById('search' + amount_of_records);
 
 searchBtns.forEach(function (element, index) {
     element.addEventListener('click', event => {
-       
+        try {
             event.preventDefault();           
-    alert('click')
 
             let url = '/';
             let urlFull = '/'
@@ -43,7 +34,7 @@ searchBtns.forEach(function (element, index) {
             let diagonal_dir = false;
             let num = -1;
             try {
-                if (element.className == "waves-effect waves-light btn-small" || document.title.slice(0, 9) == "Испытания") {
+                if (element.className == "btn waves-effect waves-light btn-small" || document.title.slice(0, 9) == "Испытания") {
                     if (document.title.slice(0, 9) == "Испытания" && element.className != "waves-effect waves-light btn-small") {
                         num = document.getElementById('num_input' + amount_of_records).value;
                         //url = url + window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
@@ -63,8 +54,7 @@ searchBtns.forEach(function (element, index) {
 
                 }
                 else {
-                    alert('qй')
-                    //alert(document.getElementById('searchForm').value)
+
                     urlFull = document.getElementById('refresh').href;
                     url = urlFull.substring(urlFull.lastIndexOf('/'))
                     num = document.getElementById('num_input'+amount_of_records).value;
@@ -115,7 +105,9 @@ searchBtns.forEach(function (element, index) {
                     console.error(error);
                     alert(error);
                     });
-
+        } catch (e) {
+            alert(e);
+        }
         });
 });
 

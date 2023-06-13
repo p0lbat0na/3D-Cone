@@ -1,19 +1,17 @@
 
-const objReport = document.getElementById('obj_report');
-const staffReport = document.getElementById('staff_report');
 
-//alert('q')
+
 //const fileStream = fs.createWriteStream(path);
 const workerReport = document.getElementById('worker_report');
+const objReport = document.getElementById('obj_report');
 
 
 
 workerReport.addEventListener('submit', event => {
 
-    event.preventDefault();  
+    event.preventDefault(); 
 
-    let num = document.getElementById('worker_report_inp').value;
-    
+    let num = document.getElementById('worker_report_inp').value;     
 
     fetch('/report/staff', {
         method: 'GET',
@@ -31,51 +29,48 @@ workerReport.addEventListener('submit', event => {
             a.click();
             a.remove();
         })
-    //.then(res => {
-      //      const doc = res.blob();
-      //
-      //  })
-        //    .then(res => {
-        //        res.body.pipe(fileStream);
-        //        res.body.on("error", reject);
-        //        fileStream.on("finish", resolve);
-        //    })
-        ////.then(data => {
-        ////    alert(data);
-            
-        //        //const doc = new docx.Document({
-        //        //    sections: [
-        //        //        {
-        //        //            properties: {},
-        //        //            children: [
-        //        //                new docx.Paragraph({
-        //        //                    children: [
-        //        //                        new docx.TextRun("Hello World"),
-        //        //                        new docx.TextRun({
-        //        //                            text: "Foo Bar",
-        //        //                            bold: true
-        //        //                        }),
-        //        //                        new docx.TextRun({
-        //        //                            text: "\tGithub is the best",
-        //        //                            bold: true
-        //        //                        })
-        //        //                    ]
-        //        //                })
-        //        //            ]
-        //        //        }
-        //        //    ]
-        //        //});
-
-        //        //docx.Packer.toBlob(doc).then((blob) => {
-        //        //    console.log(blob);
-        //        //    saveAs(blob, "example.docx");
-        //        //    console.log("Document created successfully");
-        //        //});
-            
     
-        ////    })
             .catch(error => {
                
                 alert(error);
             });
     });
+
+
+objReport.addEventListener('submit', event => {
+
+    event.preventDefault();
+
+    let num = document.getElementById('obj_report_inp').value;
+
+
+    fetch('/report/obj', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            num: num
+        },
+    }).then(res => {
+        if (res.status >= 200 && res.status < 300) {
+            return res.blob();
+        } else {
+            let error = new Error(res.statusText);
+            error.response = res;
+            throw error
+        }
+})
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'report'+num+'.docx';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        })
+        
+        .catch(error => {
+
+            alert(error);
+        });
+});
