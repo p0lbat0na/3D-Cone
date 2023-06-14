@@ -19,7 +19,15 @@ workerReport.addEventListener('submit', event => {
             'Content-Type': 'application/json',
             num:num
         },
-    }).then(response => response.blob())
+    }).then(res => {
+        if (res.status >= 200 && res.status < 300) {
+            return res.blob();
+        } else {
+            let error = new Error(res.statusText);
+            error.response = res;
+            throw error
+        }
+    })
         .then(blob => {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -50,7 +58,7 @@ objReport.addEventListener('submit', event => {
             'Content-Type': 'application/json',
             num: num
         },
-    }).then(res => {
+        }).then(res => {
         if (res.status >= 200 && res.status < 300) {
             return res.blob();
         } else {
@@ -58,7 +66,7 @@ objReport.addEventListener('submit', event => {
             error.response = res;
             throw error
         }
-})
+        })
         .then(blob => {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');

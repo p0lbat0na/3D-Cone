@@ -748,9 +748,9 @@ ORDER BY requests.request_code ASC`;
                     let currentDate = currentTime.substring(0, 14)    
 
                     console.log(data.rows.length)
-
+                    let deadline = [];
                     for (var i = 0; i < data.rows.length; i++) {
-                        let deadline = data.rows[i].deadline.toLocaleDateString("en-US", { year: 'numeric' }) + '-' +
+                        deadline[i] = data.rows[i].deadline.toLocaleDateString("en-US", { year: 'numeric' }) + '-' +
                             data.rows[i].deadline.toLocaleDateString("en-US", { month: '2-digit' }) + '-' +
                             data.rows[i].deadline.toLocaleDateString("en-US", { day: '2-digit' });
                         
@@ -761,7 +761,7 @@ ORDER BY requests.request_code ASC`;
                             objTest: data.rows[i].control_object_testing_code,
                             status: data.rows[i].testing_status,
                             regNum: data.rows[i].object_reg_number,                                
-                            deadline: deadline,
+                            deadline: deadline[i],
 
                         }
                     }
@@ -779,9 +779,9 @@ ORDER BY requests.request_code ASC`;
                     const buffer = doc.getZip().generate({ type: 'nodebuffer' });
 
                     //fs.writeFileSync(currentDate.substring(0, 13) + '.docx', buffer);
-                    let repPath = ('public/reports/report' + currentTime + '.docx')
+                    let repPath = ('public/reports/report' + num + '.docx')
                     fs.writeFileSync(repPath, buffer);
-                    const file = (path.join(__dirname, '../public/reports/') + 'report' + currentTime + '.docx');
+                    const file = (path.join(__dirname, '../public/reports/') + 'report' + num + '.docx');
                     res.download(file);
 
                     
@@ -811,25 +811,23 @@ ORDER BY objects_of_control.control_object_code ASC`;
         }
         else {
             try {
-                console.log(' ^^ 0')
+                
                 //const mimeType =   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 const template = fs.readFileSync('public/templates/object.docx', 'binary');                       
                 const zip = new PizZip(template);
-                console.log(' ^^ 0.9')
+               
 
                 const doc = new Docxtemplater(zip, {
                     paragraphLoop: true,
                     linebreaks: true,
                 });
-                console.log(' ^^ 1')
+               
 
 
                 let arrRows = [];
                let currentTime = getTime();    
                     let currentDate = currentTime.substring(0, 14)    
 
-                console.log(data.rows.length+'llllll')
-                console.log(data.rows[0].worker_id)
                 //console.log(data.rows[0].requests.worker_id)
 
 
@@ -860,9 +858,9 @@ ORDER BY objects_of_control.control_object_code ASC`;
                     const buffer = doc.getZip().generate({ type: 'nodebuffer' });
 
                     //fs.writeFileSync(currentDate.substring(0, 13) + '.docx', buffer);
-                    let repPath = ('public/reports/report' + currentTime + '.docx')
+                    let repPath = ('public/reports/report' + num + '.docx')
                     fs.writeFileSync(repPath, buffer);
-                    const file = (path.join(__dirname, '../public/reports/') + 'report' + currentTime + '.docx');
+                    const file = (path.join(__dirname, '../public/reports/') + 'report' + num + '.docx');
                     res.download(file);
 
                     
@@ -878,89 +876,103 @@ ORDER BY objects_of_control.control_object_code ASC`;
     })
     
 });
-router.get('/report/req', (req, res, next) => {
-
-    let sql = `SELECT * FROM requests
-INNER JOIN tests_in_requests ON requests.request_code = tests_in_requests.request_code
+router.get('/report/request', (req, res, next) => {
+   
+    let num = req.headers.num;      
+   
+    
+    let sql = `SELECT * FROM tests_in_requests
+INNER JOIN requests ON tests_in_requests.request_code = requests.request_code
 INNER JOIN control_objects_testing ON tests_in_requests.control_object_testing_code = control_objects_testing.control_object_testing_code
 INNER JOIN objects_of_control ON control_objects_testing.control_object_code = objects_of_control.control_object_code
 INNER JOIN sorts_of_control ON control_objects_testing.test_code = sorts_of_control.test_code
 INNER JOIN staff ON tests_in_requests.worker_id = staff.worker_id
 INNER JOIN departments ON requests.department_num = departments.department_num
-WHERE requests.request_code=2 
+WHERE tests_in_requests.request_code=`+num+` 
 ORDER BY tests_in_requests.test_in_request_code ASC`;
-
+    
     db.query(sql, function (err, data) {
-        if (err) throw err;
-        if (data.rows.length == 0) {
+        if (err) {
             res.status(400).send('Запрос не дал результатов')
+            throw err;
         }
+
         else {
-            try {
-                console.log(' ^^ 0')
-                //const mimeType =   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                const template = fs.readFileSync('public/templates/request.docx', 'binary');
-                const zip = new PizZip(template);
-                console.log(' ^^ 0.9')
-
-                const doc = new Docxtemplater(zip, {
-                    paragraphLoop: true,
-                    linebreaks: true,
-                });
-                console.log(' ^^ 1')
-
-
-                let arrRows = [];
-                let currentTime = getTime();
-                let currentDate = currentTime.substring(0, 14)
-
-                console.log(data.rows.length + 'llllll')
-                console.log(data.rows[0].worker_id)
-                console.log(data.rows[0].requests.worker_id)
-                console.log(data.rows[0].tests_in_requests.worker_id)
-
-
-
-                for (var i = 0; i < data.rows.length; i++) {
-                    arrRows[i] = {
-                        testName: data.rows[i].testing_full_name,
-                        reqCode: data.rows[i].request_code,
-                        depName: data.rows[i].dep_full_name,
-                        entity: data.rows[i].entity_short_name,
-                        lineNum: data.rows[i].line_code,
-                        status: data.rows[i].testing_status,
-                        objRegNum: data.rows[i].object_reg_number,
-                        executorID: data.rows[i].worker_id,
-
-                    }
-                }
-                doc.render({
-                    objID: num,
-                    subcategory: data.rows[0].subcategory,
-                    category: data.rows[0].category,
-                    objInfo: data.rows[0].additional_information,
-                    testInRequest: arrRows,
-                    currentDate: currentDate
-                });
-                currentTime = currentDate + currentTime.slice(14);
-                console.log(currentTime)
-                const buffer = doc.getZip().generate({ type: 'nodebuffer' });
-
-                //fs.writeFileSync(currentDate.substring(0, 13) + '.docx', buffer);
-                let repPath = ('public/reports/report' + currentTime + '.docx')
-                fs.writeFileSync(repPath, buffer);
-                const file = (path.join(__dirname, '../public/reports/') + 'report' + currentTime + '.docx');
-                res.download(file);
-
-
-                //res.send('success');
-
-            } catch (error) {
-                console.log(error);
-                res.status(500).send(error);
-
+            if (data.rows.length == 0) {
+                res.status(400).send('Запрос не дал результатов')
+                console.log(data.rows.length)
             }
-            //res.send(data,);
+
+            else {
+                try {
+                    const template = fs.readFileSync('public/templates/request.docx', 'binary');
+                    const zip = new PizZip(template);
+
+
+                    const doc = new Docxtemplater(zip, {
+                        paragraphLoop: true,
+                        linebreaks: true,
+                    });
+                    let opinionRequired = 'Заключение не требуется';
+                    if (data.rows[0].opinion_reqired == true)
+                        opinionRequired = 'Требуется выдача заключения';
+                    let arrRows = [];
+                    let currentTime = getTime();
+                    let currentDate = currentTime.substring(0, 14) 
+                    let deadline='';
+                    
+                    
+                        deadline = data.rows[0].deadline.toLocaleDateString("en-US", { year: 'numeric' }) + '-' +
+                            data.rows[0].deadline.toLocaleDateString("en-US", { month: '2-digit' }) + '-' +
+                            data.rows[0].deadline.toLocaleDateString("en-US", { day: '2-digit' });
+
+
+                    for (var i = 0; i < data.rows.length; i++) {
+                        arrRows[i] = {
+                            testCode: data.rows[0].test_in_request_code,
+                            testName: data.rows[i].testing_full_name,
+                            objName: data.rows[i].category + ', ' + data.rows[i].subcategory,
+                            files: data.rows[i].files,
+                            testStatus: data.rows[i].testing_status,
+                            objRegNum: data.rows[i].object_reg_number,
+                            executorID: data.rows[i].worker_id,
+                            lineNum: data.rows[i].line_code,
+                            comment: data.rows[i].comment,
+                        }
+                    }
+                    doc.render({
+                        declarantName: data.rows[0].director_name,
+                        depName: data.rows[0].dep_full_name,
+                        entity: data.rows[0].entity_short_name,
+                        decContacts: data.rows[0].contacts,
+                        status: data.rows[0].status,
+                        opinionRequired: opinionRequired,
+                        testInRequest: arrRows,
+                        currentDate: currentDate,
+                        deadline: deadline,
+                        num:num
+                    });
+                    currentTime = currentDate + currentTime.slice(14);
+                    console.log(currentTime)
+                    const buffer = doc.getZip().generate({ type: 'nodebuffer' });
+
+                    //fs.writeFileSync(currentDate.substring(0, 13) + '.docx', buffer);
+                    let repPath = ('public/reports/reportReq' + num + '.docx')
+                    fs.writeFileSync(repPath, buffer);
+                    const file = (path.join(__dirname, '../public/reports/') + 'reportReq' + num + '.docx');
+                    res.download(file);
+
+
+                    //res.send('success');
+
+                } catch (error) {
+                    console.log(error);
+                    res.status(500).send(error);
+
+                }
+
+                //res.send(data,);
+            }
         }
     })
 
