@@ -1,7 +1,4 @@
 
-//alert('q')
-
-
 
 
 let create = document.getElementById('backup_create');

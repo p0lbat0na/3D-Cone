@@ -1,5 +1,5 @@
 
-//alert(window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
+
 
 
 const searchForm = document.getElementById('searchForm');
@@ -26,10 +26,6 @@ searchBtns.forEach(function (element, index) {
             let url = '/';
             let urlFull = '/'
 
-
-            // page + '/search'//page + '?num=' + num + '&req_proc=' + requires_processing;
-            //let page = window.location.href.substring(window.location.href.lastIndexOf('/'))
-            //page= page.slice(0, -1);
             let requires_processing = false;
             let diagonal_dir = false;
             let num = -1;
@@ -73,14 +69,11 @@ searchBtns.forEach(function (element, index) {
             catch (e) {
                 alert(e)
             }
-            //alert(window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
             if (url[url.length - 1] == "?") {
                 url = url.slice(0, url.length - 1);
         }
         
-            //alert(diagonal_dir +element.className)
             url = url + '/search'
-            //alert(url);
             fetch(url, {
                 method: 'POST',
                 headers: {

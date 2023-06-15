@@ -39,7 +39,6 @@ changeBtns.forEach(function (element, index) {
                 })
                     .then(res => res.text())
                     .then(data => {
-                        alert('change5')
 
                         alert(data);
                         let urlFull = document.getElementById('refresh').href;

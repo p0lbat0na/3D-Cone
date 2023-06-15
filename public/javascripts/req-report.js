@@ -18,7 +18,7 @@ reportBtns.forEach(function (element, index) {
 
         event.preventDefault();
         let num = document.getElementById('num' + index).innerHTML;
-        alert(num)
+        
         fetch('/report/request', {
             method: 'GET',
             headers: {

@@ -32,7 +32,6 @@ addTestForm.addEventListener("click", event => {
         document.getElementById("comment").removeAttribute('readonly');
         document.getElementById("files").removeAttribute('readonly');
 
-        //alert(currentTestCard + " c/b " + addBtnCount)
         document.getElementById('addBtnCount').innerHTML = addBtnCount;
         delBtn.setAttribute('disabled', true);
     }
@@ -51,7 +50,6 @@ addTestForm.addEventListener("click", event => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    //alert(data.user_id)
                     user_id = data.user_id
                     fetch('/insert', {
                         method: 'POST',
@@ -72,7 +70,6 @@ addTestForm.addEventListener("click", event => {
                                 document.getElementById("line_num").removeAttribute('readonly');
                                 document.getElementById("comment").removeAttribute('readonly');
                                 document.getElementById("files").removeAttribute('readonly');
-                                //alert(return_test_code[addBtnCount - 1] + " ?? " + return_test_code.length);
                                 currentTestCard = addBtnCount;
 
                             }
@@ -93,13 +90,12 @@ addTestForm.addEventListener("click", event => {
                 alert('Ошибка сервера')
             }
             else {
-                //alert('e2');
+                
 
                 document.getElementById("reg_num").required = false;
                 document.getElementById("line_num").required = false;
                 document.getElementById("comment").required = false;
                 document.getElementById("files").required = false;
-                //alert(document.getElementById("files").value);
 
                 let control_code = document.getElementById('control_code').value;
                 let reg_num = document.getElementById('reg_num').value;
@@ -129,10 +125,9 @@ addTestForm.addEventListener("click", event => {
                             document.getElementById("line_num").removeAttribute('readonly');
                             document.getElementById("comment").removeAttribute('readonly');
                             document.getElementById("files").removeAttribute('readonly');
-                            //alert(return_test_code[addBtnCount - 1] + " ?? " + return_test_code.length + " ?? " + addBtnCount.lenght);
                         }
                         else
-                            alert('e2e ' + data.name + ' ' + data.code + ' ' + data.detail);
+                            alert('error ' + data.name + ' ' + data.code + ' ' + data.detail);
                     })
                     .catch(error => {
                         alert(error);
@@ -140,14 +135,6 @@ addTestForm.addEventListener("click", event => {
 
             }
 
-
-            //alert('q');
-
-
-            //} catch (e) {
-            //    alert(e);
-            //}
-            // отменяем стандартное действие отправки формы
         }
     }
     currentTestCard = addBtnCount;
@@ -171,14 +158,6 @@ backBtn.addEventListener('click', event => {
     if (currentTestCard < 2)
         backBtn.setAttribute('disabled', true);
 
-
-
-        
-        //alert(window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
-        
-        //alert(diagonal_dir +element.className)
-        
-        //alert(url);
         fetch('/test-list/search', {
             method: 'POST',
             headers: {
@@ -192,7 +171,6 @@ backBtn.addEventListener('click', event => {
         })
             .then(res => res.json())
             .then(data => { 
-                    //alert(data.rows[0].files);
                 document.getElementById('control_code').value = data.rows[0].control_object_testing_code;
                 document.getElementById('reg_num').value=data.rows[0].object_reg_number;
                 document.getElementById('line_num').value=data.rows[0].line_code;
@@ -210,7 +188,6 @@ backBtn.addEventListener('click', event => {
                 document.getElementById("line_num").required = false;
                 document.getElementById("comment").required = false;
                 document.getElementById("files").required = false;
-                //alert(currentTestCard + " c/b " + addBtnCount)
 
 
             })

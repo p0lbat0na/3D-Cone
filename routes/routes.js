@@ -339,7 +339,8 @@ router.post('/test-list/search', (req, res, next) => {
         num = req.body.num;
         req.requires_processing = req.body.requires_processing;
         
-        let sql = 'SELECT * FROM tests_in_requests';
+        let sql = 'SELECT * FROM tests_in_requests ';
+       
         let title= 'Список испытаний'
         if (num != undefined && num != '') {
             if (req.body.diagonal_dir) {
@@ -357,7 +358,11 @@ router.post('/test-list/search', (req, res, next) => {
         else {
             if (req.requires_processing == true)
                 sql = sql + ` WHERE testing_status='в обработке'`;
+            else 
+                sql = sql + ` WHERE testing_status='в работе'`;
+
         }
+       
         sql = sql + ' ORDER BY test_in_request_code DESC';
         console.log(req.body.num + ' ^^ ' + sql + ' %% ' + req.body.diagonal_dir)
         const user = req.user;
@@ -408,7 +413,9 @@ router.get('/', authenticateJWT, (req, res) => {
 router.get('/req-list', authenticateJWT, (req, res) => {
     if (!req.user.isExecutor) {
        
-        let sql = 'SELECT * FROM requests';
+        let sql = 'SELECT * FROM requests ';
+        if (req.user.isDeclarant)
+            sql = sql + `WHERE worker_id = ` + req.user.user_id;
         sql = sql + ' ORDER BY request_code DESC';
 
         db.query(sql, function (err, data) {
@@ -438,7 +445,15 @@ router.get('/req-list', authenticateJWT, (req, res) => {
 })
 
 router.get('/test-list', authenticateJWT, function (req, res) {
+    console.log
     let sql = 'SELECT * FROM tests_in_requests ';
+    if (req.user.isExecutor)
+        sql = sql + 'WHERE worker_id=' + req.user.user_id;
+    else {
+        if (req.user.isDeclarant)
+            sql = sql + `INNER JOIN requests on tests_in_requests.request_code=requests.request_code
+            WHERE requests.worker_id = ` + req.user.user_id;
+    }
     sql = sql + ' ORDER BY test_in_request_code DESC';
 
     db.query(sql, function (err, data) {

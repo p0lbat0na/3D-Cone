@@ -45,7 +45,6 @@ cardPanels.forEach(function (element, index) {
                     sql += attr[i] + `'`+value[i]+`',`;
                 }
                 sql = sql.slice(0, -1) +` WHERE ` + attr[0] + value[0]
-                alert(sql);
                 fetch('/anyRequest', {
                     method: 'POST',
                     headers: {

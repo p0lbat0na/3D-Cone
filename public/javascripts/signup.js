@@ -1,8 +1,7 @@
 const loginForm = document.getElementById('loginForm');
                  
 loginForm.addEventListener('submit', event => {
-    //alert('q');
-    event.preventDefault();// отменяем стандартное действие отправки формы
+    event.preventDefault();
     const worker_id = document.getElementById('worker_id').value;
     const password = document.getElementById('password').value;
     try {
@@ -18,9 +17,6 @@ loginForm.addEventListener('submit', event => {
 
                 localStorage.setItem('token', data.accessToken);
                 localStorage.setItem('refreshToken', data.refreshToken);
-
-                //alert(data.token);
-                // alert(window.location.href );
                 window.location.href = '/';
 
             })
@@ -43,12 +39,6 @@ exit.addEventListener('submit', event => {
             let token = localStorage.getItem('token');
 
             const cookie = cookies[i];
-            alert(token)
-            alert(cookies.token)
-            alert(document.cookie.token)
-            alert(document.cookie)
-            alert(document.cookie.refreshToken)
-            alert(document.cookie.accessToken)
 
 
 
@@ -59,7 +49,6 @@ exit.addEventListener('submit', event => {
         catch (e) {
             alert(e)
         }
-        alert(' not clear 2')
 
     } alert('clear')
 })
