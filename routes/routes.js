@@ -13,7 +13,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../public/javascripts/scr');
 const PizZip = require("pizzip");
 const accessTokenSecret = 'goooordon-freeman';
-const refreshTokenSecret = 'goooordon-freeman';
+const refreshTokenSecret = 'gooooooordon-freeman';
 let  refreshTokens = [];
 router.use(express.json());
 
@@ -81,7 +81,7 @@ function authenticate(worker_id, password) {
                             isExecutor: isExecutor,
                             isOperator: isOperator,
                             user_name: worker_name
-                        }, accessTokenSecret, { expiresIn: '20m' }),
+                        }, accessTokenSecret, { expiresIn: '1m' }),
                         refreshToken: jwt.sign({
                             user_id: worker_id,
                             isDeclarant: isDeclarant,
@@ -205,7 +205,7 @@ router.post('/login', (req, res) => {
             // добавляем токен в ответ
             //res.json({ token });
             refreshTokens.push(token.refreshToken);
-            //console.log("post routes token " + token);
+            console.log("post routes token " + token.refreshToken);
             res.cookie('jwt', token, cookieOptions)
             .status(200)
                 .json({
@@ -244,7 +244,6 @@ router.post('/insert', (req, res) => {
 });
 
 router.post('/insert-test', (req, res) => {
-    console.log('Wwwww');
     const request_code = req.body.return_req_code;
     const control_code = req.body.control_code;
     const object_reg_number = req.body.reg_num;
@@ -254,7 +253,7 @@ router.post('/insert-test', (req, res) => {
 
     let attr = `request_code, control_object_testing_code, line_code, testing_status, object_reg_number, comment, files`
     let val = request_code + `, '` + control_code + `', ` + line_code + `, 'в обработке'` + `, '` + object_reg_number + `', '` + comment + `', '` + files + `'`;
-    console.log('WWWWWWWWWWWWW');
+   
 
     write('tests_in_requests', attr, val, 'test_in_request_code')
 
@@ -390,13 +389,28 @@ router.post('/test-list/search', (req, res, next) => {
     catch (err) {
         console.log(error);
     };
-});
+});                                  
 
 router.post('/logout', (req, res) => {
     
+    try {
+        //let jwtStr = req.headers.cookie.indexOf('refreshToken');
+        //const tokenDem = req.headers.cookie.substring(jwtStr + 21);
+        //const token = tokenDem.substring(0, tokenDem.indexOf('%'));
+        //refreshTokens = refreshTokens.filter(token => t !== token);
+        let wrongToken = "wrongToken"
         refreshTokens.push(wrongToken);
-        res.send("Logout successful"); 
+        res.send("Logout successful");
         jwt.destroy
+        //res.status(200).clearCookie('connect.sid', {
+        //    path: '/login'
+        //});
+        console.log('2');
+    }
+    catch (error) {
+        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+        //res.status(401).send(error.message);
+    };
         
     
 });
@@ -408,6 +422,9 @@ router.get('/', authenticateJWT, (req, res) => {
         isMain: true,
         user: req.user
     })
+    console.log(refreshTokens[0]);
+    console.log(refreshTokens[1]);
+    console.log(refreshTokens[2]);
 })
 
 router.get('/req-list', authenticateJWT, (req, res) => {
@@ -777,7 +794,6 @@ ORDER BY requests.request_code ASC`;
                             status: data.rows[i].testing_status,
                             regNum: data.rows[i].object_reg_number,                                
                             deadline: deadline[i],
-
                         }
                     }
 
