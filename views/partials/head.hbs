@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8">
 
@@ -13,36 +14,39 @@
     <!--<script type="module" src="/src"></script>-->
     {{#if isLogin}}
     <style>
-
         .center-align {
             text-align: center;
             vertical-align: middle;
             width: 238px;
         }
+
         /*.search_button:hover, .search_button:active {
         background: #0c835b url(/img/search.png)no-repeat 69px 13px;
         }*/
-        
+
         label {
             color: #000000;
             text-decoration: none;
             padding-top: 40px;
         }
+
         .textbox {
             border: 0;
             font-size: 20px;
-            
+
             height: 56px;
             top: 50px;
             margin-top: 5px;
             width: 150px;
             background-color: transparent;
         }
-            .textbox:focus ~ .text-field__label,
-            .textbox:not(:focus):valid ~ .text-field__label {
-                top: -30px;
-                font-size: 11px;
-            }
+
+        .textbox:focus~.text-field__label,
+        .textbox:not(:focus):valid~.text-field__label {
+            top: -30px;
+            font-size: 11px;
+        }
+
         .container {
             background-color: rgb(239, 239, 239);
             width: 300px;
@@ -57,10 +61,10 @@
             margin-bottom: 15px;
             padding-top: 2px;
             display: inline-block;
-            margin-left:auto;
+            margin-left: auto;
         }
 
-        
+
 
         .fixed-action-btn {
             padding: 10px;
@@ -71,9 +75,9 @@
             border-radius: 32px;
         }
 
-        
 
-        
+
+
         /*.search_button:hover, .search_button:active {
                 background: #0c835b url(/img/search.png)no-repeat 69px 13px;
             }*/
@@ -84,7 +88,7 @@
             margin-top: 10px;
             margin-bottom: 35px;
             margin-right: 40px;
-            margin-left:-110px;
+            margin-left: -110px;
         }
 
         .text-field__label {
@@ -101,8 +105,8 @@
             transition: .3s;
         }
 
-        .serch_textbox:focus ~ .text-field__label,
-        .serch_textbox:not(:focus):valid ~ .text-field__label {
+        .serch_textbox:focus~.text-field__label,
+        .serch_textbox:not(:focus):valid~.text-field__label {
             top: -15px;
             font-size: 10px;
         }
@@ -135,9 +139,10 @@
             margin-right: 10px;
         }
 
-            .btn-flat:hover, .btn-flat:active {
-                background-color: darkred;
-            }
+        .btn-flat:hover,
+        .btn-flat:active {
+            background-color: darkred;
+        }
 
         .fixed-action-btn {
             padding: 10px;
@@ -147,7 +152,7 @@
             background-color: gainsboro;
             border-radius: 32px;
             bottom: auto;
-            top:23px;
+            top: 23px;
         }
 
         .upper {
@@ -156,9 +161,9 @@
         }
 
         .height {
-            height:70px;
-            line-height:2;
-            font-size:11pt;
+            height: 70px;
+            line-height: 2;
+            font-size: 11pt;
         }
 
         .search {
@@ -176,10 +181,10 @@
             border: 1px solid #E0E3EB;
             margin-top: -13px;
             margin-bottom: 10px;
-            margin-right:20px;
+            margin-right: 20px;
         }
 
-        
+
 
         .search_button {
             font-family: 'Lexend';
@@ -225,8 +230,8 @@
             transition: .3s;
         }
 
-        .serch_textbox:focus ~ .text-field__label,
-        .serch_textbox:not(:focus):valid ~ .text-field__label {
+        .serch_textbox:focus~.text-field__label,
+        .serch_textbox:not(:focus):valid~.text-field__label {
             top: -15px;
             font-size: 10px;
         }
@@ -249,7 +254,7 @@
             display: flex;
             flex-wrap: wrap;
             background: white url(/img/Group.png)no-repeat 24px center;
-            background-size: 20px,18px;
+            background-size: 20px, 18px;
             top: -3px;
             padding: 0px 0px 0px 64px;
             border-radius: 32px;
@@ -285,9 +290,9 @@
             max-width: 290px;
         }
 
-            .date_input p {
-                width: 150px
-            }
+        .date_input p {
+            width: 150px
+        }
 
         .fieldset {
             display: inline-block;
@@ -309,14 +314,14 @@
             transition: .3s;
         }
 
-        .textbox:focus ~ .text-field__label,
-        .textbox:not(:focus):valid ~ .text-field__label {
+        .textbox:focus~.text-field__label,
+        .textbox:not(:focus):valid~.text-field__label {
             top: -67px;
             font-size: 10px;
         }
 
-        .textbox:focus ~ .text-field-label,
-        .textbox:not(:focus):valid ~ .text-field-label {
+        .textbox:focus~.text-field-label,
+        .textbox:not(:focus):valid~.text-field-label {
             top: -67px;
             font-size: 10px;
         }
@@ -361,8 +366,6 @@
             justify-content: space-between;
             width: 70px;
         }
-
-        
     </style>
     {{/if}}
 
@@ -379,7 +382,7 @@
             display: flex;
             flex-wrap: wrap;
             background: white url(/img/Group.png)no-repeat 24px center;
-            background-size: 20px,18px;
+            background-size: 20px, 18px;
             top: -3px;
             padding: 0px 0px 0px 64px;
             border-radius: 32px;
@@ -390,8 +393,8 @@
             margin-bottom: 32px;
         }
 
-        h2{
-            color:rgb(60, 60, 60);
+        h2 {
+            color: rgb(60, 60, 60);
         }
 
         .textbox {
@@ -413,8 +416,8 @@
             margin-right: 30px;
         }
 
-        .checkbox{
-            margin-top:10px;
+        .checkbox {
+            margin-top: 10px;
         }
 
         .date_input {
@@ -423,9 +426,9 @@
             max-width: 290px;
         }
 
-            .date_input p {
-                width: 150px
-            }
+        .date_input p {
+            width: 150px
+        }
 
         .fieldset {
             display: inline-block;
@@ -447,14 +450,14 @@
             transition: .3s;
         }
 
-        .textbox:focus ~ .text-field__label,
-        .textbox:not(:focus):valid ~ .text-field__label {
+        .textbox:focus~.text-field__label,
+        .textbox:not(:focus):valid~.text-field__label {
             top: -67px;
             font-size: 10px;
         }
 
-        .textbox:focus ~ .text-field-label,
-        .textbox:not(:focus):valid ~ .text-field-label {
+        .textbox:focus~.text-field-label,
+        .textbox:not(:focus):valid~.text-field-label {
             top: -67px;
             font-size: 10px;
         }
@@ -470,7 +473,7 @@
             min-width: 400px;
         }
 
-        
+
 
         .ninety {
             width: 95%;
@@ -486,7 +489,7 @@
             display: flex;
             flex-wrap: wrap;
             background: white url(/img/Group.png)no-repeat 24px center;
-            background-size: 20px,18px;
+            background-size: 20px, 18px;
             top: -3px;
             padding: 0px 0px 0px 64px;
             border-radius: 32px;
@@ -500,9 +503,11 @@
         .checkbox {
             margin-top: 10px;
         }
+
         h2 {
             color: rgb(60, 60, 60);
         }
+
         .textbox {
             border: 0;
             font-size: 20px;
@@ -528,9 +533,9 @@
             max-width: 290px;
         }
 
-            .date_input p {
-                width: 150px
-            }
+        .date_input p {
+            width: 150px
+        }
 
         .fieldset {
             display: inline-block;
@@ -552,16 +557,16 @@
             transition: .3s;
         }
 
-        .textbox:focus ~ .text-field__label,
+        .textbox:focus~.text-field__label,
         .textbox:placeholder-shown,
-        .textbox:not(:focus):valid ~ .text-field__label {
+        .textbox:not(:focus):valid~.text-field__label {
             top: -67px;
             font-size: 10px;
         }
 
-        .textbox:focus ~ .text-field-label,
+        .textbox:focus~.text-field-label,
         .textbox:not(:placeholder-shown),
-        .textbox:not(:focus):valid ~ .text-field-label {
+        .textbox:not(:focus):valid~.text-field-label {
             top: -67px;
             font-size: 10px;
         }
@@ -577,13 +582,13 @@
             min-width: 400px;
         }
 
-        
+
 
         .ninety {
             width: 95%;
             display: flex;
             justify-content: space-between;
-                    height:30px;
+            height: 30px;
         }
     </style>
 
@@ -591,12 +596,188 @@
 
     {{#if isCatalog}}
     <style>
+        .intro_title {
+            font-family: 'Lexend', sans-serif;
+
+            text-transform: capitalize;
+            color: #1B1C57;
+            font-weight: 800;
+            font-style: normal;
+            font-size: 40px;
+            width: 496px;
+            line-height: 47px;
+            margin-bottom: 24px;
+        }
+
+        strong {
+            color: transparent;
+            position: relative;
+            /* We need double the stroke width because half of it gets covered up */
+            -webkit-text-stroke: 3px #1B1C57;
+            font-weight: 600;
+
+        }
+
+        .intro_title_white {
+            color: white;
+            position: absolute;
+            left: 99px;
+            -webkit-text-stroke: 0;
+            font-weight: 600;
+        }
+
         .btn {
             width: 45%;
             margin-bottom: 10px;
             min-width: 239px;
             margin-left: 20px;
             font-size: smaller;
+        }
+
+        .btn-small {
+
+            margin-bottom: 10px;
+
+            margin-left: 5px;
+            font-size: smaller;
+        }
+
+        .social {
+            margin: 10px;
+            height: 110px;
+            width: 105px;
+            background-color: dimgray;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            border-radius: 15px;
+            -webkit-transition: all 1s ease;
+            -moz-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            transition: all 1s ease;
+            padding: 1%;
+        }
+
+        .social:hover {
+            margin: 10px;
+            height: 200px;
+            width: 200px;
+            padding: 2%;
+            padding-bottom: 0;
+
+            background-color: dimgray;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            border-radius: 50%;
+            -webkit-transition: all 1s ease;
+            -moz-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            transition: all 1s ease;
+        }
+
+        .btn-social {
+            margin: 0%;
+            -webkit-transition: all 2s ease;
+            -moz-transition: all 2s ease;
+            -o-transition: all 2s ease;
+            transition: all 2s ease;
+        }
+
+        .phone-container {
+            background-color: aqua;
+            bottom: 10px;
+            right: 10px;
+            margin: 5%;
+            margin-bottom: 0%;
+            margin-right: 40px;
+            position: relative;
+            -webkit-transition: all 2s ease;
+            -moz-transition: all 2s ease;
+            -o-transition: all 2s ease;
+            transition: all 2s ease;
+        }
+
+        .social:hover .btn-social {
+            animation-delay: 500ms;
+            margin: 10%;
+            -webkit-transition: all 0.1s ease;
+            -moz-transition: all 0.1s ease;
+            -o-transition: all 0.1s ease;
+            transition: all 0.9s ease;
+
+        }
+
+        .social:hover .phone-container {
+            animation-delay: 500ms;
+            margin: 15%;
+            -webkit-transition: all 2s ease;
+            -moz-transition: all 2s ease;
+            -o-transition: all 2s ease;
+            transition: all 2s ease;
+        }
+
+        .git {
+            position: inherit;
+            top: 10px;
+            left: 10px;
+        }
+
+        .hh {
+            position: inherit;
+            top: 10px;
+            right: 10px;
+        }
+
+        .mail {
+            position: inherit;
+            bottom: 10px;
+            left: 10px;
+        }
+
+
+
+        .phone-btn {
+            position: inherit;
+
+            z-index: 20;
+            max-width: 50px;
+        }
+
+        .phone-text {
+            display: block;
+            height: 40px;
+            margin-top: -40px;
+            width: 90%;
+            visibility: visible;
+            z-index: 19;
+            background-color: aliceblue;
+        }
+
+        .phone-btn:hover {
+            position: relative;
+        }
+
+        .phone-container:hover .phone-text:after {
+            position: fixed;
+            top: 20px;
+            transform: scale(2, 0.5);
+            width: 40px;
+            margin-bottom: 30px;
+            margin-top: 0px;
+            margin-left: 20px;
+            content: '8(987)291-63-53';
+
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+        }
+
+        .mail:hover+.phone-text:after {
+            margin-bottom: 30px;
+            margin-top: -13px;
+            margin-left: 20px;
+            content: 'arsenya.popov.03@bk.ru';
         }
 
         .flow-text {
@@ -616,13 +797,15 @@
             background: white url(prism.png) repeat;
             background-size: 700px;
         }
+
         .btn {
-            background-color:tomato;
+            background-color: tomato;
         }
 
-            .btn:hover, .btn:active {
-                background-color: darkred;
-            }
+        .btn:hover,
+        .btn:active {
+            background-color: darkred;
+        }
 
         .card-panel {
             border-radius: 32px;
@@ -636,6 +819,5 @@
         .rightt {
             float: right;
         }
-        
     </style>
 </head>

@@ -81,7 +81,7 @@ function authenticate(worker_id, password) {
                             isExecutor: isExecutor,
                             isOperator: isOperator,
                             user_name: worker_name
-                        }, accessTokenSecret, { expiresIn: '1m' }),
+                        }, accessTokenSecret, { expiresIn: '30m' }),
                         refreshToken: jwt.sign({
                             user_id: worker_id,
                             isDeclarant: isDeclarant,
