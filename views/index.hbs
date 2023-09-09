@@ -1,47 +1,48 @@
 <body>
 
     {{{body}}}
-    <form action="/login" class="fixed-action-btn">
-        <p>
-            Выполнен вход, {{user.user_name}}
-        </p>
-        <button class="waves-effect waves-teal btn-flat" href="/login">
-            Выйти
-        </button>
-    </form>
-    <div class="center-align">
-        <h2>ЛНК</h2>
-        {{#if user.isDeclarant}}
-        <a class="btn" href="/create-req">Новая заявка</a>
-        {{/if}}
-        {{#unless user.isExecutor}}
-        <a class="btn" href="/req-list ">Список заявок</a>
-        {{/unless}}
-        <a class="btn" href="/test-list">Испытания</a>
-        <a class="btn" href="/catalog">Справочник</a>
-        {{#if user.isOperator}}
-        <a class="btn" href="/backup">Администрирование</a>
-        <p class="upper">Отчет по исполнителям:</p>
-        <form class="search" id="worker_report">
-            <div class="fieldset">
-                <input type="text" id="worker_report_inp" class="serch_textbox" required>
-                <button type="submit" class="search_button btn" id="executorReport">Скачать</button>
-                <label class="text-field__label">ID исполнителя</label>
+    <div class="row">
+
+        <div class='container'>
+            <a id="refresh">
+                <h2>Конус в 3D</h2>
+            </a>
+            <form id="searchForm" class="container ninety">
+                <div class="fieldset">
+                    <input id="num_input" type="text" class="textbox" required>
+                    <label class="text-field__label" for="search">Радиус основания</label>
+                </div>
+                <div class="fieldset">
+                    <input id="num_input" type="text" class="textbox" required>
+                    <label class="text-field__label" for="search">Высота</label>
+                </div>
+                <div class="fieldset">
+                    <input id="num_input" type="text" class="textbox" required>
+                    <label class="text-field__label" for="search">Количество сегментов</label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="requires_processing">
+                        <span>Гладкий конус</span>
+                    </label>
+                </div>
+
+                <button class="btn large" id="search">Сгенерировать</button>
+            </form>
+
+            <p>Найдено заявок: <strong id="amount_of_record"></strong></p>
+
+            <div id="WebGL-output">
             </div>
-        </form>
-        <p>Отчет по объектам:</p>
-        <form class="search" id="obj_report">
-            <div class="fieldset">
-                <input type="text" id="obj_report_inp" class="serch_textbox" required>
-                <button type="submit" class="search_button btn" href="/report/staff">Скачать</button>
-                <label class="text-field__label">Код объекта</label>
-            </div>
-        </form>
-        {{/if}}
+            <!--Javascript code that runs our Three.js examples -->
+
+        </div>
     </div>
 
+    </form>
 
-<script src="/javascripts/report.js"></script>
+
+    <script src="/javascripts/report.js"></script>
 </body>
 
 <script>
