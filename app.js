@@ -50,7 +50,7 @@ app.use(function (err, req, res, next) {
 app.set('port', process.env.PORT || 3000);
 
 const server = app.listen(app.get('port'), function () {
-    debug('Express server listening on port ' + server.address().port);
+    console.log('Express server listening on port ' + server.address().port);
 });
 
 // catch 404 and forward to error handler

@@ -1,0 +1,125 @@
+[33mcommit f58535a8c5c7911279861453694bb861fc42940a[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Арсений Попов <arsenya.popov.03@bk.ru>
+Date:   Sat Sep 9 17:00:11 2023 +0300
+
+    script
+
+[33mcommit e1327aefdd7aafb078284c5a88c95951c05373ca[m
+Author: Арсений Попов <arsenya.popov.03@bk.ru>
+Date:   Mon Sep 4 15:49:35 2023 +0300
+
+    'неработающая анимация соцсетей'
+
+[33mcommit bec0c18f918281284e8bb20e41d74a0e023c90dc[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Thu Aug 24 11:38:02 2023 +0300
+
+    readme
+
+[33mcommit ac3bda709a724376363c7c8774c7f1ffa7a3b2b7[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Thu Jun 15 21:51:32 2023 +0300
+
+    Чистая версия на диплом
+
+[33mcommit 784b769c32d29af9fd7976a5ca3f05b51c71d2f9[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Wed Jun 14 11:17:30 2023 +0300
+
+    Версия на диплом
+
+[33mcommit d4ced4624ebb412c159b7e088fd53a7dddafa0af[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Tue Jun 13 12:26:48 2023 +0300
+
+    Последний отчет
+
+[33mcommit b549eae0cbe82039445bc9545aa0de2da3574be6[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Sun Jun 4 22:48:16 2023 +0300
+
+    один из 3 отчетов
+
+[33mcommit 1a3345bbca3ab326aebc4e6c40cbe5fd8d4ab145[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Tue May 30 15:52:43 2023 +0300
+
+    нормальный бэкап
+
+[33mcommit 5750cc796c923e4228635b349c2855801a0e58cc[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Mon May 29 21:45:04 2023 +0300
+
+    мой первый бэкап
+
+[33mcommit 06a1fc9a53ca825472c1113d29e1741dc7e5e13f[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Fri May 26 11:21:36 2023 +0300
+
+    ///
+
+[33mcommit 4abe80796224078369596ae173862e07025a4933[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Fri May 26 00:56:03 2023 +0300
+
+    начало работы над резервным копированием
+
+[33mcommit 6d0ea462acabd1b6c55036b5b857f00fbaf83249[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Wed May 24 12:03:58 2023 +0300
+
+    кнопки в списках работают для всех карточек
+
+[33mcommit 1722a3952c4c1ab50ab47bc778af7db51190a20c[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Mon May 22 00:09:09 2023 +0300
+
+    добавление заявки сделано
+
+[33mcommit b3d45163425d68dc5576b79743e5ef14acd56047[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Fri May 19 13:39:17 2023 +0300
+
+    не сделал поиск(
+
+[33mcommit b1ebe0ad3806ff1b6d498eeff52367c18349c332[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Thu May 11 20:38:32 2023 +0300
+
+    добавил токены
+
+[33mcommit b89f09162e39bcc4d28b3f6800714dd8f822c5ca[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Mon May 1 17:27:11 2023 +0300
+
+    Справочник работает
+
+[33mcommit bfb02273fbf2016ff6920c54ec087e04012923af[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Sun Apr 16 15:56:55 2023 +0300
+
+    жжжж
+
+[33mcommit 1049fcae51cb5206c2ff33d27917cda27aa9bfb0[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Sun Apr 9 16:38:47 2023 +0300
+
+    cursor. выводит данные из таблиц в консоль, не вылетает, но не знаю как их преобразовать
+
+[33mcommit 08c04116c9e1cdd1e955dc2210d78f77d5ca204c[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Fri Apr 7 19:17:48 2023 +0300
+
+    скрипты хбс начало
+
+[33mcommit ab80d90281894f4effd2fd797eda744fcff5246b[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Tue Apr 4 12:23:18 2023 +0300
+
+    Добавьте файлы проекта.
+
+[33mcommit d55dfc2298ad0373e13d9ffcd3aa20acc882da44[m
+Author: Арсений Попов <tatyanka.popova.1970@inbox.ru>
+Date:   Tue Apr 4 12:23:16 2023 +0300
+
+    Добавить .gitattributes и .gitignore.
