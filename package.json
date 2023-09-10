@@ -2,6 +2,7 @@
   "name": "lnk2",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "node app",
     "dev": "nodemon app"

@@ -42,26 +42,5 @@
     </form>
 
 
-    <script src="/javascripts/report.js"></script>
+    <script src="/javascripts/script.js"></script>
 </body>
-
-<script>
-    function exit(request, response, next) {
-        response.statusCode = 401;
-        response.setHeader('WWW-Authenticate', 'NTLM'); response.end();
-    }
-</script>
-<script>
-
-    function deleteAllCookies() {
-        const cookies = document.cookie.split(";");
-
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i];
-            const eqPos = cookie.indexOf("=");
-            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-
-        } alert('clear')
-    }
-</script>
