@@ -8,6 +8,8 @@ import * as exphbs from 'express-handlebars';
 import { routes } from './routes/index.js';
 import { router } from './routes/routes.js';
 import { fileURLToPath } from 'url';
+import favicon from 'serve-favicon';
+
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -53,6 +55,7 @@ const server = app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + server.address().port);
 });
 
+app.use(favicon(__dirname + '/public/favicon.ico'));
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));

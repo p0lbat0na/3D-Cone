@@ -10,26 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="/index.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/three@0.131.1/build/three.min.js"></script>
     <title>3D Cone</title>
 
     </script>
     <!--<script type="module" src="/src"></script>-->
     <style>
-        .search {
-            display: flex;
-            flex-wrap: wrap;
-            background: white url(/img/Group.png)no-repeat 24px center;
-            background-size: 20px, 18px;
-            top: -3px;
-            padding: 0px 0px 0px 64px;
-            border-radius: 32px;
-            vertical-align: bottom;
-            width: 496px;
-            height: 56px;
-            border: 1px solid #E0E3EB;
-            margin-bottom: 32px;
-        }
-
         h2 {
             color: rgb(60, 60, 60);
         }
@@ -54,18 +40,11 @@
         }
 
         .checkbox {
-            margin-top: 10px;
+            margin: 10px;
+            width: 100%;
+
         }
 
-        .date_input {
-            display: flex;
-            justify-content: space-between;
-            max-width: 290px;
-        }
-
-        .date_input p {
-            width: 150px
-        }
 
         .fieldset {
             display: inline-block;
@@ -108,16 +87,59 @@
         .container {
             background-color: rgb(239, 239, 239);
             min-width: 400px;
+            width: 99%;
+            height: 100%;
+            padding: 0;
         }
 
         canvas {
-            border: 2px dotted blue;
+            height: 90%;
+            width: 70%;
+            min-width: 300px;
+            min-height: 400px;
+            margin-right: 5px;
+        }
+
+        #c {
+            width: 100%;
+            height: 100%;
+            display: block;
         }
 
         .ninety {
             width: 95%;
             display: flex;
             justify-content: space-between;
+        }
+
+        .generate-form {
+            display: block;
+            vertical-align: top;
+            width: 40px;
+            margin-right: 120px;
+        }
+
+        .btn {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .row {
+            width: 95%;
+            height: max-content;
+            display: inline-flex;
+
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 15px;
+            padding-right: 0px;
+        }
+
+
+        .lang {
+            display: block;
+            margin: 5px;
+            text-align: center;
         }
     </style>
 </head>

@@ -1,34 +1,13 @@
 {{> head}}
+
 <body>
 
-    <div class="row">
-        {{#if isMain}}
-
-        <div class='container'>
-            {{{body}}}
-        </div>
-        {{else}}
-        {{#if isLogin}}
-
-        <div class='container'>
-            {{{body}}}
-        </div>
-        {{else}}
-        {{#if isCatalog}}
-
-        <div class='container  col s12'>
-            {{{body}}}
-        </div>
-        {{else}}
-
-        <div class='container col s8 offset-s2'>
-            {{{body}}}
 
 
-        </div>
-        {{/if}}
-        {{/if}}
-        {{/if}}
+    <div class='container'>
+        {{{body}}}
     </div>
+
 </body>
+
 </html>

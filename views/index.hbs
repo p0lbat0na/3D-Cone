@@ -1,49 +1,78 @@
 <body>
 
     {{{body}}}
+
+
+    <script type="importmap">{
+    	"imports": {
+    		"three": "https://threejs.org/build/three.module.js",
+    		"three/addons/": "https://threejs.org/examples/jsm/"
+    	}
+    }</script><!-- Remove this when import maps will be widely supported -->
+    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+
+
+
+    <a id="refresh">
+        <h2 id="h">Конус в 3D</h2>
+    </a>
     <div class="row">
-
-        <div class='container'>
-            <a id="refresh">
-                <h2>Конус в 3D</h2>
-            </a>
-            <form id="searchForm" class="container ninety">
-                <div class="fieldset">
-                    <input id="num_input" type="text" class="textbox" required>
-                    <label class="text-field__label" for="search">Радиус основания</label>
-                </div>
-                <div class="fieldset">
-                    <input id="num_input" type="text" class="textbox" required>
-                    <label class="text-field__label" for="search">Высота</label>
-                </div>
-                <div class="fieldset">
-                    <input id="num_input" type="text" class="textbox" required>
-                    <label class="text-field__label" for="search">Количество сегментов</label>
-                </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="requires_processing">
-                        <span>Гладкий конус</span>
-                    </label>
-                </div>
-
-                <button class="btn large" id="search">Сгенерировать</button>
-            </form>
-
-            <p>Найдено заявок: <strong id="amount_of_record"></strong></p>
-
-            <div id="WebGL-output">
-                <canvas class="webgl"></canvas>
+        <form id="generate-form" class="generate-form ninety">
+            <div class="fieldset">
+                <input id="radius_input" type="text" class="textbox" required>
+                <label id="radius-label" class="text-field__label" for="search">Радиус основания</label>
+            </div>
+            <div class="fieldset">
+                <input id="height_input" type="text" class="textbox" required>
+                <label id="height-label" class="text-field__label" for="search">Высота</label>
+            </div>
+            <div class="fieldset">
+                <input id="segments-input" type="text" class="textbox" required>
+                <label id="segments-label" class="text-field__label" for="search">Количество сегментов</label>
+            </div>
+            <div id="checkbox" class="checkbox">
+                <label>
+                    <input type="checkbox" id="smooth-input" name="smooth-input" value="value">
+                    <span id="checkbox-label" class="checkbox-label">Гладкий конус</span>
+                </label>
             </div>
 
-
-            <!--Javascript code that runs our Three.js examples -->
-
-        </div>
+            <button class="btn large" type="submit" id="generate">Сгенерировать</button>
+        </form>
+        <canvas id="canvas"></canvas>
     </div>
+    <script>
+        function langChange() {
+            const langBtn = document.getElementById('lang');
+            if (langBtn.name == 'EN') {
+                langBtn.innerHTML = 'RU';
+                langBtn.name = 'RU';
+                document.getElementById('radius-label').innerHTML = 'Base radius';
+                document.getElementById('height-label').innerHTML = 'Height';
+                document.getElementById('segments-label').innerHTML = 'Amount of segments';
+                document.getElementById('h').innerHTML = ('3D Cone');
+                document.getElementById('checkbox-label').innerHTML = 'Smooth';
+                document.getElementById('generate').innerHTML = 'Generate';
+            }
+            else {
+                langBtn.innerHTML = 'EN';
+                langBtn.name = 'EN';
+                document.getElementById('radius-label').innerHTML = 'Радиус основания';
+                document.getElementById('height-label').innerHTML = 'Высота';
+                document.getElementById('segments-label').innerHTML = 'Количество сегментов';
+                document.getElementById('h').innerHTML = ('Конус в 3D');
+                document.getElementById('checkbox-label').innerHTML = 'Гладкий конус';
+                document.getElementById('generate').innerHTML = 'Сгенерировать';
+            }
+        }
+    </script>
+
+    <!--Javascript code that runs our Three.js examples -->
 
 
 
 
-    <script type="module" src="/javascripts/script.js"></script>
+
+    {{> tomain}}
 </body>
+<script type="module" src="/javascripts/generate.js"></script>
