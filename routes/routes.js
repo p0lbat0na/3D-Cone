@@ -1,3 +1,4 @@
+
 import * as  express from 'express'
 const router = express.Router();
 import * as  bodyParser from 'body-parser'
@@ -24,4 +25,6 @@ router.post('/cone', (req, res) => {
         res.status(401).send(er);
     };
 });
+
+export { router };
 
