@@ -14,14 +14,14 @@ const db = require('../public/javascripts/scr');
 const PizZip = require("pizzip");
 const accessTokenSecret = 'goooordon-freeman';
 const refreshTokenSecret = 'gooooooordon-freeman';
-let  refreshTokens = [];
+let refreshTokens = [];
 router.use(express.json());
 
 const role1 = ['Оператор ЛНК', 'Директор ЛНК', 'Заместитель директора ЛНК'];
 const role2 = ['Инженер по неразрушающему контролю', 'Младший специалист по неразрушающему контролю', 'Специалист по неразрушающему контролю'];
 const role3 = ['Директор', 'Руководитель', 'Главный инженер', 'Заместитель директора', 'Инженер'];
 
-                
+
 const authenticateJWT = (req, res, next) => {
 
     let authHeader = req.headers.cookie;
@@ -30,15 +30,15 @@ const authenticateJWT = (req, res, next) => {
         let jwtStr = req.headers.cookie.indexOf('accessToken');
         const tokenDem = req.headers.cookie.substring(jwtStr + 20);
         const token = tokenDem.substring(0, tokenDem.indexOf('%'));
-         jwt.verify(token, accessTokenSecret, (err, user) => {
+        jwt.verify(token, accessTokenSecret, (err, user) => {
             if (err) {
                 console.log(err)
                 //return res.sendStatus(403);
                 return res.redirect('/login');
-            }            
+            }
             req.user = user;
             console.log(user.user_id + ' ** ' + user.isOperator + ' ** ' + user.isDeclarant + ' ** ' + user.isExecutor + ' ** ' + user.user_name);
-            next();            
+            next();
         });
     } else {
         console.log("****er");
@@ -48,16 +48,16 @@ const authenticateJWT = (req, res, next) => {
 };
 
 function authenticate(worker_id, password) {
-     return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         db.query('SELECT * FROM staff WHERE worker_id = $1 AND password = $2', [worker_id, password], (error, data) => {
             if (error) {
                 reject(error);
                 console.log(error);
             } else {
                 //console.log(data.rows[0].worker_id);
-                
+
                 if (data.rows.length > 0) {
-                    
+
                     let worker_id = data.rows[0].worker_id;
                     let isDeclarant = false;
                     let isExecutor = false;
@@ -72,8 +72,8 @@ function authenticate(worker_id, password) {
                             data.rows[0].job_title == role2[2])
                             isExecutor = true;
                         else isDeclarant = true;
-                    }const worker_name = data.rows[0].full_name;
-                    
+                    } const worker_name = data.rows[0].full_name;
+
                     const token = {
                         accessToken: jwt.sign({
                             user_id: worker_id,
@@ -92,7 +92,7 @@ function authenticate(worker_id, password) {
                     }; resolve(token);
                 } else {
                     reject(new Error('Неправильный логин или пароль'));
-                }            
+                }
             }
         });
     });
@@ -100,15 +100,15 @@ function authenticate(worker_id, password) {
 
 function write(table, attr, value, returnCode) {
     return new Promise((resolve, reject) => {
-         let q = 'INSERT INTO public.' + table + '(' + attr + ') VALUES(' + value + ') RETURNING ' + returnCode+' AS return_code';
+        let q = 'INSERT INTO public.' + table + '(' + attr + ') VALUES(' + value + ') RETURNING ' + returnCode + ' AS return_code';
         console.log(q);
         db.query(q, (error, data) => {
 
             if (error) {
-                reject(error);                    
-            } else {                     
+                reject(error);
+            } else {
                 if (data) {
-    resolve(data);
+                    resolve(data);
                 } else {
                     reject('no data?;(');
                 }
@@ -128,11 +128,11 @@ function getTime() {
     let sec = myDate.getSeconds()
     console.log(sec)
 
-          console.log(minute)
+    console.log(minute)
     if (minute < 10) {
         minute = '0' + minute
     }
-    console.log(minute+'min')
+    console.log(minute + 'min')
 
     return (
         day + '.' + month + '.' + year + ' ' + hour + ':' + minute + ':' + sec
@@ -140,8 +140,9 @@ function getTime() {
 }
 
 function del(table, row, condition) {
-    return new Promise((resolve, reject) => {if (typeof (condition) != 'number')
-            condition = `'` + condition+`'`
+    return new Promise((resolve, reject) => {
+        if (typeof (condition) != 'number')
+            condition = `'` + condition + `'`
         let sql = 'DELETE FROM public.' + table + ' WHERE ' + row + ' = ' + condition;
         console.log(sql);
         //db.query('SELECT INTO $1 ($2) VALUES ($3);', [table, attr,value], (error, data) => {
@@ -159,16 +160,16 @@ function del(table, row, condition) {
 }
 
 function anyRequest(sql) {
-    return new Promise((resolve, reject) => {       
-        
-        console.log('###########'+sql);
+    return new Promise((resolve, reject) => {
+
+        console.log('###########' + sql);
         db.query(sql, (error, data) => {
 
             if (error) {
                 reject(error);
                 console.log(error);
             } else {
-                console.log('Запрос выполнен' +sql)
+                console.log('Запрос выполнен' + sql)
                 resolve(data);
             }
         });
@@ -180,7 +181,7 @@ router.post('/anyRequest', (req, res) => {
 
     anyRequest(sql)
 
-        .then(data => {            
+        .then(data => {
             res.send(data);
         })
         .catch(error => {
@@ -190,24 +191,24 @@ router.post('/anyRequest', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    
+
     const worker_id = req.body.worker_id;
     const password = req.body.password;
 
     let cookieOptions = {
         // Delete the cookie after 90 days
-        expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),httpOnly: true,
+        expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), httpOnly: true,
     };
     cookieOptions.secure = true;
-    
+
     authenticate(worker_id, password)
-        .then(token=> {
+        .then(token => {
             // добавляем токен в ответ
             //res.json({ token });
             refreshTokens.push(token.refreshToken);
             console.log("post routes token " + token.refreshToken);
             res.cookie('jwt', token, cookieOptions)
-            .status(200)
+                .status(200)
                 .json({
                     msg: 'Successfully logged in',
                 });
@@ -222,19 +223,20 @@ router.post('/login', (req, res) => {
 router.post('/insert', (req, res) => {
     console.log('Wwwww');
 
-    
+
     const department_num = req.body.department_num;
-    const deadline = req.body.deadline;   
+    const deadline = req.body.deadline;
     const opinion_reqired = req.body.opinion_reqired;
-    const worker_id = req.body.user_id;   
+    const worker_id = req.body.user_id;
 
     let attr = `department_num, deadline, opinion_required, status, worker_id`
     let val = department_num + `, '` + deadline + `', ` + opinion_reqired + `, 'в обработке'` + `, ` + worker_id;
     console.log('WWWWWWWWWWWWW');
 
     write('requests', attr, val, 'request_code')
-        
-        .then(data =>    {res.send(data.rows[0].return_code);
+
+        .then(data => {
+            res.send(data.rows[0].return_code);
 
         })
         .catch(error => {
@@ -253,11 +255,12 @@ router.post('/insert-test', (req, res) => {
 
     let attr = `request_code, control_object_testing_code, line_code, testing_status, object_reg_number, comment, files`
     let val = request_code + `, '` + control_code + `', ` + line_code + `, 'в обработке'` + `, '` + object_reg_number + `', '` + comment + `', '` + files + `'`;
-   
+
 
     write('tests_in_requests', attr, val, 'test_in_request_code')
 
-        .then(data => {res.send(data.rows[0].return_code);
+        .then(data => {
+            res.send(data.rows[0].return_code);
 
         })
         .catch(error => {
@@ -275,7 +278,7 @@ router.post('/delete', (req, res) => {
     del(table, row, condition)
 
         .then(data => {
-            
+
 
             console.log(data);
 
@@ -295,7 +298,7 @@ router.post('/req-list/search', (req, res, next) => {
     try {
         let num = req.body.num;
         let requires_processing = req.body.requires_processing;
-        
+
         //console.log(req.body.num + ' ^^ ' + req.requires_processing)
         let sql = 'SELECT * FROM requests';
 
@@ -315,12 +318,12 @@ router.post('/req-list/search', (req, res, next) => {
         db.query(sql, function (err, data) {
             if (err) throw err;
             if (data.rows.length == 0) {
-                res.status(400).send('Запрос не дал результатов')                
+                res.status(400).send('Запрос не дал результатов')
             }
             else {
-                
+
                 res.render('req-list', {
-                    title: 'Заявка '+num,
+                    title: 'Заявка ' + num,
                     isReqList: true,
                     userData: data,
                     user: user
@@ -328,40 +331,40 @@ router.post('/req-list/search', (req, res, next) => {
             }
         })
     }
-        catch(err){
-            console.log(error);
-        };    
+    catch (err) {
+        console.log(error);
+    };
 });
 
 router.post('/test-list/search', (req, res, next) => {
     try {
         num = req.body.num;
         req.requires_processing = req.body.requires_processing;
-        
+
         let sql = 'SELECT * FROM tests_in_requests ';
-       
-        let title= 'Список испытаний'
+
+        let title = 'Список испытаний'
         if (num != undefined && num != '') {
             if (req.body.diagonal_dir) {
-                
+
                 sql = sql + ' WHERE request_code=' + num;
                 title = 'Испытания заявки ' + num;
             }
             else
-            sql = sql + ' WHERE test_in_request_code=' + num;
+                sql = sql + ' WHERE test_in_request_code=' + num;
             if (req.requires_processing == true) {
                 sql = sql + ` AND testing_status='в обработке'`;
             }
         }
-        
+
         else {
             if (req.requires_processing == true)
                 sql = sql + ` WHERE testing_status='в обработке'`;
-            else 
+            else
                 sql = sql + ` WHERE testing_status='в работе'`;
 
         }
-       
+
         sql = sql + ' ORDER BY test_in_request_code DESC';
         console.log(req.body.num + ' ^^ ' + sql + ' %% ' + req.body.diagonal_dir)
         const user = req.user;
@@ -389,10 +392,10 @@ router.post('/test-list/search', (req, res, next) => {
     catch (err) {
         console.log(error);
     };
-});                                  
+});
 
 router.post('/logout', (req, res) => {
-    
+
     try {
         //let jwtStr = req.headers.cookie.indexOf('refreshToken');
         //const tokenDem = req.headers.cookie.substring(jwtStr + 21);
@@ -411,12 +414,12 @@ router.post('/logout', (req, res) => {
         console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
         //res.status(401).send(error.message);
     };
-        
-    
+
+
 });
 
 
-router.get('/', authenticateJWT, (req, res) => {    
+router.get('/', authenticateJWT, (req, res) => {
     res.render('index', {
         title: 'Главная',
         isMain: true,
@@ -429,7 +432,7 @@ router.get('/', authenticateJWT, (req, res) => {
 
 router.get('/req-list', authenticateJWT, (req, res) => {
     if (!req.user.isExecutor) {
-       
+
         let sql = 'SELECT * FROM requests ';
         if (req.user.isDeclarant)
             sql = sql + `WHERE worker_id = ` + req.user.user_id;
@@ -445,16 +448,16 @@ router.get('/req-list', authenticateJWT, (req, res) => {
                     data.rows[i].deadline.toLocaleDateString("en-US", { month: '2-digit' }) + '-' +
                     data.rows[i].deadline.toLocaleDateString("en-US", { day: '2-digit' });
                 data.rows[i].deadline = deadline
-                
+
             }
-            
+
             res.render('req-list', {
-                    title: 'Список заявок',
-                    isReqList: true,
-                    userData: data,
+                title: 'Список заявок',
+                isReqList: true,
+                userData: data,
                 user: req.user
-            });            
-        })        
+            });
+        })
     }
     else {
         res.redirect('/login');
@@ -475,13 +478,13 @@ router.get('/test-list', authenticateJWT, function (req, res) {
 
     db.query(sql, function (err, data) {
         if (err) throw err;
-    res.render('test-list', {
-        title: 'Испытания',
-        isTestList: true,
-        userData: data,
-        user: req.user
+        res.render('test-list', {
+            title: 'Испытания',
+            isTestList: true,
+            userData: data,
+            user: req.user
         })
-        })
+    })
 })
 
 router.get('/create-req', authenticateJWT, (req, res) => {
@@ -492,7 +495,7 @@ router.get('/create-req', authenticateJWT, (req, res) => {
             isNewReq: true,
             user: req.user,
         })
-             
+
     }
 
     else {
@@ -594,13 +597,13 @@ router.get('/catalog/staffSpec', authenticateJWT, (req, res) => {
     db.query(sql, function (err, data) {
         if (err) throw err;
         res.render('catalog', {
-        title: 'Справочник',
-        isCatalog: true,
-        isStaffSpec: true,
-        userData: data
+            title: 'Справочник',
+            isCatalog: true,
+            isStaffSpec: true,
+            userData: data
         });
-    })   
-    
+    })
+
 })
 
 router.get('/login', (req, res) => {
@@ -638,12 +641,12 @@ const options = {
     maxBuffer: 1024 * 1024 * 64,
     killSignal: "SIGTERM",
     shell: true,
-    windowsVerbatimArguments: true,       
+    windowsVerbatimArguments: true,
     args: ["--disk-cache-dir=C:/LNK", exePathDump],
 };
 
 function dump(dumpName) {
-    
+
     return new Promise((resolve, reject) => {
         execFile(exePathDump, [`"dbname=LNK user=postgres password=4444 client_encoding=Windows-1251" > C:/Games/LNK` + dumpName], options,
             (error, stdout, stderr) => {
@@ -666,79 +669,79 @@ function dump(dumpName) {
 function restore(dumpName) {
     return new Promise((resolve, reject) => {
         execFile(exePathPsql, [`"dbname=LNK user=postgres password=4444" < C:/Games/` + dumpName], options,
-        (error, stdout, stderr) => {
-            if (error !== null) {
-                reject(error);
+            (error, stdout, stderr) => {
+                if (error !== null) {
+                    reject(error);
+                    console.log(stderr)
+                    console.log(stdout)
+                    return
+                }
+                resolve("Restore complete!");
                 console.log(stderr)
                 console.log(stdout)
-                return
-            }
-            resolve("Restore complete!");
-            console.log(stderr)
-            console.log(stdout)
-            console.log("Restore complete!")
+                console.log("Restore complete!")
 
-        })
-        
+            })
+
     });
     console.log('aaaaaaaaaaaa ' + backupScriptPath)
-    
+
 }
 const { execute } = require('@getvim/execute');
 
 
 router.post('/backup', (req, res) => {
-    
-        dump('_main_backup.dump')
-            .then(data => {                 
-                    console.log(data);
-                
-        res.send('Резервная копия успешно создана');
-            })
-            .catch(error => {
-                console.error(error);
-        res.send(err);
 
-            });            
-    
+    dump('_main_backup.dump')
+        .then(data => {
+            console.log(data);
+
+            res.send('Резервная копия успешно создана');
+        })
+        .catch(error => {
+            console.error(error);
+            res.send(err);
+
+        });
+
 });
 
 router.post('/restore', (req, res) => {
 
-    
+
     dump('_additional_backup.dump').then(data => {
-          anyRequest(`DROP SCHEMA public CASCADE;
+        anyRequest(`DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;`)
             .then(resolve => {
                 console.log(resolve);
                 console.log('q976');
                 restore('mydb_export.dump').then(data => {
-                    res.send(data);  
+                    res.send(data);
                 })
                     .catch(error => {
                         console.log(error);
                         res.status(401).send(error);
                     });
-                    
-                })
-                    .catch(error => {
-                        console.error(error);
 
-                    });
+            })
+            .catch(error => {
+                console.error(error);
+
+            });
     })
         .catch(error => {
             console.error(error);
             res.send(err);
 
-        }); 
-        
-         //асинхронность нада
+        });
+
+    //асинхронность нада
 
     //anyRequest(`DROP DATABASE IF EXISTS "LNK"`)
-    
-        
-        console.log('q67');
-        
+
+
+    console.log('q67');
+
 });
 
 
@@ -746,86 +749,87 @@ module.exports = router;
 
 
 router.get('/report/staff', (req, res, next) => {
-    
-    let num = req.headers.num;      
-let sql = `SELECT * FROM tests_in_requests 
+
+    let num = req.headers.num;
+    let sql = `SELECT * FROM tests_in_requests 
 INNER JOIN staff ON tests_in_requests.worker_id = staff.worker_id 
 INNER JOIN requests ON tests_in_requests.request_code = requests.request_code
-WHERE tests_in_requests.worker_id=` +num+`  
+WHERE tests_in_requests.worker_id=` + num + `  
 ORDER BY requests.request_code ASC`;
-    console.log('worker '+num)
-        db.query(sql, function (err, data) {
-            if (err) throw err;
-            if (data.rows.length == 0) {
-                res.status(400).send('Запрос не дал результатов')
-            }
-            else {
-                //let isExecutor = false;
-                //for (var i = 0; i < role2.length; i++) {
-                //    if (data.rows[0].job_title == role2[i])
-                //        isExecutor == true;
-                //}
-                //if (isExecutor) {
-                //    res.status(400).send('Запрос не дал результатов')
-                
-                try {
-                    const template = fs.readFileSync('public/templates/staff.docx', 'binary');                       
-                    const zip = new PizZip(template);
-                                       const doc = new Docxtemplater(zip, {
-                        paragraphLoop: true,
-                        linebreaks: true,
-                    });
-                    let arrRows = [];
-                    let currentTime = getTime();    
-                    let currentDate = currentTime.substring(0, 14)    
+    console.log('worker ' + num)
+    db.query(sql, function (err, data) {
+        if (err) throw err;
+        if (data.rows.length == 0) {
+            res.status(400).send('Запрос не дал результатов')
+        }
+        else {
+            //let isExecutor = false;
+            //for (var i = 0; i < role2.length; i++) {
+            //    if (data.rows[0].job_title == role2[i])
+            //        isExecutor == true;
+            //}
+            //if (isExecutor) {
+            //    res.status(400).send('Запрос не дал результатов')
 
-                    console.log(data.rows.length)
-                    let deadline = [];
-                    for (var i = 0; i < data.rows.length; i++) {
-                        deadline[i] = data.rows[i].deadline.toLocaleDateString("en-US", { year: 'numeric' }) + '-' +
-                            data.rows[i].deadline.toLocaleDateString("en-US", { month: '2-digit' }) + '-' +
-                            data.rows[i].deadline.toLocaleDateString("en-US", { day: '2-digit' });
-                        
-                        arrRows[i] = {
-                            testCode: data.rows[i].test_in_request_code,
-                            reqCode: data.rows[i].request_code,
-                            dep: data.rows[i].department_num,
-                            objTest: data.rows[i].control_object_testing_code,
-                            status: data.rows[i].testing_status,
-                            regNum: data.rows[i].object_reg_number,                                
-                            deadline: deadline[i],
-                        }
+            try {
+                const template = fs.readFileSync('public/templates/staff.docx', 'binary');
+                const zip = new PizZip(template);
+                const doc = new Docxtemplater(zip, {
+                    paragraphLoop: true,
+                    linebreaks: true,
+                });
+                let arrRows = [];
+                let currentTime = getTime();
+                let currentDate = currentTime.substring(0, 14)
+
+                console.log(data.rows.length)
+                let deadline = [];
+                for (var i = 0; i < data.rows.length; i++) {
+                    deadline[i] = data.rows[i].deadline.toLocaleDateString("en-US", { year: 'numeric' }) + '-' +
+                        data.rows[i].deadline.toLocaleDateString("en-US", { month: '2-digit' }) + '-' +
+                        data.rows[i].deadline.toLocaleDateString("en-US", { day: '2-digit' });
+
+                    arrRows[i] = {
+                        testCode: data.rows[i].test_in_request_code,
+                        reqCode: data.rows[i].request_code,
+                        dep: data.rows[i].department_num,
+                        objTest: data.rows[i].control_object_testing_code,
+                        status: data.rows[i].testing_status,
+                        regNum: data.rows[i].object_reg_number,
+                        deadline: deadline[i],
                     }
+                }
 
-                    doc.render({
-                        workerID: num,
-                        fullName: data.rows[0].full_name,
-                        jobTitle: data.rows[0].job_title,
-                        contacts: data.rows[0].contacts,
-                        testInRequest: arrRows,
-                        currentDate: currentDate
-                    });
-                    currentTime = currentDate+currentTime.slice(14);
-                    console.log(currentTime)
-                    const buffer = doc.getZip().generate({ type: 'nodebuffer' });
+                doc.render({
+                    workerID: num,
+                    fullName: data.rows[0].full_name,
+                    jobTitle: data.rows[0].job_title,
+                    contacts: data.rows[0].contacts,
+                    testInRequest: arrRows,
+                    currentDate: currentDate
+                });
+                currentTime = currentDate + currentTime.slice(14);
+                console.log(currentTime)
+                const buffer = doc.getZip().generate({ type: 'nodebuffer' });
 
-                    //fs.writeFileSync(currentDate.substring(0, 13) + '.docx', buffer);
-                    let repPath = ('public/reports/report' + num + '.docx')
-                    fs.writeFileSync(repPath, buffer);
-                    const file = (path.join(__dirname, '../public/reports/') + 'report' + num + '.docx');
-                    res.download(file);
+                //fs.writeFileSync(currentDate.substring(0, 13) + '.docx', buffer);
+                let repPath = ('public/reports/report' + num + '.docx')
+                fs.writeFileSync(repPath, buffer);
+                const file = (path.join(__dirname, '../public/reports/') + 'report' + num + '.docx');
+                res.download(file);
 
-                    
-                    //res.send('success');
 
-                } catch (error) {
-                    console.log(error);
-                    res.send(error);
-                }                                       }         
-        })
-       });
+                //res.send('success');
+
+            } catch (error) {
+                console.log(error);
+                res.send(error);
+            }
+        }
+    })
+});
 router.get('/report/obj', (req, res, next) => {
-    let num = req.headers.num;      
+    let num = req.headers.num;
 
     let sql = `SELECT * FROM objects_of_control
 INNER JOIN control_objects_testing ON objects_of_control.control_object_code = control_objects_testing.control_object_code
@@ -833,7 +837,7 @@ INNER JOIN sorts_of_control ON control_objects_testing.test_code = sorts_of_cont
 INNER JOIN tests_in_requests ON control_objects_testing.control_object_testing_code = tests_in_requests.control_object_testing_code
 INNER JOIN requests ON tests_in_requests.request_code = requests.request_code
 INNER JOIN departments ON requests.department_num = departments.department_num
-WHERE objects_of_control.control_object_code=`+num+` 
+WHERE objects_of_control.control_object_code=`+ num + ` 
 ORDER BY objects_of_control.control_object_code ASC`;
     db.query(sql, function (err, data) {
         if (err) throw err;
@@ -842,76 +846,76 @@ ORDER BY objects_of_control.control_object_code ASC`;
         }
         else {
             try {
-                
+
                 //const mimeType =   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                const template = fs.readFileSync('public/templates/object.docx', 'binary');                       
+                const template = fs.readFileSync('public/templates/object.docx', 'binary');
                 const zip = new PizZip(template);
-               
+
 
                 const doc = new Docxtemplater(zip, {
                     paragraphLoop: true,
                     linebreaks: true,
                 });
-               
+
 
 
                 let arrRows = [];
-               let currentTime = getTime();    
-                    let currentDate = currentTime.substring(0, 14)    
+                let currentTime = getTime();
+                let currentDate = currentTime.substring(0, 14)
 
                 //console.log(data.rows[0].requests.worker_id)
 
 
 
-                    for (var i = 0; i < data.rows.length; i++) {
-                       arrRows[i] = {
-                           testName: data.rows[i].testing_full_name,
-                            reqCode: data.rows[i].request_code,
-                            depName: data.rows[i].dep_full_name,
-                            entity: data.rows[i].entity_short_name,
-                            lineNum: data.rows[i].line_code,
-                            status: data.rows[i].testing_status,
-                           objRegNum: data.rows[i].object_reg_number,
-                           executorID: data.rows[i].worker_id,
+                for (var i = 0; i < data.rows.length; i++) {
+                    arrRows[i] = {
+                        testName: data.rows[i].testing_full_name,
+                        reqCode: data.rows[i].request_code,
+                        depName: data.rows[i].dep_full_name,
+                        entity: data.rows[i].entity_short_name,
+                        lineNum: data.rows[i].line_code,
+                        status: data.rows[i].testing_status,
+                        objRegNum: data.rows[i].object_reg_number,
+                        executorID: data.rows[i].worker_id,
 
-                        }
                     }
-                    doc.render({
-                        objID: num,
-                        subcategory: data.rows[0].subcategory,
-                        category: data.rows[0].category,
-                        objInfo: data.rows[0].additional_information,
-                        testInRequest: arrRows,
-                        currentDate: currentDate
-                    });
-                    currentTime = currentDate+currentTime.slice(14);
-                    console.log(currentTime)
-                    const buffer = doc.getZip().generate({ type: 'nodebuffer' });
+                }
+                doc.render({
+                    objID: num,
+                    subcategory: data.rows[0].subcategory,
+                    category: data.rows[0].category,
+                    objInfo: data.rows[0].additional_information,
+                    testInRequest: arrRows,
+                    currentDate: currentDate
+                });
+                currentTime = currentDate + currentTime.slice(14);
+                console.log(currentTime)
+                const buffer = doc.getZip().generate({ type: 'nodebuffer' });
 
-                    //fs.writeFileSync(currentDate.substring(0, 13) + '.docx', buffer);
-                    let repPath = ('public/reports/report' + num + '.docx')
-                    fs.writeFileSync(repPath, buffer);
-                    const file = (path.join(__dirname, '../public/reports/') + 'report' + num + '.docx');
-                    res.download(file);
+                //fs.writeFileSync(currentDate.substring(0, 13) + '.docx', buffer);
+                let repPath = ('public/reports/report' + num + '.docx')
+                fs.writeFileSync(repPath, buffer);
+                const file = (path.join(__dirname, '../public/reports/') + 'report' + num + '.docx');
+                res.download(file);
 
-                    
-                    //res.send('success');
 
-                } catch (error) {
+                //res.send('success');
+
+            } catch (error) {
                 console.log(error);
                 res.status(500).send(error);
-                    
-                }
+
+            }
             //res.send(data,);
         }
     })
-    
+
 });
 router.get('/report/request', (req, res, next) => {
-   
-    let num = req.headers.num;      
-   
-    
+
+    let num = req.headers.num;
+
+
     let sql = `SELECT * FROM tests_in_requests
 INNER JOIN requests ON tests_in_requests.request_code = requests.request_code
 INNER JOIN control_objects_testing ON tests_in_requests.control_object_testing_code = control_objects_testing.control_object_testing_code
@@ -919,9 +923,9 @@ INNER JOIN objects_of_control ON control_objects_testing.control_object_code = o
 INNER JOIN sorts_of_control ON control_objects_testing.test_code = sorts_of_control.test_code
 INNER JOIN staff ON tests_in_requests.worker_id = staff.worker_id
 INNER JOIN departments ON requests.department_num = departments.department_num
-WHERE tests_in_requests.request_code=`+num+` 
+WHERE tests_in_requests.request_code=`+ num + ` 
 ORDER BY tests_in_requests.test_in_request_code ASC`;
-    
+
     db.query(sql, function (err, data) {
         if (err) {
             res.status(400).send('Запрос не дал результатов')
@@ -949,13 +953,13 @@ ORDER BY tests_in_requests.test_in_request_code ASC`;
                         opinionRequired = 'Требуется выдача заключения';
                     let arrRows = [];
                     let currentTime = getTime();
-                    let currentDate = currentTime.substring(0, 14) 
-                    let deadline='';
-                    
-                    
-                        deadline = data.rows[0].deadline.toLocaleDateString("en-US", { year: 'numeric' }) + '-' +
-                            data.rows[0].deadline.toLocaleDateString("en-US", { month: '2-digit' }) + '-' +
-                            data.rows[0].deadline.toLocaleDateString("en-US", { day: '2-digit' });
+                    let currentDate = currentTime.substring(0, 14)
+                    let deadline = '';
+
+
+                    deadline = data.rows[0].deadline.toLocaleDateString("en-US", { year: 'numeric' }) + '-' +
+                        data.rows[0].deadline.toLocaleDateString("en-US", { month: '2-digit' }) + '-' +
+                        data.rows[0].deadline.toLocaleDateString("en-US", { day: '2-digit' });
 
 
                     for (var i = 0; i < data.rows.length; i++) {
@@ -981,7 +985,7 @@ ORDER BY tests_in_requests.test_in_request_code ASC`;
                         testInRequest: arrRows,
                         currentDate: currentDate,
                         deadline: deadline,
-                        num:num
+                        num: num
                     });
                     currentTime = currentDate + currentTime.slice(14);
                     console.log(currentTime)

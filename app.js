@@ -16,8 +16,6 @@ const { Document, Packer, Paragraph, Table, TableCell, TableRow, TextRun } = doc
 const todoRoutes = require('./routes/routes');
 const app = express();
 
-
-
 // view engine setup
 
 app.set('views', 'views')
@@ -92,48 +90,48 @@ const hbs = exphbs.create({
         //    response.statusCode = 401;
         //    response.setHeader('WWW-Authenticate', 'NTLM'); response.end();
         //},  
-//        read117: function(){
-//        console.log('con');
-//        let query = ` SELECT * FROM staff`;
-//        let mass = 'V';
-//        console.log(' ж');
+        //        read117: function(){
+        //        console.log('con');
+        //        let query = ` SELECT * FROM staff`;
+        //        let mass = 'V';
+        //        console.log(' ж');
 
-        
 
-   
-            
-//            function generateWordDocument() {
 
-//                let doc = new Document()
-//                doc.createParagraph("Title")
-//                doc.createParagraph("Subtitle")
-//                doc.createParagraph("Heading 1")
-//                doc.createParagraph("Heading 2")
-//                doc.createParagraph(
-//                    "Aliquam gravida quam sapien, quis dapibus eros malesuada vel. Praesent tempor aliquam iaculis. Nam ut neque ex. Curabitur pretium laoreet nunc, ut ornare augue aliquet sed. Pellentesque laoreet sem risus. Cras sodales libero convallis, convallis ex sed, ultrices neque. Sed quis ullamcorper mi. Ut a leo consectetur, scelerisque nibh sit amet, egestas mauris. Donec augue sapien, vestibulum in urna et, cursus feugiat enim. Ut sit amet placerat quam, id tincidunt nulla. Cras et lorem nibh. Suspendisse posuere orci nec ligula mattis vestibulum. Suspendisse in vestibulum urna, non imperdiet enim. Vestibulum vel dolor eget neque iaculis ultrices."
-//                )
-//                saveDocumentToFile(doc, "New Document.docx")
-//            }
-//            function saveDocumentToFile(doc, fileName) {
-//                // Create new instance of Packer for the docx module
-//                const packer = new Packer()
-//                // Create a mime type that will associate the new file with Microsoft Word
-//                const mimeType =
-//                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-//                // Create a Blob containing the Document instance and the mimeType
-//                packer.toBlob(doc).then(blob => {
-//                    const docblob = blob.slice(0, blob.size, mimeType)
-//                    // Save the file using saveAs from the file-saver package
-//                    saveAs(docblob, fileName)
-//                })
-//            }
-//            try {
-//                generateWordDocument();
-//            } catch (e) {
-//                console.log(e);
-//            }
-//        ;
-//},
+
+
+        //            function generateWordDocument() {
+
+        //                let doc = new Document()
+        //                doc.createParagraph("Title")
+        //                doc.createParagraph("Subtitle")
+        //                doc.createParagraph("Heading 1")
+        //                doc.createParagraph("Heading 2")
+        //                doc.createParagraph(
+        //                    "Aliquam gravida quam sapien, quis dapibus eros malesuada vel. Praesent tempor aliquam iaculis. Nam ut neque ex. Curabitur pretium laoreet nunc, ut ornare augue aliquet sed. Pellentesque laoreet sem risus. Cras sodales libero convallis, convallis ex sed, ultrices neque. Sed quis ullamcorper mi. Ut a leo consectetur, scelerisque nibh sit amet, egestas mauris. Donec augue sapien, vestibulum in urna et, cursus feugiat enim. Ut sit amet placerat quam, id tincidunt nulla. Cras et lorem nibh. Suspendisse posuere orci nec ligula mattis vestibulum. Suspendisse in vestibulum urna, non imperdiet enim. Vestibulum vel dolor eget neque iaculis ultrices."
+        //                )
+        //                saveDocumentToFile(doc, "New Document.docx")
+        //            }
+        //            function saveDocumentToFile(doc, fileName) {
+        //                // Create new instance of Packer for the docx module
+        //                const packer = new Packer()
+        //                // Create a mime type that will associate the new file with Microsoft Word
+        //                const mimeType =
+        //                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        //                // Create a Blob containing the Document instance and the mimeType
+        //                packer.toBlob(doc).then(blob => {
+        //                    const docblob = blob.slice(0, blob.size, mimeType)
+        //                    // Save the file using saveAs from the file-saver package
+        //                    saveAs(docblob, fileName)
+        //                })
+        //            }
+        //            try {
+        //                generateWordDocument();
+        //            } catch (e) {
+        //                console.log(e);
+        //            }
+        //        ;
+        //},
         substr: function (length, context, options) {
             if (context.length > length) {
                 return context.substring(0, length) + "...";
@@ -159,8 +157,8 @@ const hbs = exphbs.create({
         },
 
         arrCount: function (arr, options) {
-            
-            return arr[0]; 
+
+            return arr[0];
         },
 
         isExecutor: function () {
@@ -178,7 +176,7 @@ const hbs = exphbs.create({
                 return true;
             else return false;
         }
-        
+
     }
 });
 
@@ -205,15 +203,15 @@ app.get("/report_worker", async (req, res) => {
                 new Paragraph({
                     children: [
                         new TextRun(data),
-                        
+
                     ],
                 }),
             ],
         }],
     });
 });
-    app.get("/report_obj", async (req, res) => {
-        let query = `SELECT оbjects_of_control.control_object_code, category, subcategory, control_objects_testing.control_object_testing_code, 
+app.get("/report_obj", async (req, res) => {
+    let query = `SELECT оbjects_of_control.control_object_code, category, subcategory, control_objects_testing.control_object_testing_code, 
 test_in_request_code, testing_status, department_num, tests_in_requests.request_code, testing_status, 
 test_in_request_code FROM оbjects_of_control 
 INNER JOIN control_objects_testing ON оbjects_of_control.control_object_code= control_objects_testing.control_object_code 
@@ -221,20 +219,20 @@ INNER JOIN tests_in_requests ON control_objects_testing.control_object_testing_c
 INNER JOIN requests ON tests_in_requests.request_code= requests.request_code 
 INNER JOIN sorts_of_control ON control_objects_testing.test_code= sorts_of_control.test_code	 
 	`;
-        let data = read(query);
-        const doc = new Document({
-            sections: [{
-                properties: {},
-                children: [
-                    new Paragraph({
-                        children: [
-                            new TextRun(data),
-                            
-                        ],
-                    }),
-                ],
-            }],
-        });
+    let data = read(query);
+    const doc = new Document({
+        sections: [{
+            properties: {},
+            children: [
+                new Paragraph({
+                    children: [
+                        new TextRun(data),
+
+                    ],
+                }),
+            ],
+        }],
+    });
     const b64string = await Packer.toBase64String(doc);
 
     res.setHeader('Content-Disposition', 'attachment; filename=My Document.docx');
@@ -242,7 +240,7 @@ INNER JOIN sorts_of_control ON control_objects_testing.test_code= sorts_of_contr
 })
 //app.use(ntlm());
 //app.all('./views/autorization', function (request, response) {
-    //response.end(JSON.stringify(request.ntlm)); // {"DomainName":"MYDOMAIN","UserName":"MYUSER","Workstation":"MYWORKSTATION"}
+//response.end(JSON.stringify(request.ntlm)); // {"DomainName":"MYDOMAIN","UserName":"MYUSER","Workstation":"MYWORKSTATION"}
 //});
 
 module.exports = app;

@@ -14,60 +14,8 @@
 
 <div class="table-data">
     {{#if isStaff}}
-    <div class="social ">
-        <div class="action-btn btn-social mail">
-            <a title="На главную" class=" btn-floating green to-main">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="-7 -1 32 24" fill="none"
-                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </a>
 
-        </div>
-        <div class="row phone-container">
-            <div class="action-btn btn-social phone-btn">
-                <a title="На главную" class=" btn-floating green to-main">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="-7 -1 32 24" fill="none"
-                        stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                </a>
-            </div>
-            <a class="phone-text btn-floating">
-                gg
-                {{!-- <div class="intro_title">
-                    <strong>Арсений Попов</strong>
-                    <span class="intro_title_white">Арсений Попов</span>
-                </div> --}}
-            </a>
-        </div>
-        {{!-- <div class="mail-text">
-            arsenya.popov.03@bk.ru
-        </div> --}}
-        <div class="action-btn btn-social git">
-            <a title="На главную" class=" btn-floating red to-main" href="/">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="-7 -1 32 24" fill="none"
-                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </a>
-
-        </div>
-        <div class="action-btn btn-social hh">
-            <a title="На главную" class=" btn-floating green to-main" href="/">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="-7 -1 32 24" fill="none"
-                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </a>
-
-        </div>
-    </div>
-    <!--<table border="1">
+    <table border="1">
         <tr>
             <th>ID</th>
             <th>ФИО</th>
@@ -77,77 +25,25 @@
             <th>Доп. информация</th>
         </tr>
         {{#each userData.rows}}
-    <tr>
-        <td>{{this.worker_id}} </td>
-        <td>{{this.full_name}} </td>
-        <td>{{this.department_num}} </td>
-        <td>{{this.job_title}} </td>
-        <td>{{this.contacts}}</td>
-        <td>{{this.staff_additional_information}} </td>
-    </tr>
+        <tr>
+            <td>{{this.worker_id}} </td>
+            <td>{{this.full_name}} </td>
+            <td>{{this.department_num}} </td>
+            <td>{{this.job_title}} </td>
+            <td>{{this.contacts}}</td>
+            <td>{{this.staff_additional_information}} </td>
+        </tr>
         {{/each}}
-    
-    </table>-->
+
+    </table>
     {{/if}}
 
     {{#if isObjectsOfControl}}
 
-    <div class="social ">
-        <div class="action-btn btn-social mail">
-            <a title="На главную" class=" btn-floating green to-main">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="-7 -1 32 24" fill="none"
-                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </a>
-
-        </div>
-        <div class="row phone-container">
-            <div class="action-btn btn-social phone-btn">
-                <a title="На главную" class=" btn-floating green to-main">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="-7 -1 32 24" fill="none"
-                        stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                </a>
-            </div>
-            <a class="phone-text btn-floating">
-                gg
-                {{!-- <div class="intro_title">
-                    <strong>Арсений Попов</strong>
-                    <span class="intro_title_white">Арсений Попов</span>
-                </div> --}}
-            </a>
-        </div>
-        {{!-- <div class="mail-text">
-            arsenya.popov.03@bk.ru
-        </div> --}}
-        <div class="action-btn btn-social git">
-            <a title="На главную" class=" btn-floating red to-main" href="/">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="-7 -1 32 24" fill="none"
-                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </a>
-
-        </div>
-        <div class="action-btn btn-social hh">
-            <a title="На главную" class=" btn-floating green to-main" href="/">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="-7 -1 32 24" fill="none"
-                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-            </a>
-
-        </div>
-    </div>
 
 
-    {{!-- <table border="1">
+
+    <table border="1">
 
         <tr>
             <th>№</th>
@@ -169,7 +65,7 @@
         </tr>
         {{/each}}
 
-    </table> --}}
+    </table>
     {{/if}}
     {{#if isObjAndControl}}
     <table border="1">
@@ -313,7 +209,6 @@
 
 
 </div>
-
 
 
 {{> tomain}}
