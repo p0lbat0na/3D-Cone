@@ -1,0 +1,214 @@
+<h1>Справочник</h1>
+
+<div class="row center-align">
+    <a class="btn" href="/catalog/staff">Сотрудники</a>
+    <a class="btn" href="/catalog/objectsOfControl">Объекты контроля</a>
+    <a class="btn" href="/catalog/sortsOfControl">Испытания</a>
+    <a class="btn" href="/catalog/objAndControl">Объекты + испытания</a>
+    <a class="btn" href="/catalog/dep">Цеха</a>
+    <a class="btn" href="/catalog/spec">Специальности</a>
+    <a class="btn" href="/catalog/staffSpec">Специализация сотрудников</a>
+</div>
+
+
+
+<div class="table-data">
+    {{#if isStaff}}
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>ФИО</th>
+            <th>Цех</th>
+            <th>Должность</th>
+            <th>Контакты</th>
+            <th>Доп. информация</th>
+        </tr>
+        {{#each userData.rows}}
+        <tr>
+            <td>{{this.worker_id}} </td>
+            <td>{{this.full_name}} </td>
+            <td>{{this.department_num}} </td>
+            <td>{{this.job_title}} </td>
+            <td>{{this.contacts}}</td>
+            <td>{{this.staff_additional_information}} </td>
+        </tr>
+        {{/each}}
+
+    </table>
+    {{/if}}
+
+    {{#if isObjectsOfControl}}
+
+
+
+
+    <table border="1">
+
+        <tr>
+            <th>№</th>
+            <th>Категория</th>
+            <th>Подкатегория</th>
+            <th>Файлы</th>
+            <th>Доп. информация</th>
+
+        </tr>
+
+        {{#each userData.rows}}
+        <tr>
+            <td>{{this.control_object_code}} </td>
+            <td>{{this.category}} </td>
+            <td>{{this.subcategory}} </td>
+
+            <td>{{this.documents}}</td>
+            <td>{{this.additional_information}} </td>
+        </tr>
+        {{/each}}
+
+    </table>
+    {{/if}}
+    {{#if isObjAndControl}}
+    <table border="1">
+
+        <tr>
+            <th>№</th>
+            <th>Номер объекта</th>
+            <th>Категория</th>
+            <th>Подкатегория</th>
+            <th>Номер испытания</th>
+            <th>Испытание</th>
+            <th>Требуемый специалист</th>
+            <th>Файлы</th>
+            <th>Описание работ</th>
+        </tr>
+
+        {{#each userData.rows}}
+        <tr>
+            <td>{{this.test_code}} </td>
+            <td>{{this.control_object_code}} </td>
+            <td>{{this.category}} </td>
+            <td>{{this.subcategory}} </td>
+            <td>{{this.test_code}} </td>
+            <td>{{this.testing_full_name}}</td>
+            <td>{{this.specialization_code}} </td>
+            <td>{{this.documents}}</td>
+            <td>{{this.works_description}} </td>
+        </tr>
+        {{/each}}
+
+    </table>
+    {{/if}}
+
+    {{#if isSortsOfControl}}
+    <table border="1">
+
+        <tr>
+            <th>№</th>
+            <th>Короткое название</th>
+            <th>Полное</th>
+            <th>Требуемый специалист</th>
+
+        </tr>
+
+        {{#each userData.rows}}
+        <tr>
+            <td>{{this.test_code}} </td>
+            <td>{{this.testing_short_name}} </td>
+            <td>{{this.testing_full_name}}</td>
+            <td>{{this.specialization_code}} </td>
+
+        </tr>
+        {{/each}}
+
+    </table>
+    {{/if}}
+
+    {{#if isDep}}
+    <table border="1">
+
+        <tr>
+            <th>№</th>
+            <th>Короткое название</th>
+            <th>Полное</th>
+            <th>Короткое название подразделения</th>
+            <th>Полное название подразделения</th>>
+            <th>ФИО директора</th>
+            <th>Delete</th>
+        </tr>
+
+        {{#each userData.rows}}
+        <tr>
+            <td>{{this.department_num}} </td>
+            <td>{{this.short_name}} </td>
+            <td>{{this.dep_full_name}} </td>
+            <td>{{this.entity_short_name}} </td>
+            <td>{{this.entity_full_name}}</td>
+            <td>{{this.director_name}} </td>
+        </tr>
+        {{/each}}
+
+    </table>
+    {{/if}}
+
+    {{#if isSpec}}
+    <table border="1">
+
+        <tr>
+            <th>№</th>
+            <th>Специальность</th>
+            <th>Срок действия</th>
+            <th>Требуемое образование</th>
+            <th>Доп. информация</th>
+        </tr>
+
+        {{#each userData.rows}}
+        <tr>
+
+            <td>{{this.specialization_code}} </td>
+
+            <td>{{this.specialization_category}} </td>
+            <td>{{this.validity_period}} </td>
+            <td>{{this.requirement_education}}</td>
+            <td>{{this.staff_additional_information}} </td>
+        </tr>
+        {{/each}}
+
+    </table>
+    {{/if}}
+
+    {{#if isStaffSpec}}
+    <table border="1">
+
+        <tr>
+
+            <th>ID</th>
+            <th>ФИО</th>
+            <th>Цех</th>
+            <th>Должность</th>
+            <th>Специальность</th>
+            <th>Срок действия</th>
+            <th>Контакты</th>
+            <th>Доп. информация</th>
+        </tr>
+
+        {{#each userData.rows}}
+        <tr>
+            <td>{{this.worker_id}} </td>
+            <td>{{this.full_name}} </td>
+            <td>{{this.department_num}} </td>
+            <td>{{this.job_title}} </td>
+            <td>{{this.specialization_category}} </td>
+            <td>{{this.validity_period}} </td>
+            <td>{{this.contacts}}</td>
+            <td>{{this.staff_additional_information}} </td>
+        </tr>
+        {{/each}}
+
+    </table>
+    {{/if}}
+
+
+</div>
+
+
+{{> tomain}}
