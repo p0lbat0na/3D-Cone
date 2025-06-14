@@ -1,23 +1,19 @@
-<<<<<<< HEAD
-=======
-# LNK2
-## Это мой дипломный проект, тема:  
-## "Разработка автоматизированной информационной системы для учета испытаний оборудования" (ТАИФ-НК)
- 
-Реализована авторизация, уровни доступа (jwt токены), цикл CRUD.  
-Иcпользовался чистый CSS, шаблонизатор Handlebars.
- 
-# Для запуска необходимы:  
-node js  
-postgresql (использовалась v7.1)  
-В psql создать базу данных с именем LNK и восстановить ее из бэкапа  
-LNK_main_backup.dump  
-пароль от учетки postgres 4444, можно изменить в файле scr.js (/public/javascript)  
-для запуска  сервера из консоли перейти в папку проекта и ввести  
->npm run dev  
+#Создает конус по заданным параметрам
+#Create a cone according to the parameters
 
-# В БД есть несколько учетных записей с разными уровнями доступа:  
-Заявитель: id=5, пароль 5555  
-Исполнитель: id=2, пароль 2222  
-Оператор ЛНК: id=1, пароль 4444  
->>>>>>> a443a7ba811cd16c92b8e5b8faa6dab2608cdef6
+Для запуска на сервере требуется node.js  
+To run on the server node.js required
+
+В консоли перейти в папку с проектом и прописать: 
+>npm i  
+>npm run dev
+
+In the console, browse to the folder with the project and write:  
+>npm i  
+>npm run dev
+
+С клиента перейти на  
+>http://localhost:3000
+
+From the client browse to  
+>http://localhost:3000
