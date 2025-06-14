@@ -1,5 +1,5 @@
 {
-  "name": "lnk2",
+  "name": "cone",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -7,9 +7,9 @@
     "start": "node app",
     "dev": "nodemon app"
   },
-  "description": "LNK2",
+  "description": "3DCone",
   "author": {
-    "name": ""
+    "name": "Arseniy Popov <arsenya.popov.03@bk.ru>"
   },
   "dependencies": {
     "@getvim/execute": "^1.0.0",

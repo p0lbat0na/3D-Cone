@@ -14,7 +14,6 @@ const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
 
-// 👇️ "/home/john/Desktop/javascript"
 const __dirname = path.dirname(__filename);
 
 app.set('views', 'views')
@@ -49,7 +48,7 @@ app.use(function (err, req, res, next) {
     });
 });
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 2995);
 
 const server = app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + server.address().port);
